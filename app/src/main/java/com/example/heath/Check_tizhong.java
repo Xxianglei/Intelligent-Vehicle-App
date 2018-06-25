@@ -122,23 +122,22 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
 
     private void LocalData() {
-        list2.clear();
-        list2 = dataBaseManager.readtzList();
-        list2 = dataBaseManager.readtzList();
+        List<TizhongModle> list3 = new DataBaseManager().readtzList();
+
+        Log.e("list2大小改变",list3.size()+"");
             //设置x轴的数据
             xValues = new ArrayList<>();
-        if (list2.size()>=7) {
+        if (list3.size()>=7) {
             for (int i = 0; i < 7; i++) {
                 xValues.add((float) i);
             }
-            Log.e("list.size()", list2.size() + "");
             //设置y轴的数据()
             yValues = new ArrayList<>();
             for (int i = 1; i > 0; i--) {
                 List<Float> yValue = new ArrayList<>();
-                if (list2.size() >= 7) {
-                    for (int j = list2.size() - 7; j <= list2.size() - 1; j++) {
-                        yValue.add(Float.valueOf(list2.get(j).getData()));
+                if (list3.size() >= 7) {
+                    for (int j = list3.size() - 7; j <= list3.size() - 1; j++) {
+                        yValue.add(Float.valueOf(list3.get(j).getData()));
                     }
                 }
                 yValues.add(yValue);
@@ -214,6 +213,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
                             std.setText(Bmi(weight));
                             testLineProgress();
                             // now_weight=weight;
+                            List<TizhongModle> list2 = new DataBaseManager().readtzList();
                             if (list2.size()>=7)
                             LocalData();
                             Toast.makeText(Check_tizhong.this, "保存成功", Toast.LENGTH_SHORT).show();
@@ -421,6 +421,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
                         String time=TimeUtils.dateToString2();
                         int w = (int) (60 + Math.random() * 40);
                         if (check(w,time)) {
+
                             upload(myApplication.getName().toString(),url, String.valueOf(w),time);
                             weight_tv.setText(w + "");
                             bmi.setText(Bmi_Value(w)+"");

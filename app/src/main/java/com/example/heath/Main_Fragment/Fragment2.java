@@ -212,7 +212,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private BluetoothDevice device;
     private Set<BluetoothDevice> pairedDevices;
     private String name = "null";
-    private String url = "http://47.94.21.55/houtai/sj-model/sj/model.php\n";
+    private String url = "http://47.94.21.55/houtai/sj-model/sj/model.php";
     private String shigh;
     private String weight;
     private String his;

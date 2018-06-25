@@ -32,14 +32,19 @@ import com.example.heath.MyApplication;
 import com.example.heath.R;
 import com.google.gson.Gson;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 public class Log_in extends AppCompatActivity {
 
@@ -58,6 +63,7 @@ public class Log_in extends AppCompatActivity {
     private CheckBox checkBox;
     private NetworkChangeReceiver networkChangeReceiver;
     private MyApplication myApplication;
+    private LoadingDialog ld;
 
 
     @Override
@@ -75,6 +81,7 @@ public class Log_in extends AppCompatActivity {
     }
 
     private void initView() {
+        ld = new LoadingDialog(Log_in.this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -114,16 +121,20 @@ public class Log_in extends AppCompatActivity {
                 // 登录
                 name = etUsername.getText().toString();
                 password = etPassword.getText().toString();
-                myApplication.setName(name);
-                KProgressHUD.create(Log_in.this)
-                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                        .setLabel("正在登陆中...")
-                        //.setDetailsLabel("Downloading data")
-                        .setCancellable(true)
-                        .setAnimationSpeed(2)
-                        .setDimAmount(0.5f)
-                        .show();
-                GLog_in(name, password);
+                if (name.toString() != "") {
+                    myApplication.setName(name);
+                    ld.setLoadingText("正在登录中...")
+                            .setSuccessText("登录成功")//显示加载成功时的文字
+                            .setFailedText("登录失败")
+                            .setInterceptBack(false)
+                            .setLoadSpeed(SPEED_TWO)
+                            .show();
+                    GLog_in(name, password);
+                } else {
+                    ld.loadFailed();
+                    Toast.makeText(Log_in.this, "账号为空", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -170,7 +181,6 @@ public class Log_in extends AppCompatActivity {
 
 
                 if (response.body().contentLength() != 0) {
-                    new KProgressHUD(Log_in.this).dismiss();
                     // 请求成功的回调
                     Log.e("login", result.toString());
                     Gson gson = new Gson();
@@ -179,62 +189,67 @@ public class Log_in extends AppCompatActivity {
                     code = gson.fromJson(deal_result, Code.class);
                     int a = Integer.parseInt(code.getCode());
                     if (a == 201) {
+
                         ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(Log_in.this);
                         Intent i2 = new Intent(Log_in.this, com.example.heath.MainActivity.class);
                         startActivity(i2, oc2.toBundle());
                         Explode explode = new Explode();
-                        explode.setDuration(800);
+                        explode.setDuration(1000);
                         getWindow().setExitTransition(explode);
                         getWindow().setEnterTransition(explode);
+
+
                     } else {
+                        ld.loadFailed();
                         Toast.makeText(Log_in.this, "账号或密码错误", Toast.LENGTH_SHORT).show();
                     }
                 }
 
-                }
+            }
 
-                @Override
-                public void progressSuccess (Response response) throws Exception {
-
-                }
-
-                @Override
-                public void requestFailure (Request request, IOException e){
-                    // 请求失败的回调
-                    Toast.makeText(Log_in.this, "登录失败", Toast.LENGTH_SHORT).show();
-                    Log.e("login--------------", request.body().toString());
-                }
-            });
-        }
-
-        @Override
-        protected void onRestart () {
-            super.onRestart();
-            fab.setVisibility(View.GONE);
-        }
-
-        @Override
-        protected void onResume () {
-            super.onResume();
-            fab.setVisibility(View.VISIBLE);
-        }
-
-        class NetworkChangeReceiver extends BroadcastReceiver {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                //得到网络连接管理器
-                ConnectivityManager connectionManager = (ConnectivityManager)
-                        getSystemService(Context.CONNECTIVITY_SERVICE);
-                //通过管理器得到网络实例
-                NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
-                //判断是否连接
-                if (networkInfo != null && networkInfo.isAvailable()) {
-                    btGo.setClickable(true);
-                } else {
-                    btGo.setClickable(false);
-                    Toast.makeText(context, "当前网络已断开!",
-                            Toast.LENGTH_SHORT).show();
-                }
+            public void progressSuccess(Response response) throws Exception {
+
+            }
+
+            @Override
+            public void requestFailure(Request request, IOException e) {
+                // 请求失败的回调
+                ld.loadFailed();
+                Toast.makeText(Log_in.this, "登录失败", Toast.LENGTH_SHORT).show();
+                Log.e("login--------------", request.body().toString());
+            }
+        });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        fab.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fab.setVisibility(View.VISIBLE);
+    }
+
+    class NetworkChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //得到网络连接管理器
+            ConnectivityManager connectionManager = (ConnectivityManager)
+                    getSystemService(Context.CONNECTIVITY_SERVICE);
+            //通过管理器得到网络实例
+            NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
+            //判断是否连接
+            if (networkInfo != null && networkInfo.isAvailable()) {
+                btGo.setClickable(true);
+            } else {
+                btGo.setClickable(false);
+                Toast.makeText(context, "当前网络已断开!",
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
+}

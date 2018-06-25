@@ -44,16 +44,20 @@ import com.example.heath.Bluteooth.BindBlutooh;
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.Model.Code;
+import com.example.heath.Register.Log_in;
 import com.example.heath.utils.ImageUtils;
 import com.example.heath.view.CircleImageView;
 import com.example.heath.view.MyOneLineView;
 import com.example.heath.view.ObservableScrollView;
 import com.google.gson.Gson;
 import com.qiushui.blurredview.BlurredView;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 public class PersonCenter extends AppCompatActivity implements View.OnClickListener {
 
@@ -87,6 +91,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences.Editor editor;
     private MyApplication application;
     private HashMap<String, String> params;
+
     private boolean bool;
 
     private int mScrollerY;
@@ -394,15 +399,15 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         getWindow().setBackgroundDrawable(null);
 
         initViews();
+        params.put("user",myApplication.getName().toString());
         // 获取偏好头像
         getBitmapFromSharedPreferences();
-
 
         // 刷新监听
         materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
-                params.put("user",myApplication.getName().toString());
+
                 upload_data(params);
                 Handler mHandler = new Handler();
                 mHandler.postDelayed(new Runnable() {
@@ -653,6 +658,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         // 获取全局化对象
         myApp = (MyApplication) getApplication();
         params = new HashMap<>();
+
         // 判断是否含有   避免 获取空对象 cash
         if (sp.contains("AGE") && sp.contains("HIGH") && sp.contains("SEX") && sp.contains("NAME") && sp.contains("TAG")) {
             Log.i("偏好", sp.getString("AGE", null).toString());
@@ -720,6 +726,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         });
 
     }
+
 
 
 }

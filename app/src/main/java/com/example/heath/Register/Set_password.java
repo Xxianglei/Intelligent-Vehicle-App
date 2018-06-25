@@ -31,6 +31,8 @@ import com.example.heath.Model.Code;
 import com.example.heath.MyApplication;
 import com.example.heath.R;
 import com.google.gson.Gson;
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,6 +41,8 @@ import java.util.regex.Pattern;
 
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 /**
  * Created by 丽丽超可爱 on 2018/3/11.
@@ -66,6 +70,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
     private MyApplication myApplication;
     private NetworkChangeReceiver networkChangeReceiver;
     private NetworkChangeReceiver networkChangeReceiver1;
+    private LoadingDialog ld;
 
 
     @Override
@@ -103,6 +108,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         next.setOnClickListener(this);
         fab.setOnClickListener(this);
         myApplication = (MyApplication) getApplication();
+        ld = new LoadingDialog(Set_password.this);
     }
 
     private void CheckPass(String num, String pass) {
@@ -111,6 +117,12 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         if (!validatepassword(pass)) {
             Toast.makeText(Set_password.this, "亲 请输入由英文和数字组成的密码哦！！", Toast.LENGTH_SHORT).show();
         } else {
+            ld.setLoadingText("正在登录中...")
+                    .setSuccessText("登录成功")//显示加载成功时的文字
+                    .setFailedText("注册失败")
+                    .setInterceptBack(false)
+                    .setLoadSpeed(SPEED_TWO)
+                    .show();
             GLog_in(num, pass);
         }
     }
@@ -133,9 +145,11 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
                 Code code= gson.fromJson(deal_result, Code.class);
                 int a= Integer.parseInt(code.getCode());
                 if (a==101){
+                    ld.loadSuccess();
                     startActivity(new Intent(Set_password.this, MainActivity.class));
                 }else
                 {
+                    ld.loadFailed();
                     Toast.makeText(Set_password.this,"注册失败，请重新注册",Toast.LENGTH_SHORT).show();
                 }
 
@@ -149,6 +163,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
             @Override
             public void requestFailure(Request request, IOException e) {
                 // 请求失败的回调
+                ld.loadFailed();
                 Toast.makeText(Set_password.this,"注册失败，请重新注册",Toast.LENGTH_SHORT).show();
             }
         });

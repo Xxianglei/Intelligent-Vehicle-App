@@ -41,7 +41,7 @@ public class DataBaseManager {
         connectModle = new ConnectModle();
     }
 
-    public void saveSingle(String date1, String date2, String date3, String date4, String date5, int data1, int highdata, int lowdata, int data3, int data4, int data5) {
+    public void saveSingle(String date1, String date2, String date3, String date4, String date5, int data1, int highdata, int lowdata, int data3, float data4, int data5) {
         xueyangModle.setDate(date1);
         xueyangModle.setData(data1);
 
@@ -67,8 +67,10 @@ public class DataBaseManager {
             tiwenModle.save();
         if (data5 != 0)
             tizhong.save();
+        tizhong.update();
         if (tizhong.save())
             Log.e("data5", data5 + "");
+        tizhong.update();
     }
 
     public void saveUser(String name, String xingbie, int age, int high, int weight) {

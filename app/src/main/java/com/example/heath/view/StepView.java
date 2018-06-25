@@ -167,7 +167,7 @@ public class StepView extends View {
 
     private int mMaxValue = 3600;
 
-    private int mCurrentValue = 2753;
+    private float mCurrentValue = 2753;
 
     private float mCurrentLength = 1.5f;
 
@@ -235,7 +235,7 @@ public class StepView extends View {
         mSubStr = String.valueOf("");
     }
 
-    public void setmCurrentValue(int mCurrentValue) {
+    public void setmCurrentValue(float mCurrentValue) {
         this.mCurrentValue=mCurrentValue;
     }
     public void setmMaxValueint  (int mMaxValue) {

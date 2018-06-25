@@ -64,7 +64,7 @@ public class LisenService extends Service {
                     intent = new Intent();
                     xueya = (int) (75 + Math.random() * 45);
                     xinlv = (int) (50 + Math.random() * 50);
-                    tiwen = (float) (35.0 + Math.random() * 5.0);
+                    tiwen = (float) (35.1 + Math.random() * 3.1);
                     int i = (int) (tiwen * 10);
                     // 转回float类型,然后将乘上的数重新除去。
                     tiwen = (float) i / 10;

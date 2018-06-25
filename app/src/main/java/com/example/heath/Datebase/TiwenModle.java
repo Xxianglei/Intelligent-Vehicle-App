@@ -21,7 +21,7 @@ public class TiwenModle extends BaseModel{
     @Column
     public String date;
     @Column
-    public int data;
+    public float data;
 
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class TiwenModle extends BaseModel{
     }
 
 
-    public int getData() {
+    public float getData() {
         return data;
     }
 
-    public void setData(int data) {
+    public void setData(float data) {
         this.data = data;
     }
 }

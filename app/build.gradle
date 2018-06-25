@@ -109,4 +109,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.kaopiz:kprogresshud:1.0.2'
     compile 'com.github.wulee510505:Text2Speach:1.0.0'
+    compile 'com.github.ForgetAll:LoadingDialog:v1.0.1'
 }

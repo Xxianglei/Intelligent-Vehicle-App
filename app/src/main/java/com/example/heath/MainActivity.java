@@ -49,6 +49,7 @@ import com.baidu.tts.observer.receiver.NetworkChangeReceiver;
 import com.example.heath.Bluteooth.BindBlutooh;
 import com.example.heath.Datebase.ConnectModle;
 import com.example.heath.Datebase.DataBaseManager;
+import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.Main_Fragment.Fragment1;
 import com.example.heath.Main_Fragment.Fragment2;
 import com.example.heath.Main_Fragment.Fragment3;
@@ -62,14 +63,22 @@ import com.liangmayong.text2speech.Text2Speech;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 public class MainActivity extends IatBasicActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AMapLocationListener, View.OnLongClickListener {
@@ -92,6 +101,7 @@ public class MainActivity extends IatBasicActivity
     private double recLen = 0;
     private ImageView doctor;
     private ImageView jiance;
+    private String down_url="http://47.94.21.55/houtai/select.php?";
 
 
     private Fragment1 mTab01;
@@ -138,6 +148,8 @@ public class MainActivity extends IatBasicActivity
     private float sp;
     private List<ConnectModle> con_persons;
     private boolean tag;
+    private HashMap<String, String> params;
+    private LoadingDialog ld;
 
 
     @Override
@@ -145,6 +157,18 @@ public class MainActivity extends IatBasicActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setBackgroundDrawable(null);
+        ld = new LoadingDialog(MainActivity.this);
+        ld.setLoadingText("正在拉取数据...")
+                .setSuccessText("拉取成功")//显示加载成功时的文字
+                .setFailedText("拉取失败")
+                .setInterceptBack(false)
+                .setLoadSpeed(SPEED_TWO)
+                .show();
+        // 获取同步数据
+        params = new HashMap<>();
+        myApplication = (MyApplication) getApplication();
+        params.put("user",myApplication.getName().toString());
+        down_data(params);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -158,7 +182,7 @@ public class MainActivity extends IatBasicActivity
                     //会以Dialog样式显示一个Activity
                 }
             }
-        },8000,24*60*60*1000);
+        },10000,24*60*60*1000);
 
         // 注册蓝牙监听
         registerReceiver(blueStateBroadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
@@ -363,7 +387,7 @@ public class MainActivity extends IatBasicActivity
         // 设置昵称
 
         mContent = (EditText) findViewById(R.id.et_content);
-        myApplication = (MyApplication) getApplication();
+
         mian = (LinearLayout) findViewById(R.id.main);
         guide = (LinearLayout) findViewById(R.id.guide);
         doctor_tab = (LinearLayout) findViewById(R.id.doctor);
@@ -569,6 +593,7 @@ public class MainActivity extends IatBasicActivity
                     if (s != street || speed >= 5) {
                         //   车子开始移动    隔两秒刷新一次    传给全局变量
                         handler.postDelayed(runnable, 1000);
+                        //runnable.run();
                         tag = false;
                     }
                 }
@@ -592,8 +617,6 @@ public class MainActivity extends IatBasicActivity
 
                 editor.commit();
                 Log.e("天气", "123456");
-
-
                 mLocationClient.stopLocation(); //停止定位
             } else {
                 //显示错误信息ErrCode是错误码，详见错误码表。errInfo是错误信息，
@@ -611,7 +634,7 @@ public class MainActivity extends IatBasicActivity
             recLen++;
             Log.e("时间",recLen+++"");
             myApplication.setTime(recLen);
-
+            handler.postDelayed(this, 1000);
         }
     };
     private void init_location() {
@@ -883,5 +906,32 @@ public class MainActivity extends IatBasicActivity
             }
         }
     };
+    private void down_data(HashMap<String, String> params) {
+        down_url=down_url+"biao=tijian";
+
+        OkNetRequest.postFormRequest(down_url, params, new OkNetRequest.DataCallBack() {
+            @Override
+            public void requestSuccess(Response response, String result) throws Exception {
+                // 请求成功的回调
+                Log.e("下载同步成功", result.toString());
+                ld.loadSuccess();
+
+            }
+
+            @Override
+            public void progressSuccess(Response response) throws Exception {
+
+            }
+
+            @Override
+            public void requestFailure(Request request, IOException e) {
+                // 请求失败的回调
+                ld.loadFailed();
+                Log.e("下载同步失败", request.body().toString());
+
+            }
+        });
+
+    }
 
 }

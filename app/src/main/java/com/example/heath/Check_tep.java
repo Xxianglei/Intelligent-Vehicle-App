@@ -165,7 +165,10 @@ public class Check_tep extends AppCompatActivity {
                                         emptyView.setVisibility(GONE);
                                         mHeartbeatRecycler.setVisibility(VISIBLE);
                                         DataBaseManager dataBaseManager = new DataBaseManager();
-                                        int randomNum = (int) (30 + Math.random() * 10);
+                                        float randomNum = (float) (35.1 + Math.random() * 3.2);
+                                        int i = (int) (randomNum * 10);
+                                        // 转回float类型,然后将乘上的数重新除去。
+                                        randomNum = (float) i / 10;
                                         HeartbeatEntity e = new HeartbeatEntity();
                                         e.date = TimeUtils.dateToString2();
                                         e.datum = String.valueOf(randomNum);
