@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Health</string>
+    <string name="mmm">此软件是由北华大学取名字要霸气队联合开发，在开发过程中为了使用户得到更好的体验，我们纳入了以下开源项目和API，下面将列举出来，以此鸣谢！</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    -
+    <string name="action_settings">设置</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="devices_list">Devices List</string>
+    <string name="chat_list">信息列表</string>
+    <string name="start_service">控制</string>
+    <string name="search">搜  索</string>
+    <string name="disconnect">断开连接</string>
+    <string name="send">发送</string>
+
+    <!--iat string-->
+
+    <string name="measure_value">%1$s℃</string>
+    <string name="pref_key_iat_show">iat_show</string>
+
+    <string name="text_begin">请开始说话…</string>
+</resources>

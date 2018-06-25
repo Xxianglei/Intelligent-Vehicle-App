@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#06f2f2f2"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_margin="10dp"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1.4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="温馨提示"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="定期身体活动 - 一周内大部分时间至少三十分钟 - 可以降低血压，帮助您避免高血压。重要的是要保持一致。如果你停止运动，你的血压可以再次上升。降低血压的最佳运动方式包括步行，慢跑，骑自行车，游泳和跳舞。力量训练也可以帮助降低血压。和你的医生谈谈制定一个运动计划。"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/doc"
+
+        />
+</LinearLayout>

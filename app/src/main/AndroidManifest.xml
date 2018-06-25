@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    package="com.example.heath">
+
+    // 持久化为 true，防止app挂后台被回收
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <application
+
+        android:name="com.example.heath.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon"
+        android:label="蜗行"
+        android:persistent="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+
+        tools:replace="android:icon,android:theme,android:label">
+        <activity
+            android:name="com.example.heath.WelAcitivity"
+            android:launchMode="standard"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
+        // 活动
+        <activity
+            android:name="com.example.heath.Guide.RouteNaviActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Check_o2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Check_tep"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Check_air"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.SaveCard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.ReportActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Register.Set_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Bluteooth.BindBlutooh"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.DataRecord"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Register.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Check_xinlv"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Register.Log_in"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.ConnActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.example.heath.PersonCenter"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Week_Report"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Check_xueya"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.heath.Check_tizhong"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.amap.api.navi.AmapRouteActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        // 服务
+
+        // 权限
+        <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <!--用于进行网络定位-->
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        <!--用于访问GPS定位-->
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <!--获取运营商信息，用于支持提供运营商信息相关的接口-->
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        <!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+        <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+        <!--用于访问网络，网络定位需要上网-->
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.CALL_PHONE" />
+        <uses-permission android:name="android.permission.CALL" />
+        <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+        <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+        <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+        <uses-permission android:name="android.permission.WAKE_LOCK" />
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+        <!--读取网络信息状态  -->
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+        <!--获取当前wifi状态  -->
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+        <!--允许程序改变网络连接状态  -->
+        <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+        <!--读取手机状态权限  -->
+        <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+        <!--读取联系人权限  -->
+        <uses-permission android:name="android.permission.READ_CONTACTS"/>
+        <!--外存储写权限 -->
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        <!--外存储读权限， -->
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+        <!--配置权限，用来记录应用配置信息  -->
+        <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="e01a44f8a3dfe44adf7dc63e2ac9fe84" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="94jv0Ec0QiqBOSWN9NUfwuNMoReV2GR3" />
+        <!--声明定位service-->
+        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name=".service.LisenService"></service>
+        <service android:name=".Bluteooth.ChatService"></service>
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+</manifest>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="boo">
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+
+
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+        <item>hhhhh</item>
+
+
+    </string-array>
+<string-array name="spin">
+    <item>2000</item>
+    <item>2500</item>
+    <item>3000</item>
+    <item>3500</item>
+</string-array>
+
+    -<string-array name="mult_temp_dash">
+
+    <item>寒冷</item>
+
+    <item>舒适</item>
+
+    <item>炎热</item>
+
+</string-array>
+
+
+    <string-array name="mult_huim_dash">
+
+    <item></item>
+
+    <item></item>
+
+    <item></item>
+    </string-array>
+</resources>

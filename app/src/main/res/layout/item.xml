@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8d000000"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/bg_bt"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/point"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/loadingpoint"
+            android:layout_alignParentStart="true"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小蜗健康"
+                android:textColor="#1F99FF"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="检测中..."
+                android:layout_gravity="center_horizontal"
+                android:textColor="#888888"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

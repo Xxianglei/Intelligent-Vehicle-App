@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        class="com.amap.api.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <EditText
+            android:id="@+id/search_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="9"
+            android:background="@drawable/editsharp"
+            android:gravity="center"
+            android:hint="搜索地点"
+            android:textColor="#4d4c4c" />
+
+        <ImageButton
+            android:id="@+id/search_img"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.8"
+            android:adjustViewBounds="true"
+            android:background="@mipmap/search"
+            android:scaleType="centerInside" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="3dp"
+        android:padding="3dp"
+        android:gravity="start"
+        android:layout_gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/one"
+        android:orientation="vertical">
+
+        <TextView
+            android:gravity="start"
+            android:layout_gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索半径/米" />
+
+        <Spinner
+            android:background="@drawable/editsharp2"
+            android:gravity="start"
+            android:layout_gravity="start"
+            android:spinnerMode="dropdown"
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/spin"
+
+           >
+
+        </Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/one"
+        android:layout_marginEnd="21dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/lukuang"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:background="@mipmap/lukuang" />
+
+        <ImageButton
+            android:id="@+id/heibai"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/lukuang"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/sun" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/location"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@mipmap/local" />
+</RelativeLayout>

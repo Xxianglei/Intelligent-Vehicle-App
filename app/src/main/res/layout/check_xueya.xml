@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D95238"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@id/head"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_indicator_prev" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="血压"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <com.example.heath.view.circlerefresh.MtScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/head">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="2"
+                android:background="#D95238"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/high"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="120"
+                        android:textColor="#ffffff"
+                        android:textSize="60sp" />
+
+                    <View
+                        android:layout_width="122dp"
+                        android:layout_height="1dp"
+                        android:background="#ffffff">
+
+                    </View>
+
+                    <TextView
+                        android:id="@+id/low"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="80"
+                        android:textColor="#ffffff"
+                        android:textSize="60sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:id="@+id/zhuangtai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="血压正常"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="测量时间:2018/5/22 19:43"
+                        android:textColor="#dcdbdb" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="36dp"
+                android:text="开始测量"
+                android:background="@drawable/text_bg"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/std"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_below="@id/start"
+                android:layout_marginTop="20dp"
+                android:background="#33000000"
+                android:orientation="horizontal">
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="20dp"
+                        android:background="#bfbfbf" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@mipmap/time" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="40dp"
+                        android:background="#bfbfbf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="测量"
+                            android:textColor="#ffffff"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="标准"
+                            android:textColor="#ffffff"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_content1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="120"
+                            android:textColor="#ffffff"
+                            android:textSize="30dp" />
+
+                        <TextView
+                            android:id="@+id/tv_time1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_content1"
+                            android:text="mmHg"
+                            android:textColor="#ffffff"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_content2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="80"
+                            android:textColor="#ffffff"
+                            android:textSize="30dp" />
+
+                        <TextView
+                            android:id="@+id/tv_time2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_content1"
+                            android:text="mmHg"
+                            android:textColor="#ffffff"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="100"
+                            android:textColor="#ffffff"
+                            android:textSize="30dp" />
+
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_content"
+                            android:text="mmHg"
+                            android:textColor="#ffffff"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/std"
+                android:orientation="vertical">
+                <com.example.heath.view.DiscView
+                    android:id="@+id/score"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/std"
+                   android:layout_marginTop="10dp"
+                    app:dvAngleRotateSpan="360"
+
+                    app:dvBottomCircleIsShow="true"
+                    app:dvOuterCircleShow="true"
+                    app:dvStartRotateAngle="60"
+                    app:dvStrokenWidth="15dp" />
+                <ImageView
+                    android:id="@+id/down"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/down2" />
+
+                <include
+                    android:id="@+id/doctor_include"
+                    layout="@layout/doc"
+                    android:visibility="gone"
+                />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </com.example.heath.view.circlerefresh.MtScrollView>
+
+</RelativeLayout>

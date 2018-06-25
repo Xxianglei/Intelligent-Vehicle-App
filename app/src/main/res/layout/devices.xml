@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/devices"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/tool_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:divider="#ffc6c6c6"
+            android:scrollingCache="false"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/suggesst"
+            android:textColor="#a53f3f"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="请打开蓝牙!"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:id="@+id/re"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.skyfishjy.library.RippleBackground xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:rb_color="#0099CC"
+                app:rb_duration="3000"
+                app:rb_radius="32dp"
+                app:rb_rippleAmount="4"
+                app:rb_scale="6">
+
+                <ImageView
+                    android:id="@+id/centerImage"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/demoimage" />
+            </com.skyfishjy.library.RippleBackground>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_header_height"
+    android:gravity="bottom"
+    android:background="@mipmap/green"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    >
+
+    <ImageView
+
+        android:id="@+id/head_image"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:layout_above="@+id/L_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+         />
+
+    <LinearLayout
+        android:id="@+id/L_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="fill_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/now_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15℃"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+
+            />
+
+        <TextView
+            android:textColor="@color/white"
+            android:id="@+id/Your_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/now_weather"
+            android:layout_alignRight="@+id/now_weather"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="8dp"
+
+            android:text="吉林"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/my_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/L_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="9dp"
+        android:text=" 蜗行"
+        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>

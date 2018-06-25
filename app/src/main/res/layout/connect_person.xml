@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="联系人"
+            android:textColor="@android:color/background_dark"
+            android:textSize="20sp" />
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_height="match_parent"
+            android:src="@mipmap/add"
+            android:scaleType="center"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:paddingLeft="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#ffffff"
+        android:layout_gravity="start|center_vertical"
+        android:weightSum="2">
+
+        <TextView
+
+            android:gravity="start|center_vertical"
+            android:text="姓名"
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:textSize="20sp"
+            android:gravity="start|center_vertical"
+            android:text="电话"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <ListView
+        android:background="#ffffff"
+        android:id="@+id/list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+  </ListView>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/image"
+        android:adjustViewBounds="true"
+        android:scaleType="center"
+        android:visibility="gone"
+        android:src="@mipmap/nodata"
+        />
+</LinearLayout>

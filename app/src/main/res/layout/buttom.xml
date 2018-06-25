@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:clipChildren="false"
+    android:background="#ffffff">
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/main_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:adjustViewBounds="true"
+            android:background="#ffffff"
+            android:clickable="false"
+            android:src="@mipmap/mian_no" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/mian_tv"
+            android:clickable="false"
+            android:text="首页"
+            android:textColor="#696969"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/jiance"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/jiance_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:adjustViewBounds="true"
+            android:background="#ffffff"
+            android:clickable="false"
+            android:src="@mipmap/check_no" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/check_tv"
+            android:clickable="false"
+            android:text="监测"
+            android:textColor="#696969"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/doctor"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+
+            android:id="@+id/doctor_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:adjustViewBounds="true"
+            android:background="#ffffff"
+            android:clickable="false"
+            android:src="@mipmap/doctor_no" />
+
+        <TextView
+            android:id="@+id/doctor_tv"
+            android:clickable="false"
+            android:textColor="#696969"
+            android:text="医生"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/guide"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <ImageView
+            android:background="#ffffff"
+            android:adjustViewBounds="true"
+            android:id="@+id/guide_img"
+            android:clickable="false"
+            android:src="@mipmap/guide_no"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/guide_tv"
+            android:clickable="false"
+            android:textColor="#696969"
+            android:text="周边搜索"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

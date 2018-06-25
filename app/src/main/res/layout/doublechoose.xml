@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="#ffffff"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
+    <NumberPicker
+        android:id="@+id/my_weight"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+
+    </NumberPicker>
+
+    <NumberPicker
+        android:id="@+id/my_weight2"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+
+    </NumberPicker>
+</LinearLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#38A6F0"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="#38A6F0"
+        android:id="@+id/head"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_indicator_prev" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="体检报告"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_below="@id/head"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+
+            android:layout_weight="0.83"
+            android:layout_gravity="center|top"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/doc_rep"
+            />
+
+            <android.support.v4.view.ViewPager
+
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1.17"
+                android:clickable="true"
+                android:clipToPadding="false"
+
+                android:overScrollMode="never"
+                android:paddingBottom="20dp"
+                android:paddingEnd="40dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingStart="40dp" />
+        </LinearLayout>
+
+
+
+</RelativeLayout>

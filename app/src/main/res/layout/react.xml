@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="牛奶过敏" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="青霉素过敏" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="宠物毛发过敏" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="氨基苄青霉素" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="链霉素" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卡那霉素" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="阿司匹林" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无" />
+    </LinearLayout>
+
+</LinearLayout>

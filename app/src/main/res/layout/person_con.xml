@@ -1,0 +1,277 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    android:orientation="vertical">
+
+    <include layout="@layout/tool_bar" />
+
+    <com.cjj.MaterialRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:overlay="true"
+        app:progress_colors="@array/material_colors"
+        app:wave_color="#00ffffff"
+        app:wave_height_type="higher"
+        app:wave_show="true">
+
+        <com.example.heath.view.ObservableScrollView
+            android:id="@+id/id_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp">
+
+                    <com.qiushui.blurredview.BlurredView
+                        android:id="@+id/mohu"
+                        android:layout_width="match_parent"
+                        android:layout_height="470dp"
+                        app:disableBlurred="false"
+                        app:move="true"
+                        app:src="@mipmap/dayu" />
+
+                    <com.example.heath.view.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/head_image"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="45dp"
+                        android:src="@mipmap/wodetoux"
+                        app:border_color="#fffcfc"
+                        app:border_width="8dp" />
+
+
+                    <TextView
+
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/head_image"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="95dp"
+                        android:gravity="center"
+                        android:text="蜗行"
+                        android:visibility="visible"
+                        android:textColor="#5eafb7"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_horizontal"
+                        android:text="男"
+                        android:textColor="#6ac8d1"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/xingbie"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_alignTop="@+id/textView"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/textView"
+                        android:layout_toRightOf="@+id/textView"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/boy" />
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:layout_below="@id/xingbie"
+                        android:layout_marginTop="15dp"
+                        android:background="#6ac8d1" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_age1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/xingbie"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/ll_high"
+                            android:layout_width="95dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="center"
+                            android:layout_toLeftOf="@+id/ll_age"
+                            android:layout_toStartOf="@+id/ll_age"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:gravity="center"
+                                android:text="身高"
+                                android:textColor="#6ac8d1"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/high"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:gravity="center"
+                                android:text="170cm"
+                                android:textColor="#6ac8d1"
+
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_tizong"
+                            android:layout_width="95dp"
+                            android:layout_height="50dp"
+
+                            android:layout_alignParentBottom="true"
+
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_toEndOf="@+id/ll_age"
+                            android:layout_toRightOf="@+id/ll_age"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:clickable="false"
+                                android:gravity="center"
+                                android:text="体重"
+                                android:textColor="#6ac8d1"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/tizong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:gravity="center"
+                                android:text="60kg"
+                                android:textColor="#6ac8d1"
+
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_age"
+                            android:layout_width="105dp"
+                            android:layout_height="105dp"
+                            android:layout_alignTop="@+id/ll_high"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:clickable="false"
+                                android:gravity="center"
+                                android:text="年龄"
+                                android:textColor="#6ac8d1"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/age"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:clickable="false"
+                                android:gravity="center"
+                                android:text="20"
+                                android:textColor="#6ac8d1"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/divider_top"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:layout_below="@id/ll_age1"
+                        android:background="#6ac8d1" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#c0bfbf"
+                        android:orientation="vertical">
+
+
+                        <com.example.heath.view.MyOneLineView
+                            android:id="@+id/one_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                        </com.example.heath.view.MyOneLineView>
+
+                        <com.example.heath.view.MyOneLineView
+                            android:id="@+id/two_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                        </com.example.heath.view.MyOneLineView>
+
+                        <com.example.heath.view.MyOneLineView
+                            android:id="@+id/there_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"></com.example.heath.view.MyOneLineView>
+
+                        <com.example.heath.view.MyOneLineView
+                            android:id="@+id/four_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"></com.example.heath.view.MyOneLineView>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/log_out"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/button_shape"
+                        android:gravity="center"
+                        android:text="退出登录"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.example.heath.view.ObservableScrollView>
+    </com.cjj.MaterialRefreshLayout>
+</LinearLayout>

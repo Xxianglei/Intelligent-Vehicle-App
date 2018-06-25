@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="吸烟" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="喝酒" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="熬夜" />
+
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不运动" />
+        <CheckBox
+            android:textColor="#046ed9"
+            android:id="@+id/one4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none"
+
+        >
+
+        <item
+            android:id="@+id/person"
+            android:icon="@mipmap/person"
+            android:title="个人中心" />
+        <item
+            android:id="@+id/dat"
+            android:icon="@mipmap/dat"
+            android:title="数据记录" />
+        <item
+            android:id="@+id/report"
+            android:icon="@mipmap/report"
+            android:title="健康报告" />
+
+        <item
+            android:id="@+id/blu"
+            android:icon="@mipmap/blu"
+            android:title="设备绑定" />
+        <item
+            android:id="@+id/doctor"
+            android:icon="@mipmap/doctor"
+            android:title="急救卡" />
+        <item
+            android:id="@+id/about"
+            android:icon="@mipmap/about"
+            android:title="关于" />
+        <item/>
+        <item
+            android:id="@+id/log_out"
+            android:icon="@mipmap/logout"
+            android:title="退出登录" />
+    </group>
+
+
+</menu>
