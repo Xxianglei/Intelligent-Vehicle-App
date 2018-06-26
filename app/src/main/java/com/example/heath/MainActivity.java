@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -29,11 +30,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,22 +53,30 @@ import com.baidu.tts.observer.receiver.NetworkChangeReceiver;
 import com.example.heath.Bluteooth.BindBlutooh;
 import com.example.heath.Datebase.ConnectModle;
 import com.example.heath.Datebase.DataBaseManager;
+import com.example.heath.Datebase.UserModle;
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.Main_Fragment.Fragment1;
 import com.example.heath.Main_Fragment.Fragment2;
 import com.example.heath.Main_Fragment.Fragment3;
 import com.example.heath.Main_Fragment.Fragment4;
+import com.example.heath.Model.Code;
 import com.example.heath.Model.Weather_model;
 
 import com.example.heath.Speech.IatBasicActivity;
 import com.example.heath.utils.HttpDownloader;
 import com.example.heath.utils.ParseNowWeatherUtil;
+import com.google.gson.Gson;
 import com.liangmayong.text2speech.Text2Speech;
+import com.mob.tools.utils.Data;
+import com.mob.wrappers.AnalySDKWrapper;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -101,7 +113,8 @@ public class MainActivity extends IatBasicActivity
     private double recLen = 0;
     private ImageView doctor;
     private ImageView jiance;
-    private String down_url="http://47.94.21.55/houtai/select.php?";
+    private String down_url = "http://47.94.21.55/houtai/select.php?";
+    private String down_url2 = "http://47.94.21.55/houtai/select.php?";
 
 
     private Fragment1 mTab01;
@@ -150,26 +163,36 @@ public class MainActivity extends IatBasicActivity
     private boolean tag;
     private HashMap<String, String> params;
     private LoadingDialog ld;
+    private boolean tag1;
+    private DrawerLayout drawer;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setEnterTransition(new Explode());
+        getWindow().setExitTransition(new Explode());
         setContentView(R.layout.activity_main);
         getWindow().setBackgroundDrawable(null);
+
+        params = new HashMap<>();
+        myApplication = (MyApplication) getApplication();
+        params.put("user", myApplication.getName().toString());
+        tag1 = false;
+        down_data(params);
+        down_data2(params);
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         ld = new LoadingDialog(MainActivity.this);
+
+
         ld.setLoadingText("正在拉取数据...")
                 .setSuccessText("拉取成功")//显示加载成功时的文字
                 .setFailedText("拉取失败")
-                .setInterceptBack(false)
                 .setLoadSpeed(SPEED_TWO)
                 .show();
-        // 获取同步数据
-        params = new HashMap<>();
-        myApplication = (MyApplication) getApplication();
-        params.put("user",myApplication.getName().toString());
-        down_data(params);
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -182,7 +205,7 @@ public class MainActivity extends IatBasicActivity
                     //会以Dialog样式显示一个Activity
                 }
             }
-        },10000,24*60*60*1000);
+        }, 10000, 24 * 60 * 60 * 1000);
 
         // 注册蓝牙监听
         registerReceiver(blueStateBroadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
@@ -198,8 +221,8 @@ public class MainActivity extends IatBasicActivity
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -226,24 +249,24 @@ public class MainActivity extends IatBasicActivity
 
             }
             if (mContent.equals("电话") || mContent.equals("拨打电话") || mContent.equals("立即拨打电话") || mContent.equals("打电话") || mContent.equals("我要打电话") || mContent.equals("求救") || mContent.equals("拨打紧急联系人")) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    DataBaseManager dataBaseManager=new DataBaseManager();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    DataBaseManager dataBaseManager = new DataBaseManager();
                     con_persons = dataBaseManager.readconnList();
-                    if (con_persons.size()>0){
+                    if (con_persons.size() > 0) {
                         // 6.0以上权限申请
-                        intentToCall(con_persons.get(con_persons.size()-1).getPhone().toString());
-                        Log.e("拨打电话", con_persons.get(con_persons.size()-1).getPhone().toString());
-                    }
-                    else  Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
+                        intentToCall(con_persons.get(con_persons.size() - 1).getPhone().toString());
+                        Log.e("拨打电话", con_persons.get(con_persons.size() - 1).getPhone().toString());
+                    } else
+                        Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    if (con_persons.size()>0) {
+                    if (con_persons.size() > 0) {
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + con_persons.get(con_persons.size()-1).getPhone().toString()));
+                        intent.setData(Uri.parse("tel:" + con_persons.get(con_persons.size() - 1).getPhone().toString()));
                         startActivity(intent);
-                    }
-                    else  Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -283,26 +306,80 @@ public class MainActivity extends IatBasicActivity
         int id = item.getItemId();
 
         if (id == R.id.person) {
+            new Runnable() {
+                @Override
+                public void run() {
 
-            startActivity(new Intent(MainActivity.this, PersonCenter.class));
+                    startActivity(new Intent(MainActivity.this, PersonCenter.class));
+
+                }
+            }.run();
+
 
         } else if (id == R.id.dat) {
-            startActivity(new Intent(MainActivity.this, DataRecord.class));
+            new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(MainActivity.this, DataRecord.class));
+
+                }
+            }.run();
+            drawer.closeDrawer(GravityCompat.START);
+            drawer.openDrawer(Gravity.LEFT);
         } else if (id == R.id.report) {
-            startActivity(new Intent(MainActivity.this, ReportActivity.class));
+            new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(MainActivity.this, ReportActivity.class));
+
+                }
+            }.run();
+            drawer.closeDrawer(GravityCompat.START);
+            drawer.openDrawer(Gravity.LEFT);
         } else if (id == R.id.doctor) {
-            startActivity(new Intent(MainActivity.this, SaveCard.class));
+            new Runnable() {
+                @Override
+                public void run() {
+
+                    startActivity(new Intent(MainActivity.this, SaveCard.class));
+
+                }
+            }.run();
+            drawer.closeDrawer(GravityCompat.START);
+            drawer.openDrawer(Gravity.LEFT);//侧滑打开  不设置则不会默认打开
         } else if (id == R.id.blu) {
-            startActivity(new Intent(MainActivity.this, BindBlutooh.class));
+            new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(MainActivity.this, BindBlutooh.class));
+
+                }
+            }.run();
+            drawer.closeDrawer(GravityCompat.START);
+            drawer.openDrawer(Gravity.LEFT);
         } else if (id == R.id.about) {
-            startActivity(new Intent(MainActivity.this, AboutActivity.class));
+            new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                }
+            }.run();
+            drawer.closeDrawer(GravityCompat.START);
+            drawer.openDrawer(Gravity.LEFT);
         } else if (id == R.id.log_out) {
-            log_out();
+            new Runnable() {
+                @Override
+                public void run() {
+                    log_out();
+
+                }
+            }.run();
+            drawer.closeDrawer(GravityCompat.START);
+            drawer.openDrawer(Gravity.LEFT);
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
@@ -593,7 +670,7 @@ public class MainActivity extends IatBasicActivity
                     if (s != street || speed >= 5) {
                         //   车子开始移动    隔两秒刷新一次    传给全局变量
                         handler.postDelayed(runnable, 1000);
-                        //runnable.run();
+
                         tag = false;
                     }
                 }
@@ -627,16 +704,17 @@ public class MainActivity extends IatBasicActivity
             }
         }
     }
+
     Handler handler = new Handler();
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
             recLen++;
-            Log.e("时间",recLen+++"");
             myApplication.setTime(recLen);
             handler.postDelayed(this, 1000);
         }
     };
+
     private void init_location() {
         //初始化定位
         mLocationClient = new AMapLocationClient(getApplicationContext());
@@ -655,7 +733,7 @@ public class MainActivity extends IatBasicActivity
         //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable(false);
         //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(5000 );
+        mLocationOption.setInterval(5000);
         //给对定位客户端象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位
@@ -716,7 +794,7 @@ public class MainActivity extends IatBasicActivity
         //解除广播
         unregisterReceiver(networkChangeReceiver);
         unregisterReceiver(blueStateBroadcastReceiver);
-        if(timer != null){
+        if (timer != null) {
             timer.cancel();
             // 一定设置为null，否则定时器不会被回收
             timer = null;
@@ -858,22 +936,22 @@ public class MainActivity extends IatBasicActivity
             switch (blueState) {
                 case BluetoothAdapter.STATE_OFF:
                     Log.i("TAG", "blueState: STATE_OFF");
-                    blu="您的蓝牙已经关闭!";
-                    Toast.makeText(MainActivity.this,blu,Toast.LENGTH_SHORT).show();
+                    blu = "您的蓝牙已经关闭!";
+                    Toast.makeText(MainActivity.this, blu, Toast.LENGTH_SHORT).show();
                     break;
                 case BluetoothAdapter.STATE_TURNING_ON:
                     Log.i("TAG", "blueState: STATE_TURNING_ON");
-                    blu="您的蓝牙正在打开!";
+                    blu = "您的蓝牙正在打开!";
 
                     break;
                 case BluetoothAdapter.STATE_ON:
                     Log.i("TAG", "blueState: STATE_ON");
-                    blu="您的蓝牙已经打开!";
-                    Toast.makeText(MainActivity.this,blu,Toast.LENGTH_SHORT).show();
+                    blu = "您的蓝牙已经打开!";
+                    Toast.makeText(MainActivity.this, blu, Toast.LENGTH_SHORT).show();
                     break;
                 case BluetoothAdapter.STATE_TURNING_OFF:
                     Log.i("TAG", "blueState: STATE_TURNING_OFF");
-                    blu="您的蓝牙正在关闭!";
+                    blu = "您的蓝牙正在关闭!";
 
                     break;
                 default:
@@ -883,22 +961,22 @@ public class MainActivity extends IatBasicActivity
             switch (blueconState) {
                 case BluetoothAdapter.STATE_CONNECTED:
                     Log.i("TAG", "STATE_CONNECTED");
-                    blu="您的蓝牙已经连接!";
+                    blu = "您的蓝牙已经连接!";
 
                     break;
                 case BluetoothAdapter.STATE_CONNECTING:
                     Log.i("TAG", "STATE_CONNECTING");
-                    blu="您的蓝牙正在开启连接!";
+                    blu = "您的蓝牙正在开启连接!";
 
                     break;
                 case BluetoothAdapter.STATE_DISCONNECTED:
                     Log.i("TAG", "STATE_DISCONNECTED");
-                    blu="您的蓝牙已经断开!";
+                    blu = "您的蓝牙已经断开!";
 
                     break;
                 case BluetoothAdapter.STATE_DISCONNECTING:
                     Log.i("TAG", "STATE_DISCONNECTING");
-                    blu="您的蓝牙正在断开连接!";
+                    blu = "您的蓝牙正在断开连接!";
 
                     break;
                 default:
@@ -906,15 +984,67 @@ public class MainActivity extends IatBasicActivity
             }
         }
     };
-    private void down_data(HashMap<String, String> params) {
-        down_url=down_url+"biao=tijian";
 
+    private void down_data(HashMap<String, String> params) {
+        down_url = down_url + "biao=xinxi";
+        final DataBaseManager dataBaseManager = new DataBaseManager();
         OkNetRequest.postFormRequest(down_url, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
                 // 请求成功的回调
                 Log.e("下载同步成功", result.toString());
+                String deal_result;
+                deal_result = result.replace("连接成功", "");
+                JSONObject jsonObject = new JSONObject(deal_result);
+                JSONObject data = jsonObject.getJSONObject("data");
+
+
+                Log.e("OK咯", data.getString("name").toString());
+
+
+                dataBaseManager.saveCard(data.getString("name"), data.getString("shengao"), data.getString("tizhong"), data.getString("bingshi"), data.getString("bron"), data.getString("xuexing"), data.getString("guoming"), data.getString("xiguan"));
+
+                //存入数据库
                 ld.loadSuccess();
+            }
+
+            @Override
+            public void progressSuccess(Response response) throws Exception {
+
+            }
+
+            @Override
+            public void requestFailure(Request request, IOException e) {
+                ld.loadFailed();
+
+                Log.e("下载同步失败", request.body().toString());
+            }
+
+
+        });
+
+    }
+
+    private void down_data2(HashMap<String, String> params) {
+        down_url2 = down_url2 + "biao=user";
+        final DataBaseManager dataBaseManager = new DataBaseManager();
+
+        OkNetRequest.postFormRequest(down_url2, params, new OkNetRequest.DataCallBack() {
+            @Override
+            public void requestSuccess(Response response, String result) throws Exception {
+                // 请求成功的回调
+                Log.e("下载同步成功", result.toString());
+                String deal_result;
+                deal_result = result.replace("连接成功", "");
+                JSONObject jsonObject = new JSONObject(deal_result);
+                JSONObject data = jsonObject.getJSONObject("data");
+
+                //存入数据库
+                ld.loadSuccess();
+                Log.e("OK咯", data.getString("userName").toString());
+                //String name, String xingbie, int age, int high, int weight
+                dataBaseManager.saveUser(data.getString("userName"), data.getString("sex"), Integer.parseInt(data.getString("age")), Integer.parseInt(data.getString("height")), Integer.parseInt(data.getString("weight")));
+
 
             }
 
@@ -926,12 +1056,114 @@ public class MainActivity extends IatBasicActivity
             @Override
             public void requestFailure(Request request, IOException e) {
                 // 请求失败的回调
+
                 ld.loadFailed();
+
                 Log.e("下载同步失败", request.body().toString());
 
             }
         });
 
     }
+
+    class user {
+        private String code;
+        private String message;
+        private Data1 data1;
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+
+        public Data1 getData1() {
+            return data1;
+        }
+
+        public void setData1(Data1 data1) {
+            this.data1 = data1;
+        }
+    }
+
+
+    class Data1 {
+        private String userName;
+        private String sex;
+        private String height;
+        private String weight;
+        private String age;
+        private String img;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        private String id;
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public String getHeight() {
+            return height;
+        }
+
+        public void setHeight(String height) {
+            this.height = height;
+        }
+
+        public String getWeight() {
+            return weight;
+        }
+
+        public void setWeight(String weight) {
+            this.weight = weight;
+        }
+
+        public String getAge() {
+            return age;
+        }
+
+        public void setAge(String age) {
+            this.age = age;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+    }
+
 
 }

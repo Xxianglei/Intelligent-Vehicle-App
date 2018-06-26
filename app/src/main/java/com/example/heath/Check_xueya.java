@@ -51,6 +51,7 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
     private BluetoothAdapter bluetoothAdapter;
     private String url = "http://47.94.21.55/houtai/addtj.php";
     private MyApplication myApplication;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,13 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
 
 
     private void initView() {
+        imageView = (ImageView)findViewById(R.id.back);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               finish();
+            }
+        });
         myApplication = (MyApplication)getApplication();
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         dataBaseManager = new DataBaseManager();

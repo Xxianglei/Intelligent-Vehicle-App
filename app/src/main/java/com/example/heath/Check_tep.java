@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,13 @@ public class Check_tep extends AppCompatActivity {
     }
 
     private void initView() {
+        ImageView imageView=(ImageView)findViewById(R.id.back);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         emptyView = findViewById(R.id.cry_nodata);
         mHeartbeatRecycler = (RecyclerView) findViewById(R.id.recycler_heartbeat);

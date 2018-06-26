@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.example.heath.Datebase.DataBaseManager;
@@ -68,9 +69,6 @@ public class ReportActivity extends AppCompatActivity  {
         mViewPager.setAdapter(mFragmentCardAdapter);
         mViewPager.setPageTransformer(false, mFragmentCardShadowTransformer);
         mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setLongClickable(true);
-        mViewPager.setClickable(true);
-        mViewPager.setEnabled(true);
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
 
             int flage = 0;
@@ -87,18 +85,22 @@ public class ReportActivity extends AppCompatActivity  {
                         if (flage == 0) {
                             int item = mViewPager.getCurrentItem();
                             if (item == 0) {
-                              ///  url = xueyaweb("13166991256");
-                                Intent intent = new Intent(ReportActivity.this, Week_Report.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("url", "http://blog.sina.com.cn/s/blog_5de73d0b0100vby4.html");
-                                intent.putExtras(bundle);
-                                startActivity(intent);
+                                List<XueyaModle> list = dataBaseManager.readxyList();
+                                Log.e("list.size()", list.size() + "***");
+                                if (list.size() >= 7) {
+                                    url = xueyaweb("13166991256");
+                                    Intent intent = new Intent(ReportActivity.this, Week_Report.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("url", url);  //报告连接
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }else    Toast.makeText(ReportActivity.this, "您的数据太少了暂时无法查看血压周报!", Toast.LENGTH_SHORT).show();
 
                             } else if (item == 1) {
-                                String url=tizhongweb("13166991256");
+                                url=tizhongweb("13166991256");
                                 Intent intent = new Intent(ReportActivity.this, Week_Report.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("url", "");
+                                bundle.putString("url", "https://labcdn.idata-power.com/html/32/0edaa40cf09a4b458d6da6295739a958.html");
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             } else if (item == 2) {
@@ -108,6 +110,13 @@ public class ReportActivity extends AppCompatActivity  {
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             } else if (item == 3) {
+                                Intent intent = new Intent(ReportActivity.this, Week_Report.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("url", "");
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                            else if (item == 4) {
                                 Intent intent = new Intent(ReportActivity.this, Week_Report.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("url", "");
@@ -142,14 +151,14 @@ public class ReportActivity extends AppCompatActivity  {
         List<xueya> xueyas = new ArrayList<xueya>();
         Log.e("list.size()", list.size() + "***");
         if (list.size() >= 7) {
-            int b = 26;
+            int b = 23;
             for (int a = list.size() - 1; a >= list.size() - 7; a--) {
                 xueya xue = new xueya();
                 xue.setId(String.valueOf(list.get(a).getId()));
                 if (b == 32) {
-                    xue.setTestTime("2018-06-01 21:17:12");
+                    xue.setTestTime("2018-07-01 21:17:12");
                 } else
-                    xue.setTestTime("2018-05-" + b + " 21:17:12");
+                    xue.setTestTime("2018-06-" + b + " 21:17:12");
 
                 // xue.setTestTime(list.get(a).getDate());
                 xue.setHighValue(list.get(a).getHigh_data());
@@ -160,7 +169,7 @@ public class ReportActivity extends AppCompatActivity  {
             }
         }
         String str = gson.toJson(xueyas);
-        params.put("memberId", "13166991256");
+        params.put("memberId", memberId);
         params.put("dataList", str);
         Log.e("血压数据", str);
         OkNetRequest.alypostFormRequest(xueya_week, params, new OkNetRequest.DataCallBack() {
@@ -169,7 +178,12 @@ public class ReportActivity extends AppCompatActivity  {
                 Log.e("成功", result.toString());
                 back back = gson.fromJson(result.toString(), back.class);
                 url = back.getData();
-                Log.e("url", url);
+                /*Intent intent = new Intent(ReportActivity.this, Week_Report.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("url", url);  //报告连接
+                intent.putExtras(bundle);
+                startActivity(intent);*/
+
             }
 
             @Override

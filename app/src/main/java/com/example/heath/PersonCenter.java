@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 
 import android.content.Context;
@@ -42,9 +43,11 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.example.heath.Bluteooth.BindBlutooh;
 import com.example.heath.Datebase.DataBaseManager;
+import com.example.heath.Datebase.UserModle;
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.Model.Code;
 import com.example.heath.Register.Log_in;
+import com.example.heath.utils.ActivityManager;
 import com.example.heath.utils.ImageUtils;
 import com.example.heath.view.CircleImageView;
 import com.example.heath.view.MyOneLineView;
@@ -61,6 +64,23 @@ import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 public class PersonCenter extends AppCompatActivity implements View.OnClickListener {
 
+    @Override
+    protected void onPostResume() {
+        upload_data(params);
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onStop() {
+        upload_data(params);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        upload_data(params);
+        super.onDestroy();
+    }
 
     private ObservableScrollView mScrollView = null;
     private MaterialRefreshLayout materialRefreshLayout;
@@ -102,6 +122,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
     private MyOneLineView twoItem;
     private MyOneLineView thereItem;
     private MyOneLineView fourItem;
+    private TextView name;
     private ImageView xingbie;
     private CircleImageView headImage;
     private TextView textView;
@@ -111,7 +132,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
     private LinearLayout llhigh;
     private LinearLayout llAge;
     private LinearLayout llTizong;
-    private TextView name;
+
     private Button button;
     private MyApplication myApplication;
 
@@ -370,7 +391,14 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
                         DataBaseManager dataBaseManager = new DataBaseManager();
                         dataBaseManager.clearAll();
-                        finish();
+                        /**
+                         *
+                         * ActivityManager.addActivity(this,"MainActivity");
+                         * Activity activity = ActivityManager.getActivity("MainActivity");
+                         * activity.finish();
+                         */
+                        // 关掉所有的Activity，退出App时使用
+                        ActivityManager.removeAllActivity();
                     }
 
 
@@ -402,7 +430,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         params.put("user",myApplication.getName().toString());
         // 获取偏好头像
         getBitmapFromSharedPreferences();
-
+        LoadLocal();
         // 刷新监听
         materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
@@ -555,6 +583,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
     // 获取头像偏好设置
     private void getBitmapFromSharedPreferences() {
+
         SharedPreferences sharedPreferences = getSharedPreferences("testSP", Context.MODE_PRIVATE);
         //第一步:取出字符串形式的Bitmap
         if (sharedPreferences.contains("image")) {
@@ -726,7 +755,31 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         });
 
     }
+   /* private TextView name;
+    private ImageView xingbie;
 
+    private TextView textView;
+    private TextView age;
+    private TextView tizong;
+    private TextView high;*/
+private void  LoadLocal(){
+    List<UserModle>list=  dataBaseManager.readuserList();
+    if (list.size()>0){
+        name.setText(list.get(list.size()-1).getName());
+        age.setText(list.get(list.size()-1).getAge()+"");
+        tizong.setText(list.get(list.size()-1).getWeight()+"");
+        high.setText(list.get(list.size()-1).getHigh()+"");
+        if (list.get(list.size()-1).getXingbie().equals("女")){
+            xingbie.setImageResource(R.mipmap.girl);
+            textView.setText("女");
+        }
+        else {
+            xingbie.setImageResource(R.mipmap.boy);
+            textView.setText("男");
+        }
 
+    }
+
+}
 
 }

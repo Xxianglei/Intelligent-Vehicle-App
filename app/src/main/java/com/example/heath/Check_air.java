@@ -48,6 +48,13 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
 
 
     private void initView() {
+        ImageView imageView=(ImageView)findViewById(R.id.back);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBigWindMill = (WindPath) findViewById(R.id.id_wind);
         mSmallWindMill = (WindPath) findViewById(R.id.id_windsmall);

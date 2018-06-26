@@ -67,10 +67,9 @@ public class DataBaseManager {
             tiwenModle.save();
         if (data5 != 0)
             tizhong.save();
-        tizhong.update();
         if (tizhong.save())
             Log.e("data5", data5 + "");
-        tizhong.update();
+
     }
 
     public void saveUser(String name, String xingbie, int age, int high, int weight) {

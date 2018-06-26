@@ -25,6 +25,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">#ff8c00</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 

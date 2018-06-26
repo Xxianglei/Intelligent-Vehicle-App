@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"

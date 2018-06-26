@@ -89,6 +89,13 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
 
     private void initView() {
+        ImageView image=(ImageView)findViewById(R.id.back);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         myApplication = (MyApplication)getApplication();
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         sp = getSharedPreferences("goal_weight", Context.MODE_PRIVATE);

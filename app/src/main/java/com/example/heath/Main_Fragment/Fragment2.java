@@ -50,6 +50,7 @@ import com.example.heath.Datebase.ConnectModle;
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.Datebase.UserModle;
 import com.example.heath.HttpUtils.OkNetRequest;
+import com.example.heath.MainActivity;
 import com.example.heath.Model.Person_Bpre;
 import com.example.heath.Model.Person_Bsur;
 import com.example.heath.Model.Person_weight;
@@ -70,6 +71,7 @@ import com.liangmayong.text2speech.Text2Speech;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import java.io.IOException;
 
@@ -85,6 +87,9 @@ import java.util.TimerTask;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.mob.tools.utils.DeviceHelper.getApplication;
+import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
+
 
 public class Fragment2 extends Fragment implements View.OnClickListener {
 
@@ -96,7 +101,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private Weather_model pm;
     private MyApplication myApplication;
     private String city;
-
+    private String down_url="http://47.94.21.55/houtai/select.php?";
     private CircleRefreshLayout mRefreshLayout;
     private CardView cardView0;
     private CardView cardView1;
@@ -231,6 +236,8 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private TextView zhuangtai;
     private TextView zhongti;
     private double time;
+    private LoadingDialog ld;
+    private HashMap<String, String> params;
 
     @Nullable
     @Override
@@ -255,6 +262,8 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                     public void run() {
                         materialRefreshLayout.finishRefresh();
                        // showPopupWindow();
+                        //  同步拉去数据
+                       // down();
                     }
                 }, 2000);
 
@@ -267,6 +276,19 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         });
         return view;
 
+    }
+
+    private void down() {
+        ld = new LoadingDialog(getActivity());
+        ld.setLoadingText("正在拉取数据...")
+                .setSuccessText("拉取成功")//显示加载成功时的文字
+                .setFailedText("拉取失败")
+                .setLoadSpeed(SPEED_TWO)
+                .show();
+        params = new HashMap<>();
+        myApplication = (MyApplication)getActivity().getApplication();
+        params.put("user",myApplication.getName().toString());
+        down_data(params);
     }
 
 
@@ -531,11 +553,11 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                     result_text4.setText("您的体温偏低");
                 }
 
-               // heartpre(nowTime, memberId, high, low);
+                heartpre(nowTime, memberId, high, low);
                 if (list.size() > 0) {
-                    //weight(nowTime, memberId, list.get(list.size() - 1).getHigh(), tizhong);
+                    weight(nowTime, memberId, list.get(list.size() - 1).getHigh(), tizhong);
                 } else {
-                   // weight(nowTime, memberId, 170, tizhong);
+                    weight(nowTime, memberId, 170, tizhong);
                 }
                // heartsur(nowTime, memberId, 1, 50);
             }
@@ -618,9 +640,10 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
                 Log.e("OK",result.toString());
-                String sj=sj("不健康");  //返回健康综合分析
-
-                zhuangtai.setText("不健康");
+                Log.e("****",result.toString());
+                String sj=sj(result.toString());      //返回健康综合分析
+                Log.e("sj的输出",sj);
+                zhuangtai.setText(result.toString());
                 String ssj="";
                 if (xinlv > 140) {
                     ssj=ssj+"您的心率偏高 ";
@@ -641,7 +664,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 if (tiwen<=35){
                     ssj=ssj+"您的体温偏低 ";
                 }
-                sug.setText(ssj+sj);
+                sug.setText(ssj+sj+"");
                 Text2Speech.speech(getActivity(),"小蜗提示 您今日身体状况为 "+"不健康 "+ssj+sj,false);
             }
 
@@ -658,14 +681,19 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     }
 
     private String sj(String data) {
-        if (data.equals("健康")){
-            return  StringClass.jiankang("健康");
+
+        if (data.contains("亚健康")){
+            Log.e("sj",data);
+            return  StringClass.jiankang(data);
         }
-        if (data.equals("亚健康")){
-            return  StringClass.jiankang("亚健康");
+        if (data.contains("不健康")){
+            Log.e("sj",data);
+            return  StringClass.jiankang(data);
         }
-        if (data.equals("不健康")){
-            return  StringClass.jiankang("不健康");
+        if (data.contains("健康")){
+            Log.e("sj",data);
+            Log.e("sj****",StringClass.jiankang(data));
+            return  StringClass.jiankang(data);
         }
         return null;
     }
@@ -1188,6 +1216,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             timer3.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    //  获取驾驶时长
+                    time = myapp.getTime();
+                    Log.e("驾驶时长", time + "");
                     Message message = new Message();
 
                     if ((intent.getExtras().getInt("warning", 1)) == 0) {
@@ -1199,9 +1230,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                         }
                     } else count = 0;
 
-                    //  获取驾驶时长
-                    time = myapp.getTime();
-                    Log.e("驾驶时长", time + "");
+
                 }
             }, 0, 1000);
 
@@ -1354,6 +1383,32 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
         return true;
     }
+    private void down_data(HashMap<String, String> params) {
+        down_url=down_url+"biao=xinxi";
 
+        OkNetRequest.postFormRequest(down_url, params, new OkNetRequest.DataCallBack() {
+            @Override
+            public void requestSuccess(Response response, String result) throws Exception {
+                // 请求成功的回调
+                Log.e("下载同步成功", result.toString());
+                ld.loadSuccess();
+
+            }
+
+            @Override
+            public void progressSuccess(Response response) throws Exception {
+
+            }
+
+            @Override
+            public void requestFailure(Request request, IOException e) {
+                // 请求失败的回调
+                ld.loadFailed();
+                Log.e("下载同步失败", request.body().toString());
+
+            }
+        });
+
+    }
 
 }

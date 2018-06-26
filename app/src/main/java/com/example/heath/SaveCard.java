@@ -85,6 +85,7 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
     private boolean tag = true;
     private String url = "http://47.94.21.55/houtai/addxinxi.php";
     private MyApplication myApplication;
+    private boolean tag2 = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,11 +93,12 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
         dataBaseManager = new DataBaseManager();
         initview();
         initEvent();
+
         preLoad();
     }
 
     private void initview() {
-        myApplication = (MyApplication)getApplication();
+        myApplication = (MyApplication) getApplication();
         lists = new ArrayList<String>();
         editText1 = (EditText) findViewById(R.id.text1);
         editText2 = (EditText) findViewById(R.id.text2);
@@ -345,7 +347,8 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
             lists.remove(buttonView.getText().toString().trim());
         }
     }
-    private void Upload(String name, String shengao,String tizhong,String bingshi,String bron,String xuexing,String guoming,String xiguan) {
+
+    private void Upload(String name, String shengao, String tizhong, String bingshi, String bron, String xuexing, String guoming, String xiguan) {
 
         HashMap<String, String> params = new HashMap<>();
         // 添加请求参数
@@ -357,12 +360,12 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
         params.put("xuexing", xuexing);
         params.put("guoming", guoming);
         params.put("xiguan", xiguan);
-        params.put("user",myApplication.getName().toString());
+        params.put("user", myApplication.getName().toString());
 
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
-            public void requestSuccess(Response response,String result) throws Exception {
+            public void requestSuccess(Response response, String result) throws Exception {
                 // 请求成功的回调
                 Log.e("同步急救卡", result.toString());
                 Gson gson = new Gson();
@@ -384,4 +387,31 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
             }
         });
     }
+
+    /**
+     * private EditText editText1;
+     * private EditText editText2;
+     * private EditText editText3;
+     * private TextView editText4;
+     * private TextView editText6;
+     * private TextView editText7;
+     * private TextView editText8;
+     * private TextView editText5;
+     */
+
+    private void LoadLocal() {
+        List<CardModle> list = dataBaseManager.readcardList();
+        if (list.size() > 0) {
+            editText1.setText(list.get(list.size() - 1).getName());
+            editText2.setText(list.get(list.size() - 1).getHigh() + "");
+            editText3.setText(list.get(list.size() - 1).getWeight() + "");
+            editText4.setText(list.get(list.size() - 1).getHis());
+            editText5.setText(list.get(list.size() - 1).getBirth());
+            editText6.setText(list.get(list.size() - 1).getBlood());
+            editText7.setText(list.get(list.size() - 1).getReact());
+            editText8.setText(list.get(list.size() - 1).getHobbit());
+        }
+
+    }
+
 }

@@ -108,7 +108,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         next.setOnClickListener(this);
         fab.setOnClickListener(this);
         myApplication = (MyApplication) getApplication();
-        ld = new LoadingDialog(Set_password.this);
+
     }
 
     private void CheckPass(String num, String pass) {
@@ -117,10 +117,10 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         if (!validatepassword(pass)) {
             Toast.makeText(Set_password.this, "亲 请输入由英文和数字组成的密码哦！！", Toast.LENGTH_SHORT).show();
         } else {
+            ld = new LoadingDialog(Set_password.this);
             ld.setLoadingText("正在登录中...")
                     .setSuccessText("登录成功")//显示加载成功时的文字
                     .setFailedText("注册失败")
-                    .setInterceptBack(false)
                     .setLoadSpeed(SPEED_TWO)
                     .show();
             GLog_in(num, pass);

@@ -81,7 +81,7 @@ public class Log_in extends AppCompatActivity {
     }
 
     private void initView() {
-        ld = new LoadingDialog(Log_in.this);
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -123,10 +123,10 @@ public class Log_in extends AppCompatActivity {
                 password = etPassword.getText().toString();
                 if (name.toString() != "") {
                     myApplication.setName(name);
+                    ld = new LoadingDialog(Log_in.this);
                     ld.setLoadingText("正在登录中...")
                             .setSuccessText("登录成功")//显示加载成功时的文字
                             .setFailedText("登录失败")
-                            .setInterceptBack(false)
                             .setLoadSpeed(SPEED_TWO)
                             .show();
                     GLog_in(name, password);
@@ -192,12 +192,11 @@ public class Log_in extends AppCompatActivity {
 
                         ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(Log_in.this);
                         Intent i2 = new Intent(Log_in.this, com.example.heath.MainActivity.class);
-                        startActivity(i2, oc2.toBundle());
                         Explode explode = new Explode();
-                        explode.setDuration(1000);
+                        explode.setDuration(2000);
                         getWindow().setExitTransition(explode);
                         getWindow().setEnterTransition(explode);
-
+                        startActivity(i2, oc2.toBundle());
 
                     } else {
                         ld.loadFailed();
