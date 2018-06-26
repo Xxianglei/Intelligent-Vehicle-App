@@ -13,8 +13,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.transition.Explode;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -66,10 +68,8 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
     private Pattern pattern1 = Pattern.compile(PASSWORD_PATTERN);
     private Matcher matcher1;
     private Button next;
-    private Bundle bundle;
     private MyApplication myApplication;
     private NetworkChangeReceiver networkChangeReceiver;
-    private NetworkChangeReceiver networkChangeReceiver1;
     private LoadingDialog ld;
 
 
@@ -85,8 +85,9 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(networkChangeReceiver);
+
         super.onDestroy();
+        this.unregisterReceiver(networkChangeReceiver);
     }
 
     private void initView() {
@@ -94,10 +95,8 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
         //动态注册
-        registerReceiver(networkChangeReceiver1, intentFilter);
+        registerReceiver(networkChangeReceiver, intentFilter);
         // 获取电话号码
-        Intent intent = getIntent();
-        bundle = intent.getExtras();
         etPassword = (EditText) findViewById(R.id.et_password);
         etRepeatpassword = (EditText) findViewById(R.id.et_repeatpassword);
 
@@ -108,7 +107,8 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         next.setOnClickListener(this);
         fab.setOnClickListener(this);
         myApplication = (MyApplication) getApplication();
-
+        if (myApplication.getName()!=null)
+        phone = myApplication.getName().toString();
     }
 
     private void CheckPass(String num, String pass) {
@@ -136,6 +136,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         params.put("password", password);
         Log.e("注册账号密码", params.toString());
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void requestSuccess(Response response,String result) throws Exception {
                 // 请求成功的回调
@@ -144,9 +145,14 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
                 deal_result = deal_result.replace("连接成功","");
                 Code code= gson.fromJson(deal_result, Code.class);
                 int a= Integer.parseInt(code.getCode());
+                Log.e("ddd",deal_result.toString());
+
+                myApplication.setPhone(phone);
                 if (a==101){
                     ld.loadSuccess();
-                    startActivity(new Intent(Set_password.this, MainActivity.class));
+                    startActivity(new Intent(Set_password.this,MainActivity.class));
+                    Set_password.this.finish();
+
                 }else
                 {
                     ld.loadFailed();
@@ -264,10 +270,9 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_go:
                 Log.e("点击按钮", "-----------");
-                password = etRepeatpassword.getText().toString();
-                phone = bundle.getString("phone");
-                CheckPass(phone, password);
-                myApplication.setPhone(phone);
+
+                CheckPass(phone, etRepeatpassword.getText().toString());
+
                 break;
             case R.id.fab:
                 animateRevealClose();

@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.heath.MyApplication;
 import com.example.heath.R;
 
 import java.util.Timer;
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.btn_next)
     Button btnNext;
     private NetworkChangeReceiver networkChangeReceiver;
+    private MyApplication myApplication;
 
     @OnClick({R.id.send_v_code, R.id.btn_next})
     public void onClick(View view) {
@@ -62,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
             case R.id.btn_next:     //验证成功下一步
                 Intent i = getIntent();
                 Bundle b=i.getExtras();
+                if (phoneNum.getText().length()>0&&etVcode.getText().length()>0){
                 if (b.getInt("TAG")==1) {
 
                     Intent intent = new Intent(RegisterActivity.this, Set_password.class);
@@ -71,19 +74,23 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else {
+
                     String code = etVcode.getText().toString().replaceAll("/s", "");
                     if (!TextUtils.isEmpty(code)) {//判断验证码是否为空
                         //验证
+
                         SMSSDK.submitVerificationCode(country, phone, code);
                         Intent intent = new Intent(RegisterActivity.this, Set_password.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("phone", phone);
-                        intent.putExtras(bundle);
                         startActivity(intent);
+
                     } else {//如果用户输入的内容为空，提醒用户
                         toast("请输入正确的验证码");
                     }
+                }}
+                else{
+                    toast("请输入正确的验证码");
                 }
+
                 break;
             default:
                 break;
@@ -117,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        myApplication = (MyApplication)getApplication();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -180,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void check() {
         phone = phoneNum.getText().toString().trim().replaceAll("/s", "");
-
+        myApplication.setName(phone);
         if (!TextUtils.isEmpty(phone)) {
             //定义需要匹配的正则表达式的规则
             String REGEX_MOBILE_SIMPLE = "[1][358]\\d{9}";

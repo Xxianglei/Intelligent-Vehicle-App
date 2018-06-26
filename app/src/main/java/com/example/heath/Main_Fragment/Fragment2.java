@@ -665,7 +665,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                     ssj=ssj+"您的体温偏低 ";
                 }
                 sug.setText(ssj+sj+"");
-                Text2Speech.speech(getActivity(),"小蜗提示 您今日身体状况为 "+"不健康 "+ssj+sj,false);
+               // Text2Speech.speech(getActivity(),"小蜗提示 您今日身体状况为 "+"不健康 "+ssj+sj,false);
             }
 
             @Override

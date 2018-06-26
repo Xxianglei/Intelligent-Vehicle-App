@@ -171,11 +171,14 @@ public class MainActivity extends IatBasicActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setEnterTransition(new Explode());
-        getWindow().setExitTransition(new Explode());
+
         setContentView(R.layout.activity_main);
-        getWindow().setBackgroundDrawable(null);
+        ld = new LoadingDialog(MainActivity.this);
+        ld.setLoadingText("正在拉取数据...")
+                .setSuccessText("拉取成功")//显示加载成功时的文字
+                .setFailedText("拉取失败")
+                .setLoadSpeed(SPEED_TWO)
+                .show();
 
         params = new HashMap<>();
         myApplication = (MyApplication) getApplication();
@@ -184,14 +187,9 @@ public class MainActivity extends IatBasicActivity
         down_data(params);
         down_data2(params);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        ld = new LoadingDialog(MainActivity.this);
 
 
-        ld.setLoadingText("正在拉取数据...")
-                .setSuccessText("拉取成功")//显示加载成功时的文字
-                .setFailedText("拉取失败")
-                .setLoadSpeed(SPEED_TWO)
-                .show();
+
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -236,6 +234,7 @@ public class MainActivity extends IatBasicActivity
         initEvent();
         setSelect(1);
         XunFeigned();
+
     }
 
     private void XunFeigned() {
@@ -1036,13 +1035,13 @@ public class MainActivity extends IatBasicActivity
                 Log.e("下载同步成功", result.toString());
                 String deal_result;
                 deal_result = result.replace("连接成功", "");
+                ld.loadSuccess();
                 JSONObject jsonObject = new JSONObject(deal_result);
                 JSONObject data = jsonObject.getJSONObject("data");
 
                 //存入数据库
-                ld.loadSuccess();
-                Log.e("OK咯", data.getString("userName").toString());
-                //String name, String xingbie, int age, int high, int weight
+
+                Log.e("OK咯", data.getString("userName")+data.getString("sex")+Integer.parseInt(data.getString("age"))+Integer.parseInt(data.getString("height"))+ Integer.parseInt(data.getString("weight")));
                 dataBaseManager.saveUser(data.getString("userName"), data.getString("sex"), Integer.parseInt(data.getString("age")), Integer.parseInt(data.getString("height")), Integer.parseInt(data.getString("weight")));
 
 

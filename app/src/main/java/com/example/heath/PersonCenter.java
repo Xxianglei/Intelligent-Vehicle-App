@@ -64,11 +64,7 @@ import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 public class PersonCenter extends AppCompatActivity implements View.OnClickListener {
 
-    @Override
-    protected void onPostResume() {
-        upload_data(params);
-        super.onPostResume();
-    }
+
 
     @Override
     protected void onStop() {
@@ -76,11 +72,6 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         super.onStop();
     }
 
-    @Override
-    protected void onDestroy() {
-        upload_data(params);
-        super.onDestroy();
-    }
 
     private ObservableScrollView mScrollView = null;
     private MaterialRefreshLayout materialRefreshLayout;
@@ -425,7 +416,6 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.person_con);
         getWindow().setBackgroundDrawable(null);
-
         initViews();
         params.put("user",myApplication.getName().toString());
         // 获取偏好头像
@@ -436,7 +426,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
 
-                upload_data(params);
+               // upload_data(params);
                 Handler mHandler = new Handler();
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -699,7 +689,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
 
             // 存入数据库
-            //  dataBaseManager.saveUser(sp.getString("NAME", null).toString(),sp.getString("AGE", null).toString(),Integer.parseInt(sp.getString("AGE", null).toString()),Integer.parseInt(sp.getString("HIGH", null).toString()),Integer.parseInt(sp.getString("WEIGHT", null).toString()));
+             dataBaseManager.saveUser(sp.getString("NAME", null).toString(),sp.getString("AGE", null).toString(),Integer.parseInt(sp.getString("AGE", null).toString()),Integer.parseInt(sp.getString("HIGH", null).toString()),Integer.parseInt(sp.getString("WEIGHT", null).toString()));
 
 
             if (sp.getInt("TAG", 0) != 0) {
@@ -723,7 +713,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
     }
 
     private void upload_data(HashMap<String, String> params) {
-
+        params.put("user",myApplication.getName().toString());
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response,String result) throws Exception {
@@ -766,9 +756,9 @@ private void  LoadLocal(){
     List<UserModle>list=  dataBaseManager.readuserList();
     if (list.size()>0){
         name.setText(list.get(list.size()-1).getName());
-        age.setText(list.get(list.size()-1).getAge()+"");
-        tizong.setText(list.get(list.size()-1).getWeight()+"");
-        high.setText(list.get(list.size()-1).getHigh()+"");
+        age.setText(list.get(list.size()-1).getAge()+"岁");
+        tizong.setText(list.get(list.size()-1).getWeight()+"kg");
+        high.setText(list.get(list.size()-1).getHigh()+"cm");
         if (list.get(list.size()-1).getXingbie().equals("女")){
             xingbie.setImageResource(R.mipmap.girl);
             textView.setText("女");

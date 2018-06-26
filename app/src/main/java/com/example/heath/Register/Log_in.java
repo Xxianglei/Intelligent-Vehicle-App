@@ -189,14 +189,8 @@ public class Log_in extends AppCompatActivity {
                     code = gson.fromJson(deal_result, Code.class);
                     int a = Integer.parseInt(code.getCode());
                     if (a == 201) {
-
-                        ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(Log_in.this);
-                        Intent i2 = new Intent(Log_in.this, com.example.heath.MainActivity.class);
-                        Explode explode = new Explode();
-                        explode.setDuration(2000);
-                        getWindow().setExitTransition(explode);
-                        getWindow().setEnterTransition(explode);
-                        startActivity(i2, oc2.toBundle());
+                        ld.loadSuccess();
+                        startActivity(new Intent(Log_in.this, MainActivity.class));
 
                     } else {
                         ld.loadFailed();

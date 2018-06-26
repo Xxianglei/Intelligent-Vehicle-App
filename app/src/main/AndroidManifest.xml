@@ -55,7 +55,7 @@
             android:name="com.example.heath.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.example.heath.Register.Set_password"
+            android:name=".Register.Set_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Bluteooth.BindBlutooh"
