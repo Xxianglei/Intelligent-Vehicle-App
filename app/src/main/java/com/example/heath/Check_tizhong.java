@@ -388,6 +388,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
             high = (float) (high / 100.0);
         }else {
             high=1.7f;
+            Toast.makeText(Check_tizhong.this,"请完善您的个人资料!",Toast.LENGTH_SHORT).show();
         }
 
             if (high < 1.5) {

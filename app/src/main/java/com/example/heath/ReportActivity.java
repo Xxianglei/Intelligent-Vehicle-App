@@ -30,7 +30,7 @@ import okhttp3.Response;
 
 import static com.example.heath.utils.DisplayUtil.dpToPixels;
 
-public class ReportActivity extends AppCompatActivity  {
+public class ReportActivity extends AppCompatActivity {
 
 
     private ViewPager mViewPager;
@@ -39,8 +39,10 @@ public class ReportActivity extends AppCompatActivity  {
     private String appcode = "e5245cb4f806431185e56bb2efd5eaf9";
     private String xueya_week = "http://bpweek.market.alicloudapi.com/alicloudapi/report/bloodPressureWeek";
     private DataBaseManager dataBaseManager;
-    private  String tizhong_week="http://weightweek.market.alicloudapi.com/alicloudapi/report/weightWeek";
+    private String tizhong_week = "http://weightweek.market.alicloudapi.com/alicloudapi/report/weightWeek";
     private String url;
+    private String zhonghe = "http://47.94.21.55/houtai/jk/jiankang.php";
+    private MyApplication myApplication;
 
 
     @Override
@@ -48,9 +50,8 @@ public class ReportActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report);
         initview();
-       // String url=tizhongweb("13166991256");
+        // String url=tizhongweb("13166991256");
     }
-
 
 
     private void initview() {
@@ -69,9 +70,11 @@ public class ReportActivity extends AppCompatActivity  {
         mViewPager.setAdapter(mFragmentCardAdapter);
         mViewPager.setPageTransformer(false, mFragmentCardShadowTransformer);
         mViewPager.setOffscreenPageLimit(3);
+        myApplication = (MyApplication) getApplication();
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
 
             int flage = 0;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -88,40 +91,34 @@ public class ReportActivity extends AppCompatActivity  {
                                 List<XueyaModle> list = dataBaseManager.readxyList();
                                 Log.e("list.size()", list.size() + "***");
                                 if (list.size() >= 7) {
-                                    url = xueyaweb("13166991256");
-                                    Intent intent = new Intent(ReportActivity.this, Week_Report.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("url", url);  //报告连接
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                }else    Toast.makeText(ReportActivity.this, "您的数据太少了暂时无法查看血压周报!", Toast.LENGTH_SHORT).show();
+                                    url = xueyaweb(myApplication.getName().toString());
+
+                                } else
+                                    Toast.makeText(ReportActivity.this, "您的数据太少了暂时无法查看血压周报!", Toast.LENGTH_SHORT).show();
 
                             } else if (item == 1) {
-                                url=tizhongweb("13166991256");
-                                Intent intent = new Intent(ReportActivity.this, Week_Report.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("url", "https://labcdn.idata-power.com/html/32/0edaa40cf09a4b458d6da6295739a958.html");
-                                intent.putExtras(bundle);
-                                startActivity(intent);
+                                List<TizhongModle> list = dataBaseManager.readxyList();
+                                Log.e("list.size()", list.size() + "***");
+                                if (list.size() >= 7) {
+                                    url = tizhongweb(myApplication.getName().toString());
+
+
+                                } else
+                                    Toast.makeText(ReportActivity.this, "您的数据太少了暂时无法查看体重周报!", Toast.LENGTH_SHORT).show();
+
+
                             } else if (item == 2) {
+
                                 Intent intent = new Intent(ReportActivity.this, Week_Report.class);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("url", "");
+                                bundle.putString("url", "http://labcdn.idata-power.com/demo/37/0ae3d43321e146f683a6ac7b9e528e55-.html");
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             } else if (item == 3) {
-                                Intent intent = new Intent(ReportActivity.this, Week_Report.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("url", "");
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                            }
-                            else if (item == 4) {
-                                Intent intent = new Intent(ReportActivity.this, Week_Report.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("url", "");
-                                intent.putExtras(bundle);
-                                startActivity(intent);
+                                zhonghe(myApplication.getName().toString());
+                            } else if (item == 4) {
+                                zhonghe(myApplication.getName().toString());
+
                             }
                         }
                         break;
@@ -169,20 +166,20 @@ public class ReportActivity extends AppCompatActivity  {
             }
         }
         String str = gson.toJson(xueyas);
-        params.put("memberId", memberId);
+        params.put("memberId", "M102309100192");
         params.put("dataList", str);
         Log.e("血压数据", str);
         OkNetRequest.alypostFormRequest(xueya_week, params, new OkNetRequest.DataCallBack() {
             @Override
-            public void requestSuccess(Response response,String result) throws Exception {
+            public void requestSuccess(Response response, String result) throws Exception {
                 Log.e("成功", result.toString());
                 back back = gson.fromJson(result.toString(), back.class);
                 url = back.getData();
-                /*Intent intent = new Intent(ReportActivity.this, Week_Report.class);
+                Intent intent = new Intent(ReportActivity.this, Week_Report.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("url", url);  //报告连接
                 intent.putExtras(bundle);
-                startActivity(intent);*/
+                startActivity(intent);
 
             }
 
@@ -201,41 +198,46 @@ public class ReportActivity extends AppCompatActivity  {
         return url;
 
     }
+
     private String tizhongweb(String memberId) {
         HashMap<String, String> params = new HashMap<>();
         // 添加请求参数
         final Gson gson = new Gson();
         List<TizhongModle> list = dataBaseManager.readtzList();
         List<tizhong> tizhongs = new ArrayList<tizhong>();
-        List<UserModle> list1=dataBaseManager.readuserList();
+        List<UserModle> list1 = dataBaseManager.readuserList();
         Log.e("list.size()", list.size() + "***");
         if (list.size() >= 7) {
             int b = 7;
             for (int a = list.size() - 1; a >= list.size() - 7; a--) {
-                tizhong tizhong=new tizhong();
+                tizhong tizhong = new tizhong();
                 tizhong.setId(String.valueOf(list.get(a).getId()));
                 tizhong.setTestTime("2018-06-" + b + " 21:17:12");
                 // xue.setTestTime(list.get(a).getDate());
                 tizhong.setWeightValue(list.get(a).getData());
-                if (list1.size()>0) {
-                    tizhong.setHightVlaue(list1.get(list1.size()-1).getHigh());
-                }
-                else tizhong.setHightVlaue(170);  // 默认170
+                if (list1.size() > 0) {
+                    tizhong.setHightVlaue(list1.get(list1.size() - 1).getHigh());
+                } else tizhong.setHightVlaue(170);  // 默认170
                 tizhongs.add(tizhong);
                 b++;
             }
         }
         String str = gson.toJson(tizhongs);
-        params.put("memberId", "13166991256");
+        params.put("memberId", "M102309100192");
         params.put("dataList", str);
         Log.e("体重数据", str);
         OkNetRequest.alypostFormRequest(tizhong_week, params, new OkNetRequest.DataCallBack() {
             @Override
-            public void requestSuccess(Response response,String result) throws Exception {
+            public void requestSuccess(Response response, String result) throws Exception {
                 Log.e("成功", result.toString());
                 back back = gson.fromJson(result.toString(), back.class);
                 url = back.getData();
                 Log.e("url", url);
+                Intent intent = new Intent(ReportActivity.this, Week_Report.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("url", url);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override
@@ -254,45 +256,56 @@ public class ReportActivity extends AppCompatActivity  {
 
     }
 
+    private void zhonghe(String memberId) {
 
-class tizhong{
-    private String id;
-    private String testTime;
-    private int hightVlaue;
-    private int weightValue;
+        Intent intent = new Intent(ReportActivity.this, Week_Report.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("url", "http://47.94.21.55/houtai/jk/jiankang.php?user=" + memberId);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
-    public String getId() {
-        return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+
+    class tizhong {
+        private String id;
+        private String testTime;
+        private int hightVlaue;
+        private int weightValue;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getTestTime() {
+            return testTime;
+        }
+
+        public void setTestTime(String testTime) {
+            this.testTime = testTime;
+        }
+
+        public int getHightVlaue() {
+            return hightVlaue;
+        }
+
+        public void setHightVlaue(int hightVlaue) {
+            this.hightVlaue = hightVlaue;
+        }
+
+        public int getWeightValue() {
+            return weightValue;
+        }
+
+        public void setWeightValue(int weightValue) {
+            this.weightValue = weightValue;
+        }
     }
 
-    public String getTestTime() {
-        return testTime;
-    }
-
-    public void setTestTime(String testTime) {
-        this.testTime = testTime;
-    }
-
-    public int getHightVlaue() {
-        return hightVlaue;
-    }
-
-    public void setHightVlaue(int hightVlaue) {
-        this.hightVlaue = hightVlaue;
-    }
-
-    public int getWeightValue() {
-        return weightValue;
-    }
-
-    public void setWeightValue(int weightValue) {
-        this.weightValue = weightValue;
-    }
-}
     class xueya {
         private String id;
         private String testTime;

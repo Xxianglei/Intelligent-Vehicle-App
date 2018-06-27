@@ -165,6 +165,8 @@ public class MainActivity extends IatBasicActivity
     private LoadingDialog ld;
     private boolean tag1;
     private DrawerLayout drawer;
+    private Timer timer4;
+    private String content;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -174,11 +176,18 @@ public class MainActivity extends IatBasicActivity
 
         setContentView(R.layout.activity_main);
         ld = new LoadingDialog(MainActivity.this);
-        ld.setLoadingText("正在拉取数据...")
-                .setSuccessText("拉取成功")//显示加载成功时的文字
-                .setFailedText("拉取失败")
-                .setLoadSpeed(SPEED_TWO)
-                .show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ld.setLoadingText("正在拉取数据...")
+                        .setSuccessText("拉取成功")//显示加载成功时的文字
+                        .setFailedText("拉取失败")
+                        .setLoadSpeed(SPEED_TWO)
+                        .show();
+            }
+        });
+
+
 
         params = new HashMap<>();
         myApplication = (MyApplication) getApplication();
@@ -233,43 +242,19 @@ public class MainActivity extends IatBasicActivity
         initIatData(mContent);
         initEvent();
         setSelect(1);
-        XunFeigned();
+
+
 
     }
 
-    private void XunFeigned() {
-        String mContent = GetBackString();
-        if (mContent != null) {
-            if (mContent.equals("医院") || mContent.equals("寻找医院") || mContent.equals("去医院") || mContent.equals("我要去医院") || mContent.equals("立即上医院") || mContent.equals("导航") || mContent.equals("紧急导航")) {
-                // 切换导航界面
-                resetImgs();
-                setSelect(2);         //导航
-                guide_tv.setTextColor(R.color.tv_color);
+    private boolean XunFeigned() {
+        content = myApplication.getMinlin();
+        if (content != null) {
 
-            }
-            if (mContent.equals("电话") || mContent.equals("拨打电话") || mContent.equals("立即拨打电话") || mContent.equals("打电话") || mContent.equals("我要打电话") || mContent.equals("求救") || mContent.equals("拨打紧急联系人")) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    DataBaseManager dataBaseManager = new DataBaseManager();
-                    con_persons = dataBaseManager.readconnList();
-                    if (con_persons.size() > 0) {
-                        // 6.0以上权限申请
-                        intentToCall(con_persons.get(con_persons.size() - 1).getPhone().toString());
-                        Log.e("拨打电话", con_persons.get(con_persons.size() - 1).getPhone().toString());
-                    } else
-                        Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    if (con_persons.size() > 0) {
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + con_persons.get(con_persons.size() - 1).getPhone().toString()));
-                        startActivity(intent);
-                    } else
-                        Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
-                }
-
-            }
+            return true;
         }
+
+        return false;
     }
 
 
@@ -781,6 +766,7 @@ public class MainActivity extends IatBasicActivity
 
     @Override
     protected void onPause() {
+        ld.close();
         super.onPause();
 
     }
@@ -798,12 +784,31 @@ public class MainActivity extends IatBasicActivity
             // 一定设置为null，否则定时器不会被回收
             timer = null;
         }
+        if (timer4 != null) {
+            timer4.cancel();
+            // 一定设置为null，否则定时器不会被回收
+            timer4 = null;
+        }
+
     }
 
     @Override
     public boolean onLongClick(View v) {
         clickMethod();
         minlin = backString();
+        timer4 = new Timer();
+        timer4.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (XunFeigned()){
+                    Message message =new Message();
+                    message.what=0x17;
+                    mHandler.sendMessage(message);
+                    timer4.cancel();
+                }
+
+            }
+        },0);
         return false;
     }
 
@@ -853,6 +858,41 @@ public class MainActivity extends IatBasicActivity
                     e.printStackTrace();
                 }
 
+
+            }
+            if (msg.what==0x17){
+                Log.e("拨打电话",content);
+                if (content.equals("医院") || content.equals("寻找医院") || content.equals("去医院") || content.equals("我要去医院") || content.equals("立即上医院") || content.equals("导航") || content.equals("紧急导航")) {
+                    // 切换导航界面
+                    resetImgs();
+                    setSelect(2);         //导航
+                    guide_tv.setTextColor(R.color.tv_color);
+
+                }
+                if (content.equals("电话") || content.equals("拨打电话") || content.equals("立即拨打电话") || content.equals("打电话") ||content.equals("我要打电话") || content.equals("求救") || content.equals("拨打紧急联系人")) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        DataBaseManager dataBaseManager = new DataBaseManager();
+                        con_persons = dataBaseManager.readconnList();
+                        if (con_persons.size() > 0) {
+                            // 6.0以上权限申请
+                            intentToCall(con_persons.get(con_persons.size() - 1).getPhone().toString());
+                            Log.e("拨打电话", con_persons.get(con_persons.size() - 1).getPhone().toString());
+                        } else
+                            Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        if (con_persons.size() > 0) {
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse("tel:" + con_persons.get(con_persons.size() - 1).getPhone().toString()));
+                            startActivity(intent);
+                        } else
+                            Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+            if (msg.what==0x18){
 
             }
 

@@ -166,6 +166,16 @@ public class Log_in extends AppCompatActivity {
         });
 
     }
+    @Override
+    protected  void onPause(){
+        //ld.close();
+        super.onPause();
+    }
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+    }
 
     private void GLog_in(String name, final String password) {
 
@@ -191,6 +201,7 @@ public class Log_in extends AppCompatActivity {
                     if (a == 201) {
                         ld.loadSuccess();
                         startActivity(new Intent(Log_in.this, MainActivity.class));
+                        Log_in.this.finish();
 
                     } else {
                         ld.loadFailed();

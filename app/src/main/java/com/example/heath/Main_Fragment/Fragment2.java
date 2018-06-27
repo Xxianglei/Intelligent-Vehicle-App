@@ -238,6 +238,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private double time;
     private LoadingDialog ld;
     private HashMap<String, String> params;
+    private LayoutInflater inflater;
 
     @Nullable
     @Override
@@ -261,7 +262,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                     @Override
                     public void run() {
                         materialRefreshLayout.finishRefresh();
-                       // showPopupWindow();
+                        showPopupWindow();
                         //  同步拉去数据
                        // down();
                     }
@@ -387,9 +388,22 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
 
     private void showPopupWindow() {
+        //2.填充布局
+        inflater = LayoutInflater.from(getActivity());
+        dialogView = inflater.inflate(R.layout.view_dialog, null);
+
+        //  报告页面
+        sug = dialogView.findViewById(R.id.suggesst);
+        one = dialogView.findViewById(R.id.xinlv);
+        two = dialogView.findViewById(R.id.tiwen);
+        three = dialogView.findViewById(R.id.xueya);
+        four = dialogView.findViewById(R.id.tizhong);
+        five = dialogView.findViewById(R.id.o2);
+        zhuangtai = dialogView.findViewById(R.id.zhuangtai);
         contentView = LayoutInflater.from(getActivity()).inflate(R.layout.item, null);
         loadingWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+
         loadingWindow.setContentView(contentView);
         rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_main, null);
         loadingWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
@@ -500,7 +514,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         ll35.setVisibility(View.VISIBLE);
         ll41.setVisibility(View.VISIBLE);
         ll42.setVisibility(View.VISIBLE);
-        ll43.setVisibility(View.VISIBLE);
         ll44.setVisibility(View.VISIBLE);
         ll45.setVisibility(View.VISIBLE);
         cry_nodata11.setVisibility(View.GONE);
@@ -554,7 +567,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 }
 
                 heartpre(nowTime, memberId, high, low);
-                if (list.size() > 0) {
+                if (list.size() > 0&&list.get(list.size()-1).getHigh()>=81&&list.get(list.size()-1).getHigh()<=238) {
                     weight(nowTime, memberId, list.get(list.size() - 1).getHigh(), tizhong);
                 } else {
                     weight(nowTime, memberId, 170, tizhong);
@@ -665,7 +678,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                     ssj=ssj+"您的体温偏低 ";
                 }
                 sug.setText(ssj+sj+"");
-               // Text2Speech.speech(getActivity(),"小蜗提示 您今日身体状况为 "+"不健康 "+ssj+sj,false);
+               Text2Speech.speech(getActivity(),"小蜗提示 您今日身体状况为 "+"不健康 "+ssj+sj,false);
             }
 
             @Override
@@ -1001,18 +1014,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         imageView4 = view.findViewById(R.id.daliycard).findViewById(R.id.down4);
         imageView5 = view.findViewById(R.id.daliycard).findViewById(R.id.down5);
         cheneikq = view.findViewById(R.id.cheneikq);
-        //2.填充布局
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        dialogView = inflater.inflate(R.layout.view_dialog, null);
 
-        //  报告页面
-        sug = dialogView.findViewById(R.id.suggesst);
-        one = dialogView.findViewById(R.id.xinlv);
-        two = dialogView.findViewById(R.id.tiwen);
-        three = dialogView.findViewById(R.id.xueya);
-        four = dialogView.findViewById(R.id.tizhong);
-        five = dialogView.findViewById(R.id.o2);
-        zhuangtai = dialogView.findViewById(R.id.zhuangtai);
 
     }
 
@@ -1152,6 +1154,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     }
 
     public void showDialog() {
+        if(mDialog!=null) {
+            mDialog.dismiss();
+        }
         //1.创建一个Dialog对象，如果是AlertDialog对象的话，弹出的自定义布局四周会有一些阴影，效果不好
         mDialog = new Dialog(getActivity());
         //去除标题栏
@@ -1327,7 +1332,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 dialog1.dismiss();
                 t.cancel();
             }
-        }, 8000);
+        },0, 8000);
         if (!tag) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // 6.0以上权限申请

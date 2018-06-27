@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.example.heath.MyApplication;
 import com.example.heath.R;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
@@ -280,6 +281,10 @@ public class IatBasicActivity extends AppCompatActivity {
         editText.setText(content);
         editText.setSelection(content.length());
         BackString(content);
+        Log.e("打电话",content.toString());
+        MyApplication myApplication=(MyApplication)getApplication();
+        myApplication.setMinlin("");
+        myApplication.setMinlin(content+"");
         return content;
     }
 

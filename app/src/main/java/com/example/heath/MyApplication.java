@@ -23,6 +23,16 @@ public class MyApplication extends Application {
     private String image_String;
     private String blu="";
 
+    public String getMinlin() {
+        return minlin;
+    }
+
+    public void setMinlin(String minlin) {
+        this.minlin = minlin;
+    }
+
+    private String minlin;
+
     public double getTime() {
         return time;
     }
