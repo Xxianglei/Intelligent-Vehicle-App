@@ -69,7 +69,6 @@
         android:weightSum="1">
 
         <RelativeLayout
-            android:id="@+id/imageView5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"

@@ -35,18 +35,6 @@
     <color name="line_indicator_text_color">#d5d8f7</color>
 
     <color name="line_indicator_background">#6bebef</color>
-    <color name="arc1">#099bfb</color>
-
-    <color name="arc2">#37d547</color>
-
-    <color name="arc3">#f86669</color>
-    <color name="arc_text">#999999</color>
-
-    <color name="arc_line">#cfcfcf</color>
-    <color name="arc_temp">#333333</color>
-    <color name="alertdialog_line">#c6c6c6</color>
-
-    <color name="actionsheet_blue">#037BFF</color>
 
     <color name="color3">#2584ce</color>
 
@@ -56,7 +44,6 @@
     <color name="color4">#1364f1</color>
 
     <color name="main_background">#FFFFFF</color>
-    <color name="text_color">#363535</color>
     <color name="start_color">#69cfe5</color>
     <color name="secondly_text_white">#ABffffff</color>
 </resources>

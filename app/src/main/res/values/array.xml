@@ -1,67 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="boo">
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-
-
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
-        <item>hhhhh</item>
+    <string-array name="spin">
+        <item>2000</item>
+        <item>2500</item>
+        <item>3000</item>
+        <item>3500</item>
+    </string-array>
+    <string-array name="ku">
+        <item>高德地图</item>
+        <item>讯飞语音</item>
+        <item>和风天气</item>
+        <item>阿里云</item>
+        <item>butterknife</item>
+        <item>MPAndroidChart</item>
+        <item>RollingText</item>
+        <item>okhttp3</item>
+        <item>gson</item>
+        <item>materialrefeshlayout</item>
+        <item>coldmoqiuli:banners</item>
+        <item>DBFlow</item>
+        <item>Android-PickerView</item>
+        <item>LoadingDialog</item>
+        <item>Text2Speach</item>
+        <item>MaterialTabs</item>
+        <item>YCDialogLib</item>
 
 
     </string-array>
-<string-array name="spin">
-    <item>2000</item>
-    <item>2500</item>
-    <item>3000</item>
-    <item>3500</item>
-</string-array>
-
-    -<string-array name="mult_temp_dash">
-
-    <item>寒冷</item>
-
-    <item>舒适</item>
-
-    <item>炎热</item>
-
-</string-array>
 
 
-    <string-array name="mult_huim_dash">
-
-    <item></item>
-
-    <item></item>
-
-    <item></item>
-    </string-array>
 </resources>
