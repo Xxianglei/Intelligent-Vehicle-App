@@ -26,7 +26,7 @@ public class WelAcitivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
         setContentView(view);
-
+        MyApplication.getInstance().addActivity(this);
         //实例化语音引擎
 
         //TTSUtils.getInstance().speak("");

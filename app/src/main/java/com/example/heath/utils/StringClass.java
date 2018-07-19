@@ -46,7 +46,7 @@ public class StringClass {
 
     public static String Health = "您今天元气满满,真是愉快健康的一天.您本次测试身体状况良好，希望您继续保持良好的生活习惯，祝您身体健康心情愉快。";
     public static String Sub_health = "您的身体存在些许异常，我们为您准备了一些建议,请您及时查看下面的反馈信息,以及您的周报信息.";
-    public static String Unhealth = "您的身体状况很差，您目前不太适合长时间驾驶,希望您及时去医院做更加详细的体检,及时获的良好的治疗.";
+    public static String Unhealth = "您的身体状况较差，您目前不太适合长时间驾驶,希望您及时去医院做更加详细的体检,及时获的良好的治疗.";
 
 
     public static String xinlv(int data) {

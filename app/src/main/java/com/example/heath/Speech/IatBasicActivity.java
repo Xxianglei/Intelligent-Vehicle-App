@@ -61,6 +61,7 @@ public class IatBasicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //
+        MyApplication.getInstance().addActivity(this);
         SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5af6d083");
         Log.d(TAG, "onCreate--->");
         initIat();
@@ -281,7 +282,8 @@ public class IatBasicActivity extends AppCompatActivity {
         editText.setText(content);
         editText.setSelection(content.length());
         BackString(content);
-        Log.e("打电话",content.toString());
+
+        Log.e("语音信息",content.toString());
         MyApplication myApplication=(MyApplication)getApplication();
         myApplication.setMinlin("");
         myApplication.setMinlin(content+"");

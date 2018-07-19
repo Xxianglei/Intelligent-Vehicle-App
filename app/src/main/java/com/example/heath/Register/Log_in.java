@@ -71,6 +71,7 @@ public class Log_in extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
         initView();
+        MyApplication.getInstance().addActivity(this);
         setListener();
     }
 
@@ -168,7 +169,7 @@ public class Log_in extends AppCompatActivity {
     }
     @Override
     protected  void onPause(){
-        //ld.close();
+        ld.close();
         super.onPause();
     }
     @Override

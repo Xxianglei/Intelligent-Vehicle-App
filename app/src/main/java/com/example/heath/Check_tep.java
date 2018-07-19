@@ -57,6 +57,7 @@ public class Check_tep extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_tep);
         initView();
+        MyApplication.getInstance().addActivity(this);
         initEvent();
         if (LoadLocalData() == false) {
             LoadYunData();

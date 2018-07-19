@@ -46,21 +46,16 @@ import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.Datebase.UserModle;
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.Model.Code;
-import com.example.heath.Register.Log_in;
-import com.example.heath.utils.ActivityManager;
 import com.example.heath.utils.ImageUtils;
 import com.example.heath.view.CircleImageView;
 import com.example.heath.view.MyOneLineView;
 import com.example.heath.view.ObservableScrollView;
 import com.google.gson.Gson;
 import com.qiushui.blurredview.BlurredView;
-import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 public class PersonCenter extends AppCompatActivity implements View.OnClickListener {
 
@@ -326,19 +321,34 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //  修改ui信息
+                        if (set_name.getText().length()>=1) {
+                            name.setText(set_name.getText().toString());
+                            //保存偏好设置 写入全局变量  ...  多出调用
+                            editor.putString("NAME", set_name.getText().toString());
+                            editor.commit();
 
-                        name.setText(set_name.getText().toString());
-                        //保存偏好设置 写入全局变量  ...  多出调用
-                        editor.putString("NAME", set_name.getText().toString());
-                        editor.commit();
-
-                        params.put("userName", set_name.getText().toString());
+                            params.put("userName", set_name.getText().toString());
 
 
-                        Log.i("测试", set_name.getText().toString());
-                        Log.i("偏好", sp.getString("NAME", null).toString());
+                            Log.i("测试", set_name.getText().toString());
+                            Log.i("偏好", sp.getString("NAME", null).toString());
 
-                        myApp.setPhone(set_name.getText().toString());
+                            myApp.setPhone(set_name.getText().toString());
+                        }else {
+                            Toast.makeText(PersonCenter.this,"您输入的内容为空!",Toast.LENGTH_SHORT).show();
+                            name.setText("蜗行");
+                            //保存偏好设置 写入全局变量  ...  多出调用
+                            editor.putString("NAME", "蜗行");
+                            editor.commit();
+
+                            params.put("userName", "蜗行");
+
+
+                            Log.i("测试","蜗行");
+                            Log.i("偏好", sp.getString("NAME", null).toString());
+
+                            myApp.setPhone("蜗行");
+                        }
 
                     }
                 });
@@ -382,14 +392,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
                         DataBaseManager dataBaseManager = new DataBaseManager();
                         dataBaseManager.clearAll();
-                        /**
-                         *
-                         * ActivityManager.addActivity(this,"MainActivity");
-                         * Activity activity = ActivityManager.getActivity("MainActivity");
-                         * activity.finish();
-                         */
-                        // 关掉所有的Activity，退出App时使用
-                        ActivityManager.removeAllActivity();
+                        MyApplication.getInstance().exit();
                     }
 
 
@@ -417,6 +420,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.person_con);
         getWindow().setBackgroundDrawable(null);
         initViews();
+        MyApplication.getInstance().addActivity(this);
         params.put("user",myApplication.getName().toString());
         // 获取偏好头像
         getBitmapFromSharedPreferences();

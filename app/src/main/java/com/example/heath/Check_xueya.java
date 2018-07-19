@@ -58,6 +58,7 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_xueya);
         initView();
+        MyApplication.getInstance().addActivity(this);
         initEvent();
         resImg();
         preLoad();

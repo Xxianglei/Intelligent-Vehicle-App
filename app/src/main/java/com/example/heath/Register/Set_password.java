@@ -36,6 +36,8 @@ import com.google.gson.Gson;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -78,11 +80,17 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setpassword);
         ShowEnterAnimation();
+        MyApplication.getInstance().addActivity(this);
         initView();
 
 
     }
 
+    @Override
+    protected  void onPause(){
+        ld.close();
+        super.onPause();
+    }
     @Override
     protected void onDestroy() {
 
@@ -114,7 +122,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
     private void CheckPass(String num, String pass) {
 
         Log.e("log_demo", "sendSms:打包电话和密码 ");
-        if (!validatepassword(pass)) {
+        if (!validatepassword(pass)&&((etPassword.getText().toString()).equals(etRepeatpassword.getText().toString()))) {
             Toast.makeText(Set_password.this, "亲 请输入由英文和数字组成的密码哦！！", Toast.LENGTH_SHORT).show();
         } else {
             ld = new LoadingDialog(Set_password.this);
@@ -140,15 +148,10 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
             @Override
             public void requestSuccess(Response response,String result) throws Exception {
                 // 请求成功的回调
-                Gson gson = new Gson();
                 String deal_result  = result.toString();
-                deal_result = deal_result.replace("连接成功","");
-                Code code= gson.fromJson(deal_result, Code.class);
-                int a= Integer.parseInt(code.getCode());
-                Log.e("ddd",deal_result.toString());
-
+                Log.e("注册",deal_result);
                 myApplication.setPhone(phone);
-                if (a==101){
+                if (deal_result.contains("101")){
                     ld.loadSuccess();
                     startActivity(new Intent(Set_password.this,MainActivity.class));
                     Set_password.this.finish();

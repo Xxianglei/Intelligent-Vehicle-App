@@ -63,31 +63,26 @@ public class RegisterActivity extends AppCompatActivity {
                 break;
             case R.id.btn_next:     //验证成功下一步
                 Intent i = getIntent();
-                Bundle b=i.getExtras();
-                if (phoneNum.getText().length()>0&&etVcode.getText().length()>0){
-                if (b.getInt("TAG")==1) {
+                Bundle b = i.getExtras();
+                phone = phoneNum.getText().toString().trim().replaceAll("/s", "");
+                myApplication.setName(phone);
+                if (phoneNum.getText().length() > 0 && etVcode.getText().length() > 0) {
+                    if (b.getInt("TAG") == 1) {
 
-                    Intent intent = new Intent(RegisterActivity.this, Set_password.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("phone", phone);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                        String code = etVcode.getText().toString().replaceAll("/s", "");
+                        if (!TextUtils.isEmpty(code)) {//判断验证码是否为空
+                            //验证
+                            SMSSDK.submitVerificationCode(country, phone, code);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("phone", phone);
+                            Intent intent = new Intent(RegisterActivity.this, Set_password.class);
+                            startActivity(intent);
 
-                } else {
-
-                    String code = etVcode.getText().toString().replaceAll("/s", "");
-                    if (!TextUtils.isEmpty(code)) {//判断验证码是否为空
-                        //验证
-
-                        SMSSDK.submitVerificationCode(country, phone, code);
-                        Intent intent = new Intent(RegisterActivity.this, Set_password.class);
-                        startActivity(intent);
-
-                    } else {//如果用户输入的内容为空，提醒用户
-                        toast("请输入正确的验证码");
+                        } else {//如果用户输入的内容为空，提醒用户
+                            toast("请输入正确的验证码");
+                        }
                     }
-                }}
-                else{
+                } else {
                     toast("请输入正确的验证码");
                 }
 
@@ -113,6 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_on);
         ShowEnterAnimation();
+        MyApplication.getInstance().addActivity(this);
         initView();
         ButterKnife.bind(this);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        myApplication = (MyApplication)getApplication();
+        myApplication = (MyApplication) getApplication();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -336,6 +332,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void onBackPressed() {
         animateRevealClose();
     }
+
     class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

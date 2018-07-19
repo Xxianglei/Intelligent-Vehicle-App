@@ -7,6 +7,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.heath.MyApplication;
+
 import java.text.NumberFormat;
 
 /**
@@ -16,6 +18,7 @@ import java.text.NumberFormat;
 public class LisenService extends Service {
 
     private UpdateThread updateThread;
+    private MyApplication myApplication;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -35,6 +38,7 @@ public class LisenService extends Service {
         updateThread = new UpdateThread();
         updateThread.start();
         super.onCreate();
+        myApplication = (MyApplication)getApplication();
 
     }
 
@@ -50,6 +54,7 @@ public class LisenService extends Service {
         private int xinlv = 0;
         private float tiwen;
         private Intent intent;
+        private int ddd=0;
 
         @Override
         public void run() {
@@ -72,9 +77,17 @@ public class LisenService extends Service {
                     intent.putExtra("xueya", xueya);
                     intent.putExtra("xinlv", xinlv);
                     intent.putExtra("tiwen", tiwen);
+                    if (myApplication.getTime()== 8 * 1000 * 60 * 60)
+                    intent.putExtra("time",myApplication.getTime());
+                    if (myApplication.getTime()==16 * 1000 * 60 * 60)
+                        intent.putExtra("time",myApplication.getTime());
+
                     Log.e("xxxxxxx", tiwen + "");
                     if (xinlv < 60 && (tiwen>38||tiwen < 36) && (xueya < 80 || xueya > 115)) {
+                        ddd++;
+                        if (ddd>=5)
                         intent.putExtra("warning",0);
+                        ddd=0;
                     }
                     else intent.putExtra("warning",2);
                     sendBroadcast(intent);

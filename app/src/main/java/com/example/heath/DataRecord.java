@@ -43,7 +43,7 @@ public class DataRecord extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_record);
-
+        MyApplication.getInstance().addActivity(this);
         //内容的fragment
         fragments = new ArrayList<>();
         fragments.add(ScrollFragment.newInstance());

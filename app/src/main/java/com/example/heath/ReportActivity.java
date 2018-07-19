@@ -50,6 +50,7 @@ public class ReportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report);
         initview();
+        MyApplication.getInstance().addActivity(this);
         // String url=tizhongweb("13166991256");
     }
 

@@ -55,6 +55,7 @@ public class Check_xinlv extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_inlv);
         initView();
+        MyApplication.getInstance().addActivity(this);
         initEvent();
         if (LoadLocalData() == false) {
 

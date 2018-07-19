@@ -91,6 +91,7 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.save_card);
         dataBaseManager = new DataBaseManager();
+        MyApplication.getInstance().addActivity(this);
         initview();
         initEvent();
 
@@ -170,7 +171,7 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
             editText1.setText(save_list.get(save_list.size() - 1).getName());
             editText2.setText(save_list.get(save_list.size() - 1).getHigh());
             editText3.setText(save_list.get(save_list.size() - 1).getWeight());
-            editText4.setText(save_list.get(save_list.size() - 1).getHigh());
+            editText4.setText(save_list.get(save_list.size() - 1).getHis());
             editText5.setText(save_list.get(save_list.size() - 1).getBirth());
             editText6.setText(save_list.get(save_list.size() - 1).getBlood());
             editText7.setText(save_list.get(save_list.size() - 1).getReact());

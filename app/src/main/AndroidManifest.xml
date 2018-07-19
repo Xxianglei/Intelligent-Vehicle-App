@@ -19,7 +19,7 @@
 
         tools:replace="android:icon,android:theme,android:label">
         <activity
-            android:name="com.example.heath.WelAcitivity"
+            android:name=".MainActivity"
             android:launchMode="standard"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -51,9 +51,7 @@
         <activity
             android:name="com.example.heath.ReportActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.example.heath.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Register.Set_password"
             android:theme="@style/AppTheme.NoActionBar" />

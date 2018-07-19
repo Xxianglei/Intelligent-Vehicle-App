@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
+import com.example.heath.MyApplication;
 import com.example.heath.R;
 import com.example.heath.updater.WaveAnimUpdater;
 import com.gplibs.magicsurfaceview.MagicMultiSurface;
@@ -39,6 +40,7 @@ public abstract class MagicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_magic);
+        MyApplication.getInstance().addActivity(this);
         mPageViewContainer = findViewById(R.id.page_view_container);
         mPageSurfaceView = (MagicSurfaceView) findViewById(R.id.page_surface_view);
         mPageTitleBar = findViewById(R.id.page_title_bar);

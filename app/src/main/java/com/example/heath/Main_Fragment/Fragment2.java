@@ -42,6 +42,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.example.heath.DataRecord;
@@ -66,6 +67,8 @@ import com.example.heath.utils.StringClass;
 import com.example.heath.utils.TimeUtils;
 import com.example.heath.view.ExpandView.ExpandView;
 import com.example.heath.view.circlerefresh.CircleRefreshLayout;
+import com.example.heath.view.weather.GyroscopeObserver;
+import com.example.heath.view.weather.WeatherAnimView;
 import com.google.gson.Gson;
 import com.liangmayong.text2speech.Text2Speech;
 import com.mylhyl.acp.Acp;
@@ -84,8 +87,12 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import me.leefeng.promptlibrary.OnAdClickListener;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Request;
 import okhttp3.Response;
+import xyz.matteobattilana.library.Common.Constants;
+import xyz.matteobattilana.library.WeatherView;
 
 import static com.mob.tools.utils.DeviceHelper.getApplication;
 import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
@@ -101,7 +108,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private Weather_model pm;
     private MyApplication myApplication;
     private String city;
-    private String down_url="http://47.94.21.55/houtai/select.php?";
+    private String down_url = "http://47.94.21.55/houtai/select.php?";
     private CircleRefreshLayout mRefreshLayout;
     private CardView cardView0;
     private CardView cardView1;
@@ -239,6 +246,8 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private LoadingDialog ld;
     private HashMap<String, String> params;
     private LayoutInflater inflater;
+    private int drivetime = 0;
+    private LinearLayout ll13;
 
     @Nullable
     @Override
@@ -264,7 +273,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                         materialRefreshLayout.finishRefresh();
                         showPopupWindow();
                         //  同步拉去数据
-                       // down();
+                        // down();
                     }
                 }, 2000);
 
@@ -275,6 +284,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 //load more refreshing...
             }
         });
+
         return view;
 
     }
@@ -287,8 +297,8 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 .setLoadSpeed(SPEED_TWO)
                 .show();
         params = new HashMap<>();
-        myApplication = (MyApplication)getActivity().getApplication();
-        params.put("user",myApplication.getName().toString());
+        myApplication = (MyApplication) getActivity().getApplication();
+        params.put("user", myApplication.getName().toString());
         down_data(params);
     }
 
@@ -301,11 +311,13 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         ll5.setVisibility(View.GONE);
         ll11.setVisibility(View.GONE);
         ll12.setVisibility(View.GONE);
+        ll13.setVisibility(View.GONE);
 
         ll14.setVisibility(View.GONE);
         ll15.setVisibility(View.GONE);
         ll21.setVisibility(View.GONE);
         ll22.setVisibility(View.GONE);
+        ll3.setVisibility(View.GONE);
 
         ll24.setVisibility(View.GONE);
         ll25.setVisibility(View.GONE);
@@ -386,6 +398,18 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
 
     private void showPopupWindow() {
         //2.填充布局
@@ -439,19 +463,18 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                         e.setText(high + "/" + low);
                         //  报告页
                         one.setText(xinlv + "bpm");
-                        two.setText(tiwen+"℃");
-                        three.setText(high + "/" + low+"mmhg");
-                        four.setText(tizhong+"kg");
-                        five.setText(xueyang+"%");
-
+                        two.setText(tiwen + "℃");
+                        three.setText(high + "/" + low + "mmhg");
+                        four.setText(tizhong + "kg");
+                        five.setText(xueyang + "%");
 
 
                         if (bluetoothAdapter.isEnabled() || !pairedDevices.isEmpty()) {
                             /**
                              * 数据上传获取报告分析
                              */
-                            Log.e("上传","OK");
-                            precheck(xinlv, tizhong, xueyang, tiwen, high, low);
+                            Log.e("上传", "OK");
+                            precheck(xinlv, tizhong, xueyang, tiwen, high, low, drivetime);
                             /** 体检数据保存本地数据库**/
                             dataBaseManager.saveSingle(TimeUtils.dateToString2(), TimeUtils.dateToString2(), TimeUtils.dateToString2(), TimeUtils.dateToString2(), TimeUtils.dateToString2(), xueyang, high, low, xinlv, (int) tiwen, tizhong);
                         } else Toast.makeText(getActivity(), "您还未连接设备!", Toast.LENGTH_SHORT).show();
@@ -491,7 +514,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     }
 
     /*precheck(xinlv,tizhong,xueyang,tiwen,high,low);*/
-    private void precheck(int xinlv, int tizhong, int xueyang, float tiwen, int high, int low) {
+    private void precheck(int xinlv, int tizhong, int xueyang, float tiwen, int high, int low, int time) {
         ll1.setVisibility(View.VISIBLE);
         ll2.setVisibility(View.VISIBLE);
         ll3.setVisibility(View.VISIBLE);
@@ -499,6 +522,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         ll5.setVisibility(View.VISIBLE);
         ll11.setVisibility(View.VISIBLE);
         ll12.setVisibility(View.VISIBLE);
+        ll13.setVisibility(View.VISIBLE);
 
         ll14.setVisibility(View.VISIBLE);
         ll15.setVisibility(View.VISIBLE);
@@ -529,18 +553,18 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             String memberId = myapp.getName().toString();
             if (tag == false) {
                 // 最后一个驾驶时间
-                GetZhuangtai(tiwen, high, low, xueyang, xinlv, 0);
+                GetZhuangtai(tiwen, high, low, xueyang, xinlv, time);
                 List<UserModle> list = dataBaseManager.readuserList();
                 //  下面页
-                time_msg1.setText(nowTime+"");
-                time_msg3.setText(nowTime+"");
-                time_msg4.setText(nowTime+"");
+                time_msg1.setText(nowTime + "");
+                time_msg3.setText(nowTime + "");
+                time_msg4.setText(nowTime + "");
                 suggest_text3.setText(StringClass.xueyang(xueyang));
-                suggest_text1.setText(StringClass.xinlv(xinlv)+"");
-                suggest_text4.setText(StringClass.tiwenjianyi(tiwen)+"");
-                data1.setText(xinlv+"");
-                data3.setText(xueyang+"");
-                data4.setText(tiwen+"");
+                suggest_text1.setText(StringClass.xinlv(xinlv) + "");
+                suggest_text4.setText(StringClass.tiwenjianyi(tiwen) + "");
+                data1.setText(xinlv + "");
+                data3.setText(xueyang + "");
+                data4.setText(tiwen + "");
                 if (xinlv > 140) {
                     result_text1.setText("您的心率偏高");
                 }
@@ -549,49 +573,34 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 }
                 if (xinlv >= 60 && xinlv <= 120)
                     result_text1.setText("您的心率正常");
-                if (xueyang>=98){
-                 result_text3.setText("您的血氧偏高");
+                if (xueyang >= 98) {
+                    result_text3.setText("您的血氧偏高");
                 }
-                if (xueyang>=95&&xueyang<98)
+                if (xueyang >= 95 && xueyang < 98)
                     result_text3.setText("您的血氧正常");
-                if (xueyang<95)
+                if (xueyang < 95)
                     result_text3.setText("您的血氧偏低");
-                if (tiwen>=38){
+                if (tiwen >= 38) {
                     result_text4.setText("您的体温偏高");
 
                 }
-                if (tiwen>35&&tiwen<38)
+                if (tiwen > 35 && tiwen < 38)
                     result_text4.setText("您的体温正常");
-                if (tiwen<=35){
+                if (tiwen <= 35) {
                     result_text4.setText("您的体温偏低");
                 }
 
                 heartpre(nowTime, memberId, high, low);
-                if (list.size() > 0&&list.get(list.size()-1).getHigh()>=81&&list.get(list.size()-1).getHigh()<=238) {
+                if (list.size() > 0 && list.get(list.size() - 1).getHigh() >= 81 && list.get(list.size() - 1).getHigh() <= 239) {
                     weight(nowTime, memberId, list.get(list.size() - 1).getHigh(), tizhong);
                 } else {
                     weight(nowTime, memberId, 170, tizhong);
                 }
-               // heartsur(nowTime, memberId, 1, 50);
+                // heartsur(nowTime, memberId, 1, 50);
             }
             showDialog();
         }
 
-
-
-
-
-
-      /*  //  蹦出广告
-        PromptDialog promptDialog = new PromptDialog(getActivity());
-        // promptDialog.getDefaultBuilder().backAlpha(150);
-        Glide.with(getActivity()).load("http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg")
-                .into(promptDialog.showAd(true, new OnAdClickListener() {
-                    @Override
-                    public void onAdClick() {
-                        Toast.makeText(getActivity(), "点击了广告", Toast.LENGTH_SHORT).show();
-                    }
-                }));*/
 
     }
 
@@ -611,8 +620,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             if (xingbie.toString().equals("女")) {
                 tag1 = 1;
             }
-        }
-        else  Toast.makeText(getActivity(), "请完善您的个人资料吧,我们好提供跟准确的服务!", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(getActivity(), "请完善您的个人资料吧,我们好提供跟准确的服务!", Toast.LENGTH_SHORT).show();
         if (list2.size() > 0) {
             shigh = list2.get(list2.size() - 1).getHigh();
             weight = list2.get(list2.size() - 1).getWeight();
@@ -647,38 +655,38 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
         HashMap<String, String> params = new HashMap<>();
         // 添加请求参数
-         params.put("shuju", tag1+"  "+shigh+"  "+weight+"  "+tiwen+"  "+high+"  "+low+"  "+xinlv+"  "+xueyang+"  "+tag2+"  "+tag3+"  "+tag4+"  "+tag5+"  "+tag6+"  "+tag7+"  "+1+"  "+exp);
+        params.put("shuju", tag1 + "  " + shigh + "  " + weight + "  " + tiwen + "  " + high + "  " + low + "  " + xinlv + "  " + xueyang + "  " + tag2 + "  " + tag3 + "  " + tag4 + "  " + tag5 + "  " + tag6 + "  " + tag7 + "  " + time + "  " + exp);
         OkNetRequest.postFormRequest(checkurl, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
-                Log.e("OK",result.toString());
-                Log.e("****",result.toString());
-                String sj=sj(result.toString());      //返回健康综合分析
-                Log.e("sj的输出",sj);
+                Log.e("OK", result.toString());
+                Log.e("****", result.toString());
+                String sj = sj(result.toString());      //返回健康综合分析
+                Log.e("sj的输出", sj);
                 zhuangtai.setText(result.toString());
-                String ssj="";
+                String ssj = "";
                 if (xinlv > 140) {
-                    ssj=ssj+"您的心率偏高 ";
+                    ssj = ssj + "您的心率偏高 ";
                 }
                 if (xinlv < 60) {
-                    ssj=ssj+"您的心率偏低 ";
+                    ssj = ssj + "您的心率偏低 ";
                 }
 
-                if (xueyang>=98){
-                    ssj=ssj+"您的血氧偏高 ";
+                if (xueyang >= 98) {
+                    ssj = ssj + "您的血氧偏高 ";
                 }
 
-                if (xueyang<95)
-                    ssj=ssj+"您的血氧偏低 ";
-                if (tiwen>=38){
-                    ssj=ssj+"您的体温偏高 ";
+                if (xueyang < 95)
+                    ssj = ssj + "您的血氧偏低 ";
+                if (tiwen >= 38) {
+                    ssj = ssj + "您的体温偏高 ";
                 }
-                if (tiwen<=35){
-                    ssj=ssj+"您的体温偏低 ";
+                if (tiwen <= 35) {
+                    ssj = ssj + "您的体温偏低 ";
                 }
-                sug.setText(ssj+sj+"");
-               Text2Speech.speech(getActivity(),"小蜗提示 您今日身体状况为 "+"不健康 "+ssj+sj,false);
+                sug.setText(ssj + sj + "");
+                Text2Speech.speech(getActivity(), "小蜗提示 您今日身体状况为 " + result.toString() + ssj + sj, false);
             }
 
             @Override
@@ -688,25 +696,25 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
             @Override
             public void requestFailure(Request request, IOException e) {
-                Log.e("unOK",request.toString());
+                Log.e("unOK", request.toString());
             }
         });
     }
 
     private String sj(String data) {
 
-        if (data.contains("亚健康")){
-            Log.e("sj",data);
-            return  StringClass.jiankang(data);
+        if (data.contains("亚健康")) {
+            Log.e("sj", data);
+            return StringClass.jiankang(data);
         }
-        if (data.contains("不健康")){
-            Log.e("sj",data);
-            return  StringClass.jiankang(data);
+        if (data.contains("不健康")) {
+            Log.e("sj", data);
+            return StringClass.jiankang(data);
         }
-        if (data.contains("健康")){
-            Log.e("sj",data);
-            Log.e("sj****",StringClass.jiankang(data));
-            return  StringClass.jiankang(data);
+        if (data.contains("健康")) {
+            Log.e("sj", data);
+            Log.e("sj****", StringClass.jiankang(data));
+            return StringClass.jiankang(data);
         }
         return null;
     }
@@ -886,6 +894,32 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             if (msg.what == 0x16) {
                 XunFeigned();
             }
+            if (msg.what == 0x21) {
+
+                //  蹦出广告
+                PromptDialog promptDialog = new PromptDialog(getActivity());
+                // promptDialog.getDefaultBuilder().backAlpha(150);
+                Glide.with(getActivity()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532011943988&di=0c580bdf194c1979994db63c6b153ee9&imgtype=0&src=http%3A%2F%2Fimg1.0515yc.cn%2Fmaterial%2Fnews%2Fimg%2F640x%2F2017%2F01%2F20170118175400BAHN.jpg%3F7iLc")
+                        .into(promptDialog.showAd(true, new OnAdClickListener() {
+                            @Override
+                            public void onAdClick() {
+                                Toast.makeText(getActivity(), "我知道了", Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+            }
+            if (msg.what == 0x22) {
+
+                //  蹦出广告
+                PromptDialog promptDialog = new PromptDialog(getActivity());
+                // promptDialog.getDefaultBuilder().backAlpha(150);
+                Glide.with(getActivity()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532011995137&di=c162cf831ee607580de6f87504eeb309&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fzj%2Fpics%2Fhv1%2F84%2F231%2F2222%2F144544539.jpg")
+                        .into(promptDialog.showAd(true, new OnAdClickListener() {
+                            @Override
+                            public void onAdClick() {
+                                Toast.makeText(getActivity(), "我知道了", Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+            }
 
         }
     };
@@ -912,6 +946,16 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
     public void initlun(View view) {
         // 获取蓝牙设备适配器
+      /*  WeatherView mWeatherView = view.findViewById(R.id.weather);
+        //Optional
+        mWeatherView
+                .setLifeTime(2000)
+                .setFadeOutTime(1000)
+                .setParticles(43)
+                .setFPS(40)
+                .setAngle(-5)
+                .startAnimation();*/
+
 
         zhongti = view.findViewById(R.id.zhuangtai);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -964,7 +1008,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         suggest_text2 = view2.findViewById(R.id.suggesst_msg);
         ll11 = view2.findViewById(R.id.ll_1);
         ll12 = view2.findViewById(R.id.ll_2);
-
+        ll13 = view2.findViewById(R.id.ll_3);
         ll14 = view2.findViewById(R.id.ll_4);
         ll15 = view2.findViewById(R.id.ll_5);
         cry_nodata2 = view2.findViewById(R.id.cry_nodata);
@@ -999,7 +1043,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         time_msg4 = view4.findViewById(R.id.tiem_msg);
         result_text4 = view4.findViewById(R.id.result_msg);
         data4 = view4.findViewById(R.id.high_msg);
-        suggest_text4=view4.findViewById(R.id.suggesst);
+        suggest_text4 = view4.findViewById(R.id.suggesst);
 
         ll41 = view4.findViewById(R.id.ll_1);
         ll42 = view4.findViewById(R.id.ll_2);
@@ -1154,7 +1198,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     }
 
     public void showDialog() {
-        if(mDialog!=null) {
+        if (mDialog != null) {
             mDialog.dismiss();
         }
         //1.创建一个Dialog对象，如果是AlertDialog对象的话，弹出的自定义布局四周会有一些阴影，效果不好
@@ -1209,7 +1253,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         public void onReceive(Context context, final Intent intent) {
             heart_pre.setNumber(intent.getExtras().getInt("xueya", 0));
             int i = (int) (intent.getExtras().getFloat("tiwen", 0) * 10);
-            double tiwen = (double) i / 10;
+            final double tiwen = (double) i / 10;
             heart_tmp.setNumber(tiwen);
             heart_num.setNumber(intent.getExtras().getInt("xinlv", 0));
             mCircleProgress1.setProgress(intent.getExtras().getInt("xinlv", 0) - 10);
@@ -1218,49 +1262,36 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             Log.e("", intent.getExtras().getInt("warning", 1) + "xxxxxx");
             timer3 = new Timer();
             count = 0;
-            timer3.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    //  获取驾驶时长
-                    time = myapp.getTime();
-                    Log.e("驾驶时长", time + "");
-                    Message message = new Message();
+            //  获取驾驶时长
+            //  时间扩大了两倍
+            time = intent.getExtras().getDouble("time");
+            Log.e("驾驶时长", time + "");
 
-                    if ((intent.getExtras().getInt("warning", 1)) == 0) {
-                        count++;
-                        if (count >= 5) {
-                            count = 0;
-                            message.what = 0x16;
-                            mHandler.sendMessage(message);
-                        }
-                    } else count = 0;
+            Message message = new Message();
+            if ((intent.getExtras().getInt("warning", 1)) == 0) {
+                message.what = 0x16;
+                mHandler.sendMessage(message);
+            }
 
-
-                }
-            }, 0, 1000);
 
             // 驾驶时间
 
-            if (time > 4 * 1000 * 60 * 60) {
+            if (time >= 8 * 1000 * 60 * 60) {
                 zhongti.setText("倦怠");
+                drivetime = 1;
                 Text2Speech.speech(getActivity(), "您已经连续驾驶超过四小时  建议您停靠休息二十分钟 如果你需要继续驾驶建议您用清凉空气或冷水刺激面部 或者打开车窗还入清凉空气", false);
-            }
-            if (time > 8 * 1000 * 60 * 60) {
-                zhongti.setText("疲劳");
-                Text2Speech.speech(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶 寻找最近的停靠点休息一会再继续上路", false);
-                Toast.makeText(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶", 5000).show();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(5000);
-                            Text2Speech.speech(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶 寻找最近的停靠点休息一会再继续上路", false);
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }).start();
+                message.what = 0x21;
+                mHandler.sendMessage(message);
 
+            }
+
+            if (time >= 16 * 1000 * 60 * 60) {
+                drivetime = 1;
+                zhongti.setText("疲劳");
+                Text2Speech.speech(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶 寻找最近的停靠点休息一会再继续驾驶", false);
+                Toast.makeText(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶", 5000).show();
+                message.what = 0x22;
+                mHandler.sendMessage(message);
             }
         }
     }
@@ -1304,9 +1335,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         tag1 = true;
         AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
         builder1.setIcon(R.mipmap.delete);
-        builder1.setTitle("紧急提示");
-        builder1.setMessage("您目前身体处于危险状况!请问您需要拨打120吗?");
-        Text2Speech.speech(getActivity(),"您目前身体处于危险状况!请问您需要拨打120吗",false);
+        builder1.setTitle("危险提示");
+        builder1.setMessage("您目前身体处于危险状况!请问您需要120吗?");
+        Text2Speech.speech(getActivity(), "请问需要为您呼叫120吗", false);
         builder1.setCancelable(true);
         builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
@@ -1332,7 +1363,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 dialog1.dismiss();
                 t.cancel();
             }
-        },0, 8000);
+        }, 0, 8000);
         if (!tag) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // 6.0以上权限申请
@@ -1388,8 +1419,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
         return true;
     }
+
     private void down_data(HashMap<String, String> params) {
-        down_url=down_url+"biao=xinxi";
+        down_url = down_url + "biao=xinxi";
 
         OkNetRequest.postFormRequest(down_url, params, new OkNetRequest.DataCallBack() {
             @Override

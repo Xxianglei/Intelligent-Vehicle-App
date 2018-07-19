@@ -29,6 +29,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
+import com.example.heath.MyApplication;
 import com.example.heath.PersonCenter;
 import com.example.heath.R;
 import com.example.heath.utils.ParseNowWeatherUtil;
@@ -87,6 +88,7 @@ public class BindBlutooh extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.devices);
+        MyApplication.getInstance().addActivity(this);
         mContext = this;
         init();
         initEvent();

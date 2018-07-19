@@ -30,14 +30,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,51 +48,48 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.baidu.tts.observer.receiver.NetworkChangeReceiver;
 import com.example.heath.Bluteooth.BindBlutooh;
+import com.example.heath.Datebase.CardModle;
 import com.example.heath.Datebase.ConnectModle;
 import com.example.heath.Datebase.DataBaseManager;
-import com.example.heath.Datebase.UserModle;
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.Main_Fragment.Fragment1;
 import com.example.heath.Main_Fragment.Fragment2;
 import com.example.heath.Main_Fragment.Fragment3;
 import com.example.heath.Main_Fragment.Fragment4;
-import com.example.heath.Model.Code;
 import com.example.heath.Model.Weather_model;
 
 import com.example.heath.Speech.IatBasicActivity;
 import com.example.heath.utils.HttpDownloader;
 import com.example.heath.utils.ParseNowWeatherUtil;
-import com.google.gson.Gson;
-import com.liangmayong.text2speech.Text2Speech;
-import com.mob.tools.utils.Data;
-import com.mob.wrappers.AnalySDKWrapper;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 public class MainActivity extends IatBasicActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AMapLocationListener, View.OnLongClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AMapLocationListener, View.OnLongClickListener, View.OnTouchListener {
 
     //AMap是地图对象
     private static final int REFRESH_COMPLETE = 0X110;
@@ -103,7 +99,6 @@ public class MainActivity extends IatBasicActivity
     //声明mLocationOption对象，定位参数
     public AMapLocationClientOption mLocationOption = null;
     //声明mListener对象，定位监听器
-    private String minlin;
     private LinearLayout doctor_tab;
     private LinearLayout jiance_tab;
     private LinearLayout mian;
@@ -166,7 +161,9 @@ public class MainActivity extends IatBasicActivity
     private boolean tag1;
     private DrawerLayout drawer;
     private Timer timer4;
-    private String content;
+    private String minlin;
+    private boolean a1=false;
+    private DataBaseManager dataBaseManager;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -175,6 +172,7 @@ public class MainActivity extends IatBasicActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        MyApplication.getInstance().addActivity(this);
         ld = new LoadingDialog(MainActivity.this);
         runOnUiThread(new Runnable() {
             @Override
@@ -186,18 +184,52 @@ public class MainActivity extends IatBasicActivity
                         .show();
             }
         });
-
-
-
         params = new HashMap<>();
         myApplication = (MyApplication) getApplication();
-        params.put("user", myApplication.getName().toString());
+        params.put("user", "13166991256");
         tag1 = false;
         down_data(params);
         down_data2(params);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        /***
+         * 优化统一权限申请
+         */
 
+        List<PermissionItem> permissions = new ArrayList<PermissionItem>();
 
+        permissions.add(new PermissionItem(Manifest.permission.ACCESS_FINE_LOCATION,
+                "定位",
+                R.drawable.permission_ic_location));
+        permissions.add(new PermissionItem(Manifest.permission.RECORD_AUDIO,
+                "麦克风",
+                R.drawable.permission_ic_micro_phone));
+        permissions.add(new PermissionItem(Manifest.permission.CALL_PHONE,
+                "电话",
+                R.drawable.permission_ic_phone));
+        HiPermission.create(MainActivity.this)
+                .permissions(permissions)
+                .style(R.style.PermissionDefaultGreenStyle)
+                .checkMutiPermission(new PermissionCallback() {
+                    @Override
+                    public void onClose() {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+
+                    @Override
+                    public void onDeny(String permission, int position) {
+
+                    }
+
+                    @Override
+                    public void onGuarantee(String permission, int position) {
+
+                    }
+                });
 
 
         timer = new Timer();
@@ -212,8 +244,7 @@ public class MainActivity extends IatBasicActivity
                     //会以Dialog样式显示一个Activity
                 }
             }
-        }, 10000, 24 * 60 * 60 * 1000);
-
+        }, 10000*30, 24 * 60 * 60 * 1000);
         // 注册蓝牙监听
         registerReceiver(blueStateBroadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
         registerReceiver(blueStateBroadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED));
@@ -244,12 +275,11 @@ public class MainActivity extends IatBasicActivity
         setSelect(1);
 
 
-
     }
 
     private boolean XunFeigned() {
-        content = myApplication.getMinlin();
-        if (content != null) {
+
+        if (minlin != null) {
 
             return true;
         }
@@ -412,6 +442,8 @@ public class MainActivity extends IatBasicActivity
         headimage.setOnClickListener(this);
         now_weather.setOnClickListener(this);
         mian.setOnClickListener(this);
+        mian.setOnTouchListener(this);
+
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -466,7 +498,7 @@ public class MainActivity extends IatBasicActivity
         guide_tv = (TextView) findViewById(R.id.guide_tv);
         mian_tv = (TextView) findViewById(R.id.mian_tv);
 
-
+        dataBaseManager = new DataBaseManager();
         // 找到天气控件
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         headerView = navigationView.getHeaderView(0);
@@ -477,9 +509,8 @@ public class MainActivity extends IatBasicActivity
 
         SharedPreferences sharedPreferences2 = getSharedPreferences("P_NAME", Context.MODE_PRIVATE);
         SharedPreferences sharedPreferences3 = getSharedPreferences("headimage", Context.MODE_PRIVATE);
-        if (sharedPreferences2.contains("NAME")) {
-            name.setText(sharedPreferences2.getString("NAME", null).toString() + "");
-        }
+
+
         if (sharedPreferences3.contains("image")) {
 
             String imageString = sharedPreferences3.getString("image", null);
@@ -514,6 +545,7 @@ public class MainActivity extends IatBasicActivity
                 break;
             case R.id.main:
                 setSelect(1);  //首页
+                a1=false;
                 mian_tv.setTextColor(R.color.tv_color);
                 break;
             case R.id.guide:
@@ -653,6 +685,7 @@ public class MainActivity extends IatBasicActivity
                 if (tag) {
                     if (s != street || speed >= 5) {
                         //   车子开始移动    隔两秒刷新一次    传给全局变量
+                        recLen = 0.0;
                         handler.postDelayed(runnable, 1000);
 
                         tag = false;
@@ -795,22 +828,47 @@ public class MainActivity extends IatBasicActivity
     @Override
     public boolean onLongClick(View v) {
         clickMethod();
-        minlin = backString();
-        timer4 = new Timer();
-        timer4.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (XunFeigned()){
-                    Message message =new Message();
-                    message.what=0x17;
-                    mHandler.sendMessage(message);
-                    timer4.cancel();
-                }
+        a1 = true;
 
-            }
-        },0);
+        return true;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                if (a1) {
+                    if (myApplication.getMinlin() != null) {
+                        Log.e("获取语音信息", myApplication.getMinlin().toString());
+                        minlin = myApplication.getMinlin().toString();
+                    }
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            if (XunFeigned()) {
+                                Message message = new Message();
+                                message.what = 0x17;
+                                mHandler.sendMessage(message);
+                            }
+
+                        }
+                    }).start();
+                }
+                a1=false;
+                break;
+
+
+        }
         return false;
     }
+
 
     private class now_WeatherThread implements Runnable {
 
@@ -860,16 +918,17 @@ public class MainActivity extends IatBasicActivity
 
 
             }
-            if (msg.what==0x17){
-                Log.e("拨打电话",content);
-                if (content.equals("医院") || content.equals("寻找医院") || content.equals("去医院") || content.equals("我要去医院") || content.equals("立即上医院") || content.equals("导航") || content.equals("紧急导航")) {
+            if (msg.what == 0x17) {
+
+                Log.e("back", minlin);
+                if (minlin.equals("医院") || minlin.equals("寻找医院") || minlin.equals("去医院") || minlin.equals("我要去医院") || minlin.equals("立即上医院") || minlin.equals("导航") || minlin.equals("紧急导航")) {
                     // 切换导航界面
                     resetImgs();
                     setSelect(2);         //导航
                     guide_tv.setTextColor(R.color.tv_color);
 
                 }
-                if (content.equals("电话") || content.equals("拨打电话") || content.equals("立即拨打电话") || content.equals("打电话") ||content.equals("我要打电话") || content.equals("求救") || content.equals("拨打紧急联系人")) {
+                if (minlin.equals("电话") || minlin.equals("拨打电话") || minlin.equals("立即拨打电话") || minlin.equals("打电话") || minlin.equals("我要打电话") || minlin.equals("求救") || minlin.equals("拨打紧急联系人")) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         DataBaseManager dataBaseManager = new DataBaseManager();
                         con_persons = dataBaseManager.readconnList();
@@ -877,6 +936,7 @@ public class MainActivity extends IatBasicActivity
                             // 6.0以上权限申请
                             intentToCall(con_persons.get(con_persons.size() - 1).getPhone().toString());
                             Log.e("拨打电话", con_persons.get(con_persons.size() - 1).getPhone().toString());
+                            Toast.makeText(MainActivity.this,"拨打电话"+con_persons.get(con_persons.size() - 1).getPhone().toString(),Toast.LENGTH_SHORT).show();
                         } else
                             Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
 
@@ -892,7 +952,7 @@ public class MainActivity extends IatBasicActivity
 
                 }
             }
-            if (msg.what==0x18){
+            if (msg.what == 0x18) {
 
             }
 
@@ -931,6 +991,7 @@ public class MainActivity extends IatBasicActivity
     /**
      * 直接拨打电话
      */
+
     public boolean intentToCall(final String phoneNumber) {
         if (phoneNumber.isEmpty()) {
             Toast.makeText(MainActivity.this, "拨打失败", Toast.LENGTH_SHORT).show();
@@ -1026,25 +1087,26 @@ public class MainActivity extends IatBasicActivity
 
     private void down_data(HashMap<String, String> params) {
         down_url = down_url + "biao=xinxi";
-        final DataBaseManager dataBaseManager = new DataBaseManager();
+
         OkNetRequest.postFormRequest(down_url, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
+                ld.loadSuccess();
                 // 请求成功的回调
                 Log.e("下载同步成功", result.toString());
-                String deal_result;
-                deal_result = result.replace("连接成功", "");
-                JSONObject jsonObject = new JSONObject(deal_result);
+                String s=result.trim();
+
+                JSONObject jsonObject = new JSONObject(s);
                 JSONObject data = jsonObject.getJSONObject("data");
 
 
                 Log.e("OK咯", data.getString("name").toString());
 
-
+                    name.setText(data.getString("name")+"");
                 dataBaseManager.saveCard(data.getString("name"), data.getString("shengao"), data.getString("tizhong"), data.getString("bingshi"), data.getString("bron"), data.getString("xuexing"), data.getString("guoming"), data.getString("xiguan"));
 
                 //存入数据库
-                ld.loadSuccess();
+
             }
 
             @Override
@@ -1072,16 +1134,19 @@ public class MainActivity extends IatBasicActivity
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
                 // 请求成功的回调
-                Log.e("下载同步成功", result.toString());
-                String deal_result;
-                deal_result = result.replace("连接成功", "");
                 ld.loadSuccess();
-                JSONObject jsonObject = new JSONObject(deal_result);
+                Log.e("下载同步成功", result.toString());
+                String s=result.trim();
+
+                JSONObject jsonObject = new JSONObject(s);
+                jsonObject.length();
+                Log.d("data",  jsonObject.length()+"");
                 JSONObject data = jsonObject.getJSONObject("data");
+
 
                 //存入数据库
 
-                Log.e("OK咯", data.getString("userName")+data.getString("sex")+Integer.parseInt(data.getString("age"))+Integer.parseInt(data.getString("height"))+ Integer.parseInt(data.getString("weight")));
+                Log.e("OK咯", data.getString("userName") + data.getString("sex") + Integer.parseInt(data.getString("age")) + Integer.parseInt(data.getString("height")) + Integer.parseInt(data.getString("weight")));
                 dataBaseManager.saveUser(data.getString("userName"), data.getString("sex"), Integer.parseInt(data.getString("age")), Integer.parseInt(data.getString("height")), Integer.parseInt(data.getString("weight")));
 
 

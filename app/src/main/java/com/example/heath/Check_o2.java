@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.Datebase.XueyangModle;
+import com.example.heath.Guide.RouteNaviActivity;
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.utils.TimeUtils;
 import com.example.heath.utils.Utils;
@@ -55,6 +56,7 @@ public class Check_o2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_o2);
+        MyApplication.getInstance().addActivity(this);
         initView();
         initEvent();
         //hideResult();

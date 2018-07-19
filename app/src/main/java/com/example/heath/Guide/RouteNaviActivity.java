@@ -24,6 +24,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
 import com.autonavi.tbt.TrafficFacilityInfo;
+import com.example.heath.MyApplication;
 import com.example.heath.R;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class RouteNaviActivity extends Activity implements AMapNaviListener, AMa
         // 模拟导航
         mAMapNavi.setEmulatorNaviSpeed(60);
         getNaviParam();
+        MyApplication.getInstance().addActivity(RouteNaviActivity.this);
 
     }
 

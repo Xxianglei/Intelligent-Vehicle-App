@@ -73,6 +73,7 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connect_person);
         initView();
+        MyApplication.getInstance().addActivity(this);
 
         if (LoadLocalData() == false) {
             LoadYunData();

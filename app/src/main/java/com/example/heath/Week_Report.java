@@ -40,6 +40,7 @@ public class Week_Report extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.week_report);
+        MyApplication.getInstance().addActivity(this);
         initview();
     }
 

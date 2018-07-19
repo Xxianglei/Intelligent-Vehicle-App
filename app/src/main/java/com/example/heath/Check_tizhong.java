@@ -83,6 +83,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_tizhong);
         initView();
+        MyApplication.getInstance().addActivity(this);
         initEvent();
 
     }
