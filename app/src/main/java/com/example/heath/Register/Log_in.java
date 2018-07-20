@@ -103,19 +103,6 @@ public class Log_in extends AppCompatActivity {
     }
 
     private void setListener() {
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    edit = sharedPreferences.edit();
-                    edit.putString("tag", "ok");
-
-                } else {
-                    edit.putString("tag", "no");
-                }
-                edit.commit();
-            }
-        });
 
         btGo.setOnClickListener(new View.OnClickListener() {
             @Override

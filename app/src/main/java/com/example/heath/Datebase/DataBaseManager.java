@@ -134,6 +134,7 @@ public class DataBaseManager {
     public List readtzList() {
         List<TizhongModle> contentBeanList = SQLite.select().
                 from(TizhongModle.class).queryList();
+        Log.e("读取多条体重",contentBeanList.size()+"");
         return contentBeanList;
     }
 

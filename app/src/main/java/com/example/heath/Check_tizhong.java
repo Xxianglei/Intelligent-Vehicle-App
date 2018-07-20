@@ -75,8 +75,9 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
     private PopupWindow loadingWindow;
     private ImageView mPoint;
     private BluetoothAdapter bluetoothAdapter;
-    private String url="http://47.94.21.55/houtai/addtj.php";
+    private String url = "http://47.94.21.55/houtai/addtj.php";
     private MyApplication myApplication;
+    private List<TizhongModle> list3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +91,14 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
 
     private void initView() {
-        ImageView image=(ImageView)findViewById(R.id.back);
+        ImageView image = (ImageView) findViewById(R.id.back);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        myApplication = (MyApplication)getApplication();
+        myApplication = (MyApplication) getApplication();
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         sp = getSharedPreferences("goal_weight", Context.MODE_PRIVATE);
         editor = sp.edit();
@@ -109,9 +110,9 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
         bmi = findViewById(R.id.BMI);
         std = findViewById(R.id.zhuangtai);
         dataBaseManager = new DataBaseManager();
-        if (bluetoothAdapter.isEnabled() ) {
+        if (bluetoothAdapter.isEnabled()) {
             start.setEnabled(true);
-        } else{
+        } else {
             start.setEnabled(false);
             Toast.makeText(this, "您还未连接设备!", Toast.LENGTH_SHORT).show();
         }
@@ -125,8 +126,8 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
             bmi.setText(Bmi_Value(list2.get(list2.size() - 1).getData()) + "");
             weight_tv.setText(list2.get(list2.size() - 1).getData() + "");
         }
-        if (list2.size()>=7)
-        LocalData();
+        if (list2.size() >= 7)
+            LocalData();
         else {
             Toast.makeText(this, "您的数据太少了稍后再看吧！", Toast.LENGTH_SHORT).show();
         }
@@ -136,12 +137,11 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
 
     private void LocalData() {
-        List<TizhongModle> list3 = new DataBaseManager().readtzList();
-
-        Log.e("list2大小改变",list3.size()+"");
-            //设置x轴的数据
-            xValues = new ArrayList<>();
-        if (list3.size()>=7) {
+        list3 = new DataBaseManager().readtzList();
+        Log.e("list3大小改变", list3.size() + "");
+        //设置x轴的数据
+        xValues = new ArrayList<>();
+        if (list3.size() >= 7) {
             for (int i = 0; i < 7; i++) {
                 xValues.add((float) i);
             }
@@ -157,8 +157,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
                 yValues.add(yValue);
             }
             initLine();
-        }
-        else {
+        } else {
             Toast.makeText(this, "您的数据太少了稍后再看吧！", Toast.LENGTH_SHORT).show();
         }
 
@@ -218,21 +217,19 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
                 builder3.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String time=TimeUtils.dateToString2();
-                        if (check(weight,time)) {
-                            upload(myApplication.getName().toString(),url, String.valueOf(weight),time);
+                        String time = TimeUtils.dateToString2();
+                        if (check(weight, time)) {
+                            upload(myApplication.getName().toString(), url, String.valueOf(weight), time);
                             Log.e("weight", weight + "");
                             weight_tv.setText(weight + "");
-                            bmi.setText(Bmi_Value(weight)+"");
+                            bmi.setText(Bmi_Value(weight) + "");
                             std.setText(Bmi(weight));
                             testLineProgress();
-                            // now_weight=weight;
-                            List<TizhongModle> list2 = new DataBaseManager().readtzList();
-                            if (list2.size()>=7)
+                            //  添加数据到曲线图
                             LocalData();
                             Toast.makeText(Check_tizhong.this, "保存成功", Toast.LENGTH_SHORT).show();
                             //更新
-                            //initLine();
+
 
                         } else {
                             Toast.makeText(Check_tizhong.this, "保存失败", Toast.LENGTH_SHORT).show();
@@ -255,10 +252,9 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
                 break;
             case R.id.start:  // 自动体检
-                if (bluetoothAdapter.isEnabled()){
+                if (bluetoothAdapter.isEnabled()) {
                     showPopupWindow();
-                }
-                else Toast.makeText(this,"您还未连接设备!",Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(this, "您还未连接设备!", Toast.LENGTH_SHORT).show();
 
                 break;
         }
@@ -344,7 +340,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
     }
 
-    private boolean check(int weight,String time) {
+    private boolean check(int weight, String time) {
         if (weight != 0) {
             dataBaseManager.saveSingle(null, null, null, null, time, 0, 0, 0, 0, 0, weight);
             return true;
@@ -357,29 +353,29 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
     private String Bmi(int weight) {
         float high = 0f;
         List<UserModle> list = dataBaseManager.readuserList();
-        Log.e("list",list.size()+""+list.get(list.size() - 1).getHigh());
+        Log.e("list", list.size() + "" + list.get(list.size() - 1).getHigh());
         if (list.size() > 0) {
             high = list.get(list.size() - 1).getHigh();
             high = (float) (high / 100.0);
-        }else {
-            high=1.7f;
+        } else {
+            high = 1.7f;
         }
 
-            if (high > 1.3f) {
-                float bmi = (float) weight / (high * high);
-                if (bmi < 18.5)
-                    return "过轻";
-                if (18.5 <= bmi && bmi < 24)
-                    return "正常";
-                if (24 <= bmi && bmi < 27)
-                    return "过重";
-                if (27 <= bmi && bmi < 30)
-                    return "轻度肥胖";
-                if (30 <= bmi && bmi < 35)
-                    return "中度肥胖";
-                if (35 <= bmi)
-                    return "重度肥胖";
-            }
+        if (high > 1.3f) {
+            float bmi = (float) weight / (high * high);
+            if (bmi < 18.5)
+                return "过轻";
+            if (18.5 <= bmi && bmi < 24)
+                return "正常";
+            if (24 <= bmi && bmi < 27)
+                return "过重";
+            if (27 <= bmi && bmi < 30)
+                return "轻度肥胖";
+            if (30 <= bmi && bmi < 35)
+                return "中度肥胖";
+            if (35 <= bmi)
+                return "重度肥胖";
+        }
 
         return "正常";
     }
@@ -392,15 +388,15 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
             high = list.get(list.size() - 1).getHigh();
             // 换算米
             high = (float) (high / 100.0);
-        }else {
-            high=1.7f;
-            Toast.makeText(Check_tizhong.this,"请完善您的个人资料!",Toast.LENGTH_SHORT).show();
+        } else {
+            high = 1.7f;
+            Toast.makeText(Check_tizhong.this, "请完善您的个人资料!", Toast.LENGTH_SHORT).show();
         }
 
-            if (high < 1.5) {
-                return 0f;
-            } else
-                bmi = (float) weight / (high * high);
+        if (high < 1.5) {
+            return 0f;
+        } else
+            bmi = (float) weight / (high * high);
 
 
         return (float) Math.round(bmi * 100) / 100;
@@ -432,15 +428,15 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String time=TimeUtils.dateToString2();
+                        String time = TimeUtils.dateToString2();
                         int w = (int) (60 + Math.random() * 40);
-                        if (check(w,time)) {
+                        if (check(w, time)) {
 
-                            upload(myApplication.getName().toString(),url, String.valueOf(w),time);
+                            upload(myApplication.getName().toString(), url, String.valueOf(w), time);
                             weight_tv.setText(w + "");
-                            bmi.setText(Bmi_Value(w)+"");
+                            bmi.setText(Bmi_Value(w) + "");
                             std.setText(Bmi(w));
-                            if (list2.size()>=7)
+                            if (list2.size() >= 7)
                                 LocalData();
                         }
                         testLineProgress();
@@ -451,6 +447,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
             }
         }.start();
     }
+
     private void upload(String user, String url, String data, String date) {
 
         HashMap<String, String> params = new HashMap<>();
@@ -462,7 +459,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
-            public void requestSuccess(Response response,String result) throws Exception {
+            public void requestSuccess(Response response, String result) throws Exception {
                 // 请求成功的回调
                 Log.e("cccc", result.toString());
 

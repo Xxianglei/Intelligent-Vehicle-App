@@ -112,7 +112,8 @@
                 <CheckBox
                     android:id="@+id/checkbox"
                     android:checked="true"
-                    android:text="记住密码"
+                    android:text=""
+                    android:visibility="gone"
                     android:textSize="15sp"
                     android:textColor="#2fa881"
                     android:layout_width="wrap_content"
