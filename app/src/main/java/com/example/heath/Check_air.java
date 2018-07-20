@@ -62,10 +62,10 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
         start = (Button)findViewById(R.id.start);
 
         if (bluetoothAdapter.isEnabled()){
-            sv.setClickable(true);
+            start.setEnabled(true);
         }
         else{
-            sv.setClickable(false);
+            start.setEnabled(false);
             Toast.makeText(this,"您还未连接设备!",Toast.LENGTH_SHORT).show();
         }
 

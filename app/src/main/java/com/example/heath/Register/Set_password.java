@@ -93,12 +93,12 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
         this.unregisterReceiver(networkChangeReceiver);
     }
 
     private void initView() {
+        ld = new LoadingDialog(Set_password.this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -125,7 +125,6 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         if (!validatepassword(pass)&&((etPassword.getText().toString()).equals(etRepeatpassword.getText().toString()))) {
             Toast.makeText(Set_password.this, "亲 请输入由英文和数字组成的密码哦！！", Toast.LENGTH_SHORT).show();
         } else {
-            ld = new LoadingDialog(Set_password.this);
             ld.setLoadingText("正在登录中...")
                     .setSuccessText("登录成功")//显示加载成功时的文字
                     .setFailedText("注册失败")
@@ -152,7 +151,6 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
                 Log.e("注册",deal_result);
                 myApplication.setPhone(phone);
                 if (deal_result.contains("101")){
-                    ld.loadSuccess();
                     startActivity(new Intent(Set_password.this,MainActivity.class));
                     Set_password.this.finish();
 
@@ -295,9 +293,9 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
             NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
             //判断是否连接
             if (networkInfo != null && networkInfo.isAvailable()) {
-              next.setClickable(true);
+              next.setEnabled(true);
             } else {
-                next.setClickable(false);
+                next.setEnabled(false);
                 Toast.makeText(context, "当前网络已断开!",
                         Toast.LENGTH_SHORT).show();
             }

@@ -136,7 +136,7 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
         dataBaseManager.saveSingle(null, time, null, null, null, 0, randomNum_high, randomNum_low, 0, 0, 0);
         // 上传数据
         upload(myApplication.getName().toString(),url,String.valueOf(randomNum_high),String.valueOf(randomNum_low),time);
-        date.setText("测量时间" + TimeUtils.dateToString());
+        date.setText("测量时间" + TimeUtils.dateToString2());
         judge(randomNum_high, randomNum_low);
 
     }

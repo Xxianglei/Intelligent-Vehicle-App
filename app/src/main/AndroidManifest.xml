@@ -19,7 +19,7 @@
 
         tools:replace="android:icon,android:theme,android:label">
         <activity
-            android:name=".MainActivity"
+            android:name=".WelAcitivity"
             android:launchMode="standard"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -30,6 +30,9 @@
             </intent-filter>
         </activity>
         // 活动
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.example.heath.Guide.RouteNaviActivity"
             android:theme="@style/AppTheme.NoActionBar" />

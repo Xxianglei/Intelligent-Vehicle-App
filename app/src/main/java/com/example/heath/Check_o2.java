@@ -100,10 +100,10 @@ public class Check_o2 extends AppCompatActivity {
         mSvStep.setmMaxValueint(100);
 
         if (bluetoothAdapter.isEnabled()){
-            mSvStep.setClickable(true);
+            mSvStep.setEnabled(true);
         }
         else {
-            mSvStep.setClickable(false);
+            mSvStep.setEnabled(false);
             Toast.makeText(this,"您还未连接设备!",Toast.LENGTH_SHORT).show();
         }
         myApplication = (MyApplication)getApplication();

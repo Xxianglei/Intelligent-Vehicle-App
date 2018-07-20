@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.RunnableFuture;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -82,7 +83,7 @@ public class Log_in extends AppCompatActivity {
     }
 
     private void initView() {
-
+        ld = new LoadingDialog(Log_in.this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -122,9 +123,9 @@ public class Log_in extends AppCompatActivity {
                 // 登录
                 name = etUsername.getText().toString();
                 password = etPassword.getText().toString();
-                if (name.toString() != "") {
+
+                if (name.length()>0 && password.length()>0) {
                     myApplication.setName(name);
-                    ld = new LoadingDialog(Log_in.this);
                     ld.setLoadingText("正在登录中...")
                             .setSuccessText("登录成功")//显示加载成功时的文字
                             .setFailedText("登录失败")
@@ -133,7 +134,7 @@ public class Log_in extends AppCompatActivity {
                     GLog_in(name, password);
                 } else {
                     ld.loadFailed();
-                    Toast.makeText(Log_in.this, "账号为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Log_in.this, "账号或密码为空", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -167,11 +168,13 @@ public class Log_in extends AppCompatActivity {
         });
 
     }
+
     @Override
-    protected  void onPause(){
+    protected void onPause() {
         ld.close();
         super.onPause();
     }
+
     @Override
     protected void onStop() {
 
@@ -200,7 +203,7 @@ public class Log_in extends AppCompatActivity {
                     code = gson.fromJson(deal_result, Code.class);
                     int a = Integer.parseInt(code.getCode());
                     if (a == 201) {
-                        ld.loadSuccess();
+
                         startActivity(new Intent(Log_in.this, MainActivity.class));
                         Log_in.this.finish();
 

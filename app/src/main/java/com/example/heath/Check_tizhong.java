@@ -109,6 +109,12 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
         bmi = findViewById(R.id.BMI);
         std = findViewById(R.id.zhuangtai);
         dataBaseManager = new DataBaseManager();
+        if (bluetoothAdapter.isEnabled() ) {
+            start.setEnabled(true);
+        } else{
+            start.setEnabled(false);
+            Toast.makeText(this, "您还未连接设备!", Toast.LENGTH_SHORT).show();
+        }
         LineChart lineChart = findViewById(R.id.lineChart);//绑定控件
         lineChartManager1 = new LineChartManager(lineChart);
         list2 = dataBaseManager.readtzList();
@@ -351,6 +357,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
     private String Bmi(int weight) {
         float high = 0f;
         List<UserModle> list = dataBaseManager.readuserList();
+        Log.e("list",list.size()+""+list.get(list.size() - 1).getHigh());
         if (list.size() > 0) {
             high = list.get(list.size() - 1).getHigh();
             high = (float) (high / 100.0);
@@ -358,7 +365,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
             high=1.7f;
         }
 
-            if (high > 1.5) {
+            if (high > 1.3f) {
                 float bmi = (float) weight / (high * high);
                 if (bmi < 18.5)
                     return "过轻";
@@ -372,11 +379,9 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
                     return "中度肥胖";
                 if (35 <= bmi)
                     return "重度肥胖";
-            } else {
-                return "null ";
             }
 
-        return null;
+        return "正常";
     }
 
     private float Bmi_Value(int weight) {

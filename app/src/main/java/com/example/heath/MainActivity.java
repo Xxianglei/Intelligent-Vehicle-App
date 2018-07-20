@@ -30,6 +30,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -38,6 +39,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,6 +63,7 @@ import com.example.heath.Model.Weather_model;
 
 import com.example.heath.Speech.IatBasicActivity;
 import com.example.heath.utils.HttpDownloader;
+import com.example.heath.utils.JsonUtil;
 import com.example.heath.utils.ParseNowWeatherUtil;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
@@ -265,10 +268,6 @@ public class MainActivity extends IatBasicActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-       /* Explode explode = new Explode();
-        explode.setDuration(500);
-        getWindow().setExitTransition(explode);
-        getWindow().setEnterTransition(explode);*/
         initView();
         initIatData(mContent);
         initEvent();
@@ -444,36 +443,6 @@ public class MainActivity extends IatBasicActivity
         mian.setOnClickListener(this);
         mian.setOnTouchListener(this);
 
-        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                /**
-                 * 抽屉滑动时，调用此方法
-                 * */
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                /**
-                 * 抽屉被完全展开时，调用此方法
-                 * */
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                /**
-                 * 抽屉被完全关闭时，调用此方法
-                 * */
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-                /**
-                 * 抽屉状态改变时，调用此方法
-                 * */
-            }
-        });
     }
 
     private void initView() {
@@ -829,7 +798,6 @@ public class MainActivity extends IatBasicActivity
     public boolean onLongClick(View v) {
         clickMethod();
         a1 = true;
-
         return true;
     }
 
@@ -962,13 +930,7 @@ public class MainActivity extends IatBasicActivity
     //定位天气服务尾
 
 
-    /*  public boolean onCreateOptionsMenu(Menu menu) {
 
-          getMenuInflater().inflate(R.menu.add_mess_menu, menu);
-
-
-          return true;
-      }*/
     class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -979,8 +941,7 @@ public class MainActivity extends IatBasicActivity
             NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
             //判断是否连接
             if (networkInfo != null && networkInfo.isAvailable()) {
-                Toast.makeText(context, "当前网络已连接!",
-                        Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(context, "当前网络已断开!",
                         Toast.LENGTH_SHORT).show();
@@ -1077,7 +1038,6 @@ public class MainActivity extends IatBasicActivity
                 case BluetoothAdapter.STATE_DISCONNECTING:
                     Log.i("TAG", "STATE_DISCONNECTING");
                     blu = "您的蓝牙正在断开连接!";
-
                     break;
                 default:
                     break;
@@ -1096,13 +1056,13 @@ public class MainActivity extends IatBasicActivity
                 Log.e("下载同步成功", result.toString());
                 String s=result.trim();
 
-                JSONObject jsonObject = new JSONObject(s);
+                JSONObject jsonObject = new JSONObject(JsonUtil.JSONTokener(s));
                 JSONObject data = jsonObject.getJSONObject("data");
 
 
                 Log.e("OK咯", data.getString("name").toString());
 
-                    name.setText(data.getString("name")+"");
+                name.setText(data.getString("name")+"");
                 dataBaseManager.saveCard(data.getString("name"), data.getString("shengao"), data.getString("tizhong"), data.getString("bingshi"), data.getString("bron"), data.getString("xuexing"), data.getString("guoming"), data.getString("xiguan"));
 
                 //存入数据库
@@ -1138,7 +1098,7 @@ public class MainActivity extends IatBasicActivity
                 Log.e("下载同步成功", result.toString());
                 String s=result.trim();
 
-                JSONObject jsonObject = new JSONObject(s);
+                JSONObject jsonObject = new JSONObject(JsonUtil.JSONTokener(s));
                 jsonObject.length();
                 Log.d("data",  jsonObject.length()+"");
                 JSONObject data = jsonObject.getJSONObject("data");

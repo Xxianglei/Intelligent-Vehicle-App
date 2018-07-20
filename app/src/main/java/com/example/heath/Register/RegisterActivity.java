@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final int CODE_REPEAT = 1; //重新发送
     private FloatingActionButton fab;
     private CardView cvAdd;
-    private Button go;     //
+
 
 
     @Override
@@ -120,15 +120,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        cvAdd = (CardView) findViewById(R.id.cv_add);
         myApplication = (MyApplication) getApplication();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
         //动态注册
         registerReceiver(networkChangeReceiver, intentFilter);
-        go = (Button) findViewById(R.id.bt_go);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        cvAdd = (CardView) findViewById(R.id.cv_add);
     }
 
     Handler hd = new Handler() {
@@ -163,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             } else {//错误等在这里（包括验证失败）
-                //错误码请参照http://wiki.mob.com/android-api-错误码参考/这里我就不再继续写了
+
                 ((Throwable) data).printStackTrace();
                 String str = data.toString();
                 toast(str);
@@ -343,10 +344,9 @@ public class RegisterActivity extends AppCompatActivity {
             NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
             //判断是否连接
             if (networkInfo != null && networkInfo.isAvailable()) {
-
-                Toast.makeText(context, "当前网络已连接!",
-                        Toast.LENGTH_SHORT).show();
+                btnNext.setEnabled(true);
             } else {
+                btnNext.setEnabled(false);
                 Toast.makeText(context, "当前网络已断开!",
                         Toast.LENGTH_SHORT).show();
             }
