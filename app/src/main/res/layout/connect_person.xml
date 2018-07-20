@@ -39,18 +39,16 @@
 
 
     <LinearLayout
-        android:paddingLeft="30dp"
+        android:paddingLeft="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
         android:background="#ffffff"
-        android:layout_gravity="start|center_vertical"
         android:weightSum="2">
 
         <TextView
 
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="姓名"
             android:textSize="20sp"
             android:layout_width="0dp"
@@ -59,7 +57,7 @@
 
         <TextView
             android:textSize="20sp"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="电话"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -67,6 +65,8 @@
     </LinearLayout>
 
     <ListView
+
+        android:layout_gravity="center"
         android:background="#ffffff"
         android:id="@+id/list_item"
         android:layout_width="match_parent"

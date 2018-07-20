@@ -121,7 +121,7 @@ public class Check_xinlv extends AppCompatActivity {
                 DataBaseManager dataBaseManager = new DataBaseManager();
                 int randomNum = (int) (50 + Math.random() * 50);
                 HeartbeatEntity e = new HeartbeatEntity();
-                e.date = TimeUtils.dateToString();
+                e.date = TimeUtils.dateToString2();
                 e.datum = String.valueOf(randomNum);
                 // 数据存入数据库
                 String time=TimeUtils.dateToString2();

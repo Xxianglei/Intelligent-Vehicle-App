@@ -1051,7 +1051,7 @@ public class MainActivity extends IatBasicActivity
         OkNetRequest.postFormRequest(down_url, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
-                ld.loadSuccess();
+
                 // 请求成功的回调
                 Log.e("下载同步成功", result.toString());
                 String s=result.trim();
@@ -1066,7 +1066,7 @@ public class MainActivity extends IatBasicActivity
                 dataBaseManager.saveCard(data.getString("name"), data.getString("shengao"), data.getString("tizhong"), data.getString("bingshi"), data.getString("bron"), data.getString("xuexing"), data.getString("guoming"), data.getString("xiguan"));
 
                 //存入数据库
-
+                ld.loadSuccess();
             }
 
             @Override
@@ -1094,7 +1094,7 @@ public class MainActivity extends IatBasicActivity
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
                 // 请求成功的回调
-                ld.loadSuccess();
+
                 Log.e("下载同步成功", result.toString());
                 String s=result.trim();
 
@@ -1108,7 +1108,7 @@ public class MainActivity extends IatBasicActivity
 
                 Log.e("OK咯", data.getString("userName") + data.getString("sex") + Integer.parseInt(data.getString("age")) + Integer.parseInt(data.getString("height")) + Integer.parseInt(data.getString("weight")));
                 dataBaseManager.saveUser(data.getString("userName"), data.getString("sex"), Integer.parseInt(data.getString("age")), Integer.parseInt(data.getString("height")), Integer.parseInt(data.getString("weight")));
-
+                ld.loadSuccess();
 
             }
 

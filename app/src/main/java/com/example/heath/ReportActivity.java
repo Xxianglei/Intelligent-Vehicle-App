@@ -81,11 +81,14 @@ public class ReportActivity extends AppCompatActivity {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         flage = 0;
+                        Log.e("flage_down",flage+"");
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        flage = 1;
+                        flage = 2;
+                        Log.e("flage_move",flage+"");
                         break;
                     case MotionEvent.ACTION_UP:
+                        Log.e("flage_up",flage+"");
                         if (flage == 0) {
                             int item = mViewPager.getCurrentItem();
                             if (item == 0) {
