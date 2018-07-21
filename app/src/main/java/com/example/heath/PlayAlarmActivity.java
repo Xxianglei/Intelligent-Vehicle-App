@@ -38,7 +38,8 @@ public class PlayAlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_med);
         MyApplication.getInstance().addActivity(this);
-
+        player =new MediaPlayer();
+        //  调整闹钟声音大小
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);

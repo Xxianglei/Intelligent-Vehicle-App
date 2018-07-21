@@ -276,7 +276,7 @@ public class AddAlarmActivity extends AppCompatActivity implements
     private void showRingDialog(DialogInterface lastDialog) {
 
         lastDialog.dismiss();
-
+        player =new MediaPlayer();
         String[] ringList = new String[]{"Morning","卡农","空灵","天籁森林","唯美","温暖早晨"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setSingleChoiceItems(ringList, 0, new DialogInterface.OnClickListener() {
@@ -539,6 +539,8 @@ public class AddAlarmActivity extends AppCompatActivity implements
         }
         if (player!=null){
             player.release();
+
+
         }
         super.onDestroy();
     }
