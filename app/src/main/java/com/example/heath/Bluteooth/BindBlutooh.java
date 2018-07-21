@@ -17,31 +17,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 
 import com.example.heath.MyApplication;
-import com.example.heath.PersonCenter;
 import com.example.heath.R;
-import com.example.heath.utils.ParseNowWeatherUtil;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
-import static android.R.attr.handle;
-import static android.R.attr.x;
 
 @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
 public class BindBlutooh extends AppCompatActivity {
@@ -52,8 +42,6 @@ public class BindBlutooh extends AppCompatActivity {
     private ArrayList<SiriListItem> list;
     ChatListAdapter mAdapter;
     private RelativeLayout re;
-    private IntentFilter discoveryFilter;
-    private IntentFilter foundFilter;
     private Intent intent;
     private TextView sug;
 
@@ -146,9 +134,9 @@ public class BindBlutooh extends AppCompatActivity {
     private void initEvent() {
 
         //  注册广播
-        discoveryFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        IntentFilter discoveryFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(mReceiver, discoveryFilter);
-        foundFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        IntentFilter foundFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(mReceiver, foundFilter);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

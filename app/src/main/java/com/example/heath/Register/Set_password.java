@@ -13,10 +13,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.transition.Explode;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -29,14 +27,9 @@ import android.widget.Toast;
 
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.MainActivity;
-import com.example.heath.Model.Code;
 import com.example.heath.MyApplication;
 import com.example.heath.R;
-import com.google.gson.Gson;
-import com.kaopiz.kprogresshud.KProgressHUD;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -61,14 +54,12 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
 
     private FloatingActionButton fab;
     private CardView cvAdd;
-    private String url = "http://47.94.21.55/houtai/index.php";
     private EditText etPassword;
     private EditText etRepeatpassword;
     private static final String PASSWORD_PATTERN = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
 
 
     private Pattern pattern1 = Pattern.compile(PASSWORD_PATTERN);
-    private Matcher matcher1;
     private Button next;
     private MyApplication myApplication;
     private NetworkChangeReceiver networkChangeReceiver;
@@ -142,6 +133,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         params.put("phone", name);
         params.put("password", password);
         Log.e("注册账号密码", params.toString());
+        String url = "http://47.94.21.55/houtai/index.php";
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -261,7 +253,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
 
 
     public boolean validatepassword(String pass) {
-        matcher1 = pattern1.matcher(pass);
+        Matcher matcher1 = pattern1.matcher(pass);
         return matcher1.matches();
     }
 

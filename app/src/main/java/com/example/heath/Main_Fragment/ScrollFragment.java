@@ -30,23 +30,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by florentchampigny on 24/04/15.
  */
 public class ScrollFragment extends HeaderViewPagerFragment {
-    private LineChart lineChart;// 声明图表控件
     @BindView(R.id.scrollView)
     NestedScrollView mScrollView;
-    private Context context;
 
-    private NestedScrollView scrollview;
     private List<XueyaModle> list;
     private TextView zhi;
     private TextView date;
     private MyScrollView end;
-    private LinearLayout ll;
 
 
     public static ScrollFragment newInstance() {
@@ -57,7 +52,7 @@ public class ScrollFragment extends HeaderViewPagerFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scroll, container, false);
         initView(view);
-        context=getActivity();
+        Context context = getActivity();
         initData();
         return view;
     }
@@ -65,8 +60,8 @@ public class ScrollFragment extends HeaderViewPagerFragment {
     private void initView(View v) {
         DataBaseManager dataBaseManager=new DataBaseManager();
         list = dataBaseManager.readxyList();
-        ll = v.findViewById(R.id.cry_nodata);
-        lineChart = v.findViewById(R.id.lineChart);//绑定控件
+        LinearLayout ll = v.findViewById(R.id.cry_nodata);
+        LineChart lineChart = v.findViewById(R.id.lineChart);
         if (list.size()>=7){
             ll.setVisibility(View.GONE);
             lineChart.setVisibility(View.VISIBLE);
@@ -82,7 +77,7 @@ public class ScrollFragment extends HeaderViewPagerFragment {
             }
         });
 
-        scrollview= v.findViewById(R.id.scrollView);
+        NestedScrollView scrollview = v.findViewById(R.id.scrollView);
         Log.e("大小",list.size()+"");
         LineChartManager lineChartManager1 = new LineChartManager(lineChart);
 

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -39,7 +38,6 @@ public class ScrollFragment3 extends HeaderViewPagerFragment {
     private List<XueyangModle> list;
     private LineChart lineChart;
     private MyScrollView end;
-    private LinearLayout ll;
 
     public static ScrollFragment3 newInstance() {
         return new ScrollFragment3();
@@ -55,7 +53,7 @@ public class ScrollFragment3 extends HeaderViewPagerFragment {
 
     private void initView(View view) {
         com.github.mikephil.charting.charts.LineChart lineChart = view.findViewById(R.id.lineChart);//绑定控件
-        ll = view.findViewById(R.id.cry_nodata);
+        LinearLayout ll = view.findViewById(R.id.cry_nodata);
         DataBaseManager dataBaseManager=new DataBaseManager();
         list = dataBaseManager.readxyangList();
         if (list.size()>=7){

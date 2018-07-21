@@ -12,4 +12,29 @@
     <string name="pref_key_iat_show">iat_show</string>
 
     <string name="text_begin">请开始说话…</string>
+
+
+
+    <string name="add_alarm">闹钟名</string>
+    <string name="details">设置闹钟</string>
+    <string name="date">Date</string>
+    <string name="time">时间</string>
+    <string name="repeat">响铃周期</string>
+    <string name="repeat_off">Off</string>
+    <string name="wake_method">关闭方式</string>
+    <string name="repeat_type">Type of Repetitions</string>
+    <string name="action_discard_alarm">Discard Alarm</string>
+    <string name="action_save_alarm">Save Alarm</string>
+    <string name="popup_menu_edit">编辑</string>
+    <string name="popup_menu_delete">删除</string>
+    <string name="ring_type">提醒方式</string>
+
+    <string name="ca_set">点我设置</string>
+    <string name="question">自定义问题</string>
+    <string name="que_set">点我设置</string>
+    <string name="set_que">请输入您的问题：</string>
+    <string name="que_sure">确定并保存</string>
+    <string name="que_can">取消</string>
+    <string name="input_complete">输入好了</string>
+    <string name="alarm_complete">闹钟时间到</string>
 </resources>

@@ -15,7 +15,7 @@ buildscript {
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'  //添加这一行
         classpath 'com.android.tools.build:gradle:2.3.2'
         // 注册MobSDK
-        classpath 'com.mob.sdk:MobSDK:+'
+        classpath 'com.mob.sdk:MobSDK:2018.0319.1724'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
     }

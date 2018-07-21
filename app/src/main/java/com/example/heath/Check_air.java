@@ -33,7 +33,6 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
     private Button start;
     private ImageView mPoint;
     private PopupWindow loadingWindow;
-    private BluetoothAdapter bluetoothAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
                 finish();
             }
         });
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBigWindMill = (WindPath) findViewById(R.id.id_wind);
         mSmallWindMill = (WindPath) findViewById(R.id.id_windsmall);
         sv = (StepArcView) findViewById(R.id.sv);

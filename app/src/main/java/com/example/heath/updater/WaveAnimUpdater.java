@@ -14,9 +14,6 @@ import com.gplibs.magicsurfaceview.Vec;
  */
 public class WaveAnimUpdater extends MagicSurfaceModelUpdater {
 
-    // 每个点移动所需时间占整个动画时间的比例
-    private final float MOVING_TIME = 0.3f;
-
     // 是否为隐藏动画
     private boolean mIsHide;
     // 动画方向
@@ -86,6 +83,7 @@ public class WaveAnimUpdater extends MagicSurfaceModelUpdater {
      */
     @Override
     protected void updatePosition(MagicSurface surface, int r, int c, Vec outPos, Vec outColor) {
+        float MOVING_TIME = 0.3f;
         float startTime = mAnimHelper.getStartAnimTime(outPos, false, (1 - MOVING_TIME));
         float offset = mAnimHelper.getMoveDistance(mRangeOfSelf ? AnimHelper.MOVE_TYPE_SELF : AnimHelper.MOVE_TYPE_SCENE, startTime, MOVING_TIME);
         if (mIsVertical) {

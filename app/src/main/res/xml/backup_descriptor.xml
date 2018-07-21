@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- TODO Remove the following "exclude" elements to make them a part of the auto backup -->
+    <!-- Exclude the shared preferences file that contains the GCM registrationId -->
+    <exclude
+        domain="sharedpref"
+        path="com.iflytek.setting.xml" />
+    <exclude
+        domain="sharedpref"
+        path="gerencenter.xml" />
+    <exclude
+        domain="sharedpref"
+        path="CITY.xml" />
+    <exclude
+        domain="sharedpref"
+        path="P_NAME.xml" />
+    <exclude
+        domain="sharedpref"
+        path="log_tag.xml" />
+    <exclude
+        domain="sharedpref"
+        path="testSP.xml" />
+    <exclude
+        domain="sharedpref"
+        path="headimage.xml" />
+    <exclude
+        domain="sharedpref"
+        path="goal_weight.xml" />
+</full-backup-content>

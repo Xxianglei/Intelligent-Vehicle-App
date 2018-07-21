@@ -20,8 +20,6 @@ public class Fragment1 extends Fragment{
 
 
     private WebView webView;
-    private ProgressBar progressBar;
-    private LoadWeb loadWeb;
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,9 +32,9 @@ public class Fragment1 extends Fragment{
     }
 
     private void initView(View view) {
-        progressBar = view.findViewById(R.id.progressbar);
+        ProgressBar progressBar = view.findViewById(R.id.progressbar);
         webView = view.findViewById(R.id.webview);
-        loadWeb = new LoadWeb(webView,progressBar,getActivity());
+        LoadWeb loadWeb = new LoadWeb(webView, progressBar, getActivity());
         loadWeb.load("https://m.haodf.com/");
     }
     private View.OnKeyListener backListener = new View.OnKeyListener() {

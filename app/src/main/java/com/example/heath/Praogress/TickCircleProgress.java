@@ -27,8 +27,6 @@ public class TickCircleProgress extends CircleProgress {
     private PointF[] stopPoints;
     //刻度圆弧的rect
     private RectF mTickPaintRect;
-    //父类内弧边界的Rect
-    private RectF mParentRect;
     private float tickWidth;
     //刻度颜色
     private int tickColor;
@@ -57,7 +55,7 @@ public class TickCircleProgress extends CircleProgress {
         super.initViewSize();
 
         float dx = mStrokeWidth * 0.5F;
-        mParentRect = new RectF(mPaintRectF.left + dx, mPaintRectF.top + dx,
+        RectF mParentRect = new RectF(mPaintRectF.left + dx, mPaintRectF.top + dx,
                 mPaintRectF.right - dx, mPaintRectF.bottom - dx);
 
         mTickPaintRect = new RectF(mParentRect.left + tickMarkHeight, mParentRect.top + tickMarkHeight,

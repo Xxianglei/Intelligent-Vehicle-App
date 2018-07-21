@@ -20,7 +20,6 @@ public class HeadLayout extends RelativeLayout{
     private LinearLayout titleLayout; //标题栏父控件
     private ViewPager viewPager;
 
-    private View bgLine;  //导航背景色
     private View navLine;  //导航条颜色
 
     private int navWidth = 0; //导航条宽度
@@ -138,7 +137,7 @@ public class HeadLayout extends RelativeLayout{
     {
         height = dip2px(context,height);
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, height);
-        bgLine = new View(context);
+        View bgLine = new View(context);
         bgLine.setLayoutParams(layoutParams);
         bgLine.setBackgroundColor(context.getResources().getColor(color));
 

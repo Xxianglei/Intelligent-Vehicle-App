@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.annotation.UiThread;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
@@ -65,19 +64,14 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
     private List<List<Float>> yValues;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private NumberPicker numberPicker;
-    private String leftContent;
-    private String rightContent;
     private String leftAlert;
     private String rightAlert;
     private float losseweight;
-    private float now_weight;
     private PopupWindow loadingWindow;
     private ImageView mPoint;
     private BluetoothAdapter bluetoothAdapter;
     private String url = "http://47.94.21.55/houtai/addtj.php";
     private MyApplication myApplication;
-    private List<TizhongModle> list3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +131,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
 
     private void LocalData() {
-        list3 = new DataBaseManager().readtzList();
+        List<TizhongModle> list3 = new DataBaseManager().readtzList();
         Log.e("list3大小改变", list3.size() + "");
         //设置x轴的数据
         xValues = new ArrayList<>();
@@ -264,11 +258,11 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
         leftAlert = "开始";
         rightAlert = "目标";
         if (sp.contains("start_weight") && sp.contains("end_weight")) {
-            leftContent = sp.getString("start_weight", null) + "公斤";
-            rightContent = sp.getString("end_weight", null) + "公斤";
+            String leftContent = sp.getString("start_weight", null) + "公斤";
+            String rightContent = sp.getString("end_weight", null) + "公斤";
             liProgress.setContent(leftAlert, leftContent, rightAlert, rightContent);
             if (list2.size() > 0) {
-                now_weight = Float.valueOf(list2.get(list2.size() - 1).getData());
+                float now_weight = Float.valueOf(list2.get(list2.size() - 1).getData());
                 losseweight = now_weight - Float.parseFloat(sp.getString("start_weight", null));
                 liProgress.setIndicator(Float.parseFloat(sp.getString("start_weight", null)), Float.parseFloat(sp.getString("end_weight", null)), now_weight, losseweight + "kg");
             } else {
@@ -287,7 +281,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
     private void prechoose() {
         View myView = LayoutInflater.from(this).inflate(R.layout.doublechoose, null);
-        numberPicker = myView.findViewById(R.id.my_weight2);
+        NumberPicker numberPicker = myView.findViewById(R.id.my_weight2);
         numberPicker.setMaxValue(200);
         numberPicker.setMinValue(30);
         numberPicker.setValue(70);

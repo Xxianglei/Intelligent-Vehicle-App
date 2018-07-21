@@ -109,10 +109,7 @@
                             android:id="@+id/ll_high"
                             android:layout_width="95dp"
                             android:layout_height="50dp"
-                            android:layout_alignParentBottom="true"
                             android:layout_gravity="center"
-                            android:layout_toLeftOf="@+id/ll_age"
-                            android:layout_toStartOf="@+id/ll_age"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -142,13 +139,9 @@
                             android:layout_width="95dp"
                             android:layout_height="50dp"
 
-                            android:layout_alignParentBottom="true"
-
                             android:layout_gravity="center"
                             android:layout_marginLeft="12dp"
                             android:layout_marginStart="12dp"
-                            android:layout_toEndOf="@+id/ll_age"
-                            android:layout_toRightOf="@+id/ll_age"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -178,8 +171,6 @@
                             android:id="@+id/ll_age"
                             android:layout_width="105dp"
                             android:layout_height="105dp"
-                            android:layout_alignTop="@+id/ll_high"
-                            android:layout_centerHorizontal="true"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:orientation="vertical">

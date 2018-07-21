@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -38,7 +37,6 @@ public class ScrollFragment4 extends HeaderViewPagerFragment {
     private TextView zhi;
     private TextView date;
     private MyScrollView end;
-    private LineChart lineChart;
 
     public static ScrollFragment4 newInstance() {
         return new ScrollFragment4();
@@ -62,7 +60,7 @@ public class ScrollFragment4 extends HeaderViewPagerFragment {
 
     private void initView(View view) {
         LinearLayout ll=view.findViewById(R.id.cry_nodata);
-        lineChart = view.findViewById(R.id.lineChart);
+        LineChart lineChart = view.findViewById(R.id.lineChart);
         DataBaseManager dataBaseManager=new DataBaseManager();
         list = dataBaseManager.readtzList();
         if (list.size()>=7){

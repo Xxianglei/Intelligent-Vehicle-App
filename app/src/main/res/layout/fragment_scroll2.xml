@@ -66,7 +66,7 @@
                             android:layout_marginTop="10dp"
                             android:text="96"
                             android:textColor="#f25151"
-                            android:textSize="50dp" />
+                            android:textSize="50sp" />
 
                         <TextView
                             android:id="@+id/date"
@@ -108,7 +108,7 @@
                             android:padding="5dp"
                             android:text="  心率趋势图"
                             android:textColor="#2e2e2e"
-                            android:textSize="12dp"
+                            android:textSize="12sp"
 
                             />
 
@@ -133,7 +133,7 @@
                                 android:layout_height="match_parent">
                                 <ImageView
                                     android:layout_weight="1"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="100dp"
                                     android:adjustViewBounds="true"
                                     android:scaleType="fitCenter"
@@ -201,7 +201,7 @@
                                 android:gravity="center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="50dp"
-                                android:textSize="18dp"
+                                android:textSize="18sp"
                                 android:text="详细历史数据"
 
                                 />
@@ -232,25 +232,25 @@
                             android:padding="5dp"
                             android:layout_width="wrap_content"
                             android:text="参考标准"
-                            android:textSize="12dp"
+                            android:textSize="12sp"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:padding="5dp"
                             android:text="正常范围："
-                            android:textSize="12dp"
+                            android:textSize="12sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <TextView
                             android:padding="5dp"
                             android:text="安静心率：一般为60—100次/分"
-                            android:textSize="12dp"
+                            android:textSize="12sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:padding="5dp"
                             android:text="运动心率：一般为120—160次/分"
-                            android:textSize="12dp"
+                            android:textSize="12sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>

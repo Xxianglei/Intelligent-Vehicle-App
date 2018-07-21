@@ -13,11 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.annotation.UiThread;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
-import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,11 +28,8 @@ import android.widget.Toast;
 import com.example.heath.Datebase.ConnectModle;
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.HttpUtils.OkNetRequest;
-import com.example.heath.Model.Code;
 import com.example.heath.Model.Con_person;
-import com.example.heath.Register.Log_in;
 import com.example.heath.adpter.MyAdapter;
-import com.google.gson.Gson;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -61,11 +55,7 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
     private MyAdapter adapter;
     private List<Con_person> con_persons = new ArrayList<Con_person>();
 
-    private ImageView imageView;
-    private List<ConnectModle> list1;
-    private String url = "http://47.94.21.55/houtai/addlink.php";
     private MyApplication myApplication;
-    private ConnectivityManager manager;
     private NetworkInfo info;
 
     @Override
@@ -89,7 +79,7 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
 
     private boolean LoadLocalData() {
 
-        list1 = database.readconnList();
+        List<ConnectModle> list1 = database.readconnList();
         con_persons.clear();
         if (list1.size() >= 1) {
             for (int i = list1.size() - 1; i >= 0; i--) {
@@ -106,13 +96,13 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
     }
 
     private void initView() {
-        manager = (ConnectivityManager)
+        ConnectivityManager manager = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         info = manager.getActiveNetworkInfo();
         adapter = new MyAdapter(con_persons, this);
         database = new DataBaseManager();
         listView = findViewById(R.id.list_item);
-        imageView = findViewById(R.id.add);
+        ImageView imageView = findViewById(R.id.add);
         imageView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
@@ -299,6 +289,7 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
         params.put("name", name);
         params.put("phone", phone);
 
+        String url = "http://47.94.21.55/houtai/addlink.php";
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override

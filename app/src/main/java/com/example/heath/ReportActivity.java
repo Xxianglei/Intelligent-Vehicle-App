@@ -34,12 +34,8 @@ public class ReportActivity extends AppCompatActivity {
 
 
     private ViewPager mViewPager;
-    private CardFragmentPagerAdapter mFragmentCardAdapter;
-    private ShadowTransformer mFragmentCardShadowTransformer;
     private String appcode = "e5245cb4f806431185e56bb2efd5eaf9";
-    private String xueya_week = "http://bpweek.market.alicloudapi.com/alicloudapi/report/bloodPressureWeek";
     private DataBaseManager dataBaseManager;
-    private String tizhong_week = "http://weightweek.market.alicloudapi.com/alicloudapi/report/weightWeek";
     private String url;
     private String zhonghe = "http://47.94.21.55/houtai/jk/jiankang.php";
     private MyApplication myApplication;
@@ -66,9 +62,9 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mFragmentCardAdapter = new CardFragmentPagerAdapter(getSupportFragmentManager(),
+        CardFragmentPagerAdapter mFragmentCardAdapter = new CardFragmentPagerAdapter(getSupportFragmentManager(),
                 dpToPixels(2, this));
-        mFragmentCardShadowTransformer = new ShadowTransformer(mViewPager, mFragmentCardAdapter);
+        ShadowTransformer mFragmentCardShadowTransformer = new ShadowTransformer(mViewPager, mFragmentCardAdapter);
         mViewPager.setAdapter(mFragmentCardAdapter);
         mViewPager.setPageTransformer(false, mFragmentCardShadowTransformer);
         mViewPager.setOffscreenPageLimit(3);
@@ -190,6 +186,7 @@ public class ReportActivity extends AppCompatActivity {
         params.put("memberId", "M102309100192");
         params.put("dataList", str);
         Log.e("血压数据", str);
+        String xueya_week = "http://bpweek.market.alicloudapi.com/alicloudapi/report/bloodPressureWeek";
         OkNetRequest.alypostFormRequest(xueya_week, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
@@ -247,6 +244,7 @@ public class ReportActivity extends AppCompatActivity {
         params.put("memberId", "M102309100192");
         params.put("dataList", str);
         Log.e("体重数据", str);
+        String tizhong_week = "http://weightweek.market.alicloudapi.com/alicloudapi/report/weightWeek";
         OkNetRequest.alypostFormRequest(tizhong_week, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {

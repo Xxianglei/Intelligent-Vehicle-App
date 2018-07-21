@@ -22,8 +22,6 @@ public class CircleView extends View {
     public static final int MIN_VALUE = 0;
     public static final int MAX_VALUE = 360;
 
-    private Context mContext;
-
     //圆环模式
     private static final int CIRCLE_MODE_NORMAL = 1;//普通模式
     private static final int CIRCLE_MODE_ROUND = 2;//圆角模式(文艺模式)
@@ -78,7 +76,7 @@ public class CircleView extends View {
     }
 
     private void initView(Context mContext, AttributeSet attrs) {
-        this.mContext = mContext;
+        Context mContext1 = mContext;
 
         paint.setColor(mRadiusColor);//圆圈颜色
         paint.setStyle(Paint.Style.STROKE);//设置空心

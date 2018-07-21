@@ -46,7 +46,6 @@ public class LineChart extends View {
     private Paint mShapePaint = new Paint();//阴影部分画笔
 
     private int max = 7;
-    private Context mContext;
 
     public LineChart(Context context) {
         this(context, null);
@@ -58,7 +57,7 @@ public class LineChart extends View {
 
     public LineChart(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mContext = context;
+        Context mContext = context;
         TypedArray typedArray = mContext.getTheme().obtainStyledAttributes(attrs, R.styleable.LineChart, 0, 0);
         try {
             mDateTextColor = typedArray.getColor(R.styleable.LineChart_DateTextColor, mDateTextColor);

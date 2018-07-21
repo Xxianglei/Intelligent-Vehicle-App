@@ -13,7 +13,6 @@ import java.net.URL;
  */
 
 public class HttpDownloader {
-    private URL url = null;
 
     /**
      * @param urlstr
@@ -25,7 +24,7 @@ public class HttpDownloader {
         BufferedReader buffer = null;
         try {
             Log.e("天气", "123456");
-            url = new URL(urlstr);
+            URL url = new URL(urlstr);
             HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
             urlConn.setRequestMethod("GET");
             urlConn.setConnectTimeout(8000);

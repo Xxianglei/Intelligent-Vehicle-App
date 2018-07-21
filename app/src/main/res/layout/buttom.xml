@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="55dp"
     android:clipChildren="false"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:baselineAligned="false">
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="0dp"

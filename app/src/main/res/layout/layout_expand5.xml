@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
         <ImageView
             android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="100dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
@@ -42,15 +42,14 @@
             android:layout_height="match_parent"
             android:text="时间:"
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tiem_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/time"
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -67,17 +66,16 @@
             android:id="@+id/high"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@id/ll_1"
             android:text="收缩压:"
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/high_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:textSize="18dp"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
@@ -95,18 +93,16 @@
             android:id="@+id/low"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@id/high"
             android:text="舒张压："
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/low_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/high"
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -122,10 +118,9 @@
             android:id="@+id/suggesst"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@id/low"
             android:text="建议："
             android:textColor="#000000"
-            android:textSize="18dp"
+            android:textSize="18sp"
 
             />
 
@@ -133,9 +128,8 @@
             android:id="@+id/suggesst_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/low"
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -150,18 +144,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@id/suggesst"
             android:text="结果:"
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/result_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/suggesst"
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
 </RelativeLayout>

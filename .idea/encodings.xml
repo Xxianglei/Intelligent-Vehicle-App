@@ -3,17 +3,48 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/heath/Bluteooth/BindBlutooh.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/heath/Bluteooth/ChatListAdapter.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/heath/Bluteooth/ChatListAdapter.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/heath/Bluteooth/ChatService.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/heath/Bluteooth/ChatService.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/msgbox_rec.9.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_access_time_grey600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_alarm_off_grey_600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_alarm_on_grey_600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_cancel_grey_600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_check_white_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_delete_grey_600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_delete_grey_600_36dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_delete_white_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_error_outline_orange_800_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_notifications_off_grey600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_notifications_on_white_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_notifications_paused_grey_600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_power_settings_new_grey_600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_repeat_grey_600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_snooze_white_36dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_sync_grey600_24dp.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_view_day_grey600_24dp.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/msgbox_rec.9.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/msgbox_send.9.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/msgbox_send.9.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/alarm_line.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_ed.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_style.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ed_focused.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ed_normal.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_add_med.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main_medicine.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_play_med.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/devices.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/devices.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_normal.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/items_layout.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/list_item.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/list_item.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/medicine.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/menu/main_menu.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_add_alarm.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/ring01.mp3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/ring02.mp3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/ring03.mp3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/ring04.mp3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/ring05.mp3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/ring06.mp3" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

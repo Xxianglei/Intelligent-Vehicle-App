@@ -17,15 +17,18 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.example.heath.AddAlarmActivity;
 import com.example.heath.Check_air;
 import com.example.heath.Check_o2;
 import com.example.heath.Check_tep;
 import com.example.heath.Check_tizhong;
 import com.example.heath.Check_xinlv;
 import com.example.heath.DataRecord;
+import com.example.heath.MainActivity_med;
 import com.example.heath.R;
 import com.example.heath.ReportActivity;
 import com.example.heath.SaveCard;
+import com.example.heath.TimeLineActivity;
 import com.example.heath.Week_Report;
 import com.example.heath.Check_xueya;
 import com.oragee.banners.BannerView;
@@ -50,7 +53,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
 
     private int[] imgs = {R.mipmap.ban1, R.mipmap.ban2, R.mipmap.ban3, R.mipmap.ban4};
     private BannerView bannerView;
-    private ArrayList<View> viewList;
     private TextView weather;
     private TextView report;
     private TextView his_data;
@@ -69,6 +71,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
     private LinearLayout check_o2;
     private LinearLayout check_tmp;
     private BannerView bannerView1;
+    private TextView medicine;
 
     @Nullable
     @Override
@@ -104,10 +107,12 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
         check_air.setOnClickListener(this);
         check_o2.setOnClickListener(this);
         check_tmp.setOnClickListener(this);
+        medicine.setOnClickListener(this);
 
     }
 
     private void initView() {
+        medicine = getActivity().findViewById(R.id.medicine);
         report = getActivity().findViewById(R.id.report);
         his_data = getActivity().findViewById(R.id.his_data);
         weather = getActivity().findViewById(R.id.weather);
@@ -126,7 +131,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
     }
 
     private void initBanner() {
-        viewList = new ArrayList<View>();
+        ArrayList<View> viewList = new ArrayList<View>();
         for (int i = 0; i < imgs.length; i++) {
             ImageView image = new ImageView(getActivity());
             image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -229,6 +234,10 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
             case R.id.image2 :
                 Intent intent14 = new Intent(getActivity(), Check_tep.class);
                 startActivity(intent14);
+                break;
+            case R.id.medicine:
+                Intent intent15 = new Intent(getActivity(), MainActivity_med.class);
+                startActivity(intent15);
                 break;
         }
 

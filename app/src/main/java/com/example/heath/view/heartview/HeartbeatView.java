@@ -31,7 +31,6 @@ public class HeartbeatView extends View {
     private float[] yPos;
     private int mRingRadius;
     private int mRingStrokeWid = 25;
-    private int mBallRadius = 15;
     private int mAnimationMargin = 55;
     private int mOffset = 0;
     private int mCycle;
@@ -82,6 +81,7 @@ public class HeartbeatView extends View {
             }
         }
 
+        int mBallRadius = 15;
         if (mOffset > mAnimationMargin)
             canvas.drawCircle(getMeasuredWidth() - mBallRadius - mAnimationMargin, yPos[mOffset - mAnimationMargin], mBallRadius, mBallPaint);
         else if (mOffset != 0)

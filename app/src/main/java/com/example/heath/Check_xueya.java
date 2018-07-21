@@ -45,13 +45,9 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
     private TextView low_tv;
     private TextView zhuangtai;
     private TextView date;
-    private List<XueyaModle> list;
     private ImageView mPoint;
     private PopupWindow loadingWindow;
-    private BluetoothAdapter bluetoothAdapter;
-    private String url = "http://47.94.21.55/houtai/addtj.php";
     private MyApplication myApplication;
-    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +68,7 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
 
 
     private void initView() {
-        imageView = (ImageView)findViewById(R.id.back);
+        ImageView imageView = (ImageView) findViewById(R.id.back);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +76,7 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
             }
         });
         myApplication = (MyApplication)getApplication();
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         dataBaseManager = new DataBaseManager();
         down = (ImageView) findViewById(R.id.down);
         mDiscView = (DiscView) findViewById(R.id.score);
@@ -135,14 +131,15 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
         String time=TimeUtils.dateToString2();
         dataBaseManager.saveSingle(null, time, null, null, null, 0, randomNum_high, randomNum_low, 0, 0, 0);
         // 上传数据
-        upload(myApplication.getName().toString(),url,String.valueOf(randomNum_high),String.valueOf(randomNum_low),time);
+        String url = "http://47.94.21.55/houtai/addtj.php";
+        upload(myApplication.getName().toString(), url,String.valueOf(randomNum_high),String.valueOf(randomNum_low),time);
         date.setText("测量时间" + TimeUtils.dateToString2());
         judge(randomNum_high, randomNum_low);
 
     }
 
     private void preLoad() {
-        list = dataBaseManager.readxyList();
+        List<XueyaModle> list = dataBaseManager.readxyList();
         if (list.size() > 0) {
             judge(list.get(list.size() - 1).getHigh_data(), list.get(list.size() - 1).getLow_data());
             date.setText("测量时间" + list.get(list.size() - 1).getDate());

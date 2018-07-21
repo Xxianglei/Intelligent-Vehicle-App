@@ -74,7 +74,7 @@
                     android:layout_margin="10dp"
                     android:text="高德地图"
                     android:textColor="#40aeaa"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                     android:layout_margin="10dp"
                     android:text="讯飞语音"
                     android:textColor="#40aeaa"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                     android:layout_margin="10dp"
                     android:text="和风天气"
                     android:textColor="#40aeaa"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
                     android:layout_margin="10dp"
                     android:text="阿里云"
                     android:textColor="#40aeaa"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -115,7 +115,7 @@
                     android:layout_margin="5dp"
                     android:text="OkHttp"
                     android:textColor="#40aeaa"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                     android:layout_margin="5dp"
                     android:text="RollingText"
                     android:textColor="#40aeaa"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                     android:layout_margin="5dp"
                     android:text="MPAndroidChart"
                     android:textColor="#40aeaa"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
                     android:layout_margin="5dp"
                     android:text="materialviewpager"
                     android:textColor="#40aeaa"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
         </LinearLayout>

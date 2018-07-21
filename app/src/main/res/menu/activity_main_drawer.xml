@@ -23,6 +23,10 @@
             android:icon="@mipmap/blu"
             android:title="设备绑定" />
         <item
+            android:id="@+id/med"
+            android:icon="@mipmap/med"
+            android:title="用药提醒" />
+        <item
             android:id="@+id/doctor"
             android:icon="@mipmap/doctor"
             android:title="急救卡" />

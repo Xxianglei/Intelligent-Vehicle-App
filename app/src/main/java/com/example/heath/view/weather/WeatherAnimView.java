@@ -35,20 +35,16 @@ import java.util.List;
  */
 
 public class WeatherAnimView extends View {
-    private int Width;
-    private int Height;
     private float scaleSideHill;
     private Bitmap sidehillLeft;
     private Bitmap sidehillRight;
     private RectF mRectFLeft;
     private RectF mRectFRight;
     private static final int maxOffsetX = 50;
-    private Bitmap backgroud;
     private float currentOffsetX;
     private float mProgress;
 
     private int birdTimes;
-    private Paint birdPaint;
 
     private Bitmap bird;
     private int offsetBirds;
@@ -67,7 +63,6 @@ public class WeatherAnimView extends View {
     private List<Bitmap> birdsList = new ArrayList<>(16);
 
     private Bitmap treeBranch, treeBallLeft, treeBallRight, treeTrunk, treeBallMiddle, treeLeaf;
-    private Matrix treeBranch_Matrix, treeBallLeft_Matrix, treeBallRight_Matrix, treeTrunk_Matrix, treeBallMiddle_Matrix, treeLeaf_Matrix;
     private static final float SCALESIZE = 0.2f;
     private static final float SCALESIZEBALL = 0.3f;
     private static final float SCALESIZELEAF = 0.4f;
@@ -108,7 +103,7 @@ public class WeatherAnimView extends View {
         mProgress = 0;
 
         bird = BitmapFactory.decodeResource(getResources(), R.drawable.blue01);
-        birdPaint = new Paint();
+        Paint birdPaint = new Paint();
         birdPaint.setStyle(Paint.Style.STROKE);
         birdTimes = 0;
         offsetBirds = ScaleChangeUtils.dp2px(context, 15);
@@ -131,48 +126,48 @@ public class WeatherAnimView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        Width = w;
-        Height = h;
+        int width = w;
+        int height = h;
         BitmapFactory.Options optionsSideHill = new BitmapFactory.Options();
         optionsSideHill.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(getResources(), R.drawable.bg_sunny_left_night, optionsSideHill);
         if (optionsSideHill.outHeight != 0)
             scaleSideHill = optionsSideHill.outWidth / optionsSideHill.outHeight;
-        mRectFLeft = new RectF(-maxOffsetX, Height / 5 * 3, -maxOffsetX + Height / 5 * 2 * scaleSideHill, Height);
-        if (Width < Height / 3 * scaleSideHill) {
-            mRectFRight = new RectF(-maxOffsetX, Height / 5 * 3, maxOffsetX + Height / 5 * 2 * scaleSideHill, Height);
+        mRectFLeft = new RectF(-maxOffsetX, height / 5 * 3, -maxOffsetX + height / 5 * 2 * scaleSideHill, height);
+        if (width < height / 3 * scaleSideHill) {
+            mRectFRight = new RectF(-maxOffsetX, height / 5 * 3, maxOffsetX + height / 5 * 2 * scaleSideHill, height);
         } else {
-            mRectFRight = new RectF(-maxOffsetX, Height / 5 * 3, maxOffsetX + Width, Height);
+            mRectFRight = new RectF(-maxOffsetX, height / 5 * 3, maxOffsetX + width, height);
         }
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(getResources(), R.drawable.bg_sunny_right_night, options);
         options.inSampleSize = 32;
         options.inJustDecodeBounds = false;
-        backgroud = BitmapFactory.decodeResource(getResources(), R.drawable.bg_sunny_night, options);
+        Bitmap backgroud = BitmapFactory.decodeResource(getResources(), R.drawable.bg_sunny_night, options);
         Drawable drawable = new BitmapDrawable(backgroud);
         setBackground(drawable);
 
         optionsSideHill = new BitmapFactory.Options();
         optionsSideHill.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(getResources(), R.drawable.bg_sunny_left_night, optionsSideHill);
-        optionsSideHill.inSampleSize = calculateInSampleSize(optionsSideHill, (int) (Height / 5 * 2 * scaleSideHill), Height / 5 * 2);
+        optionsSideHill.inSampleSize = calculateInSampleSize(optionsSideHill, (int) (height / 5 * 2 * scaleSideHill), height / 5 * 2);
         optionsSideHill.inJustDecodeBounds = false;
         sidehillLeft = BitmapFactory.decodeResource(getResources(), R.drawable.bg_sunny_left_night, optionsSideHill);
 
         optionsSideHill = new BitmapFactory.Options();
         optionsSideHill.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(getResources(), R.drawable.bg_sunny_right_night, optionsSideHill);
-        optionsSideHill.inSampleSize = calculateInSampleSize(optionsSideHill, 2 * maxOffsetX + Width, Height / 5 * 2);
+        optionsSideHill.inSampleSize = calculateInSampleSize(optionsSideHill, 2 * maxOffsetX + width, height / 5 * 2);
         optionsSideHill.inJustDecodeBounds = false;
         sidehillRight = BitmapFactory.decodeResource(getResources(), R.drawable.bg_sunny_right_night, optionsSideHill);
 
-        birdStartPointX = Width;
-        birdStartPointY = Height / 4;
+        birdStartPointX = width;
+        birdStartPointY = height / 4;
         birdEndPointX = -3 * offsetBirds - birdsSize;
         birdEndPointY = 0;
-        birdControlPointX = Width / 2;
-        birdControlPointY = Height / 4 + 80;
+        birdControlPointX = width / 2;
+        birdControlPointY = height / 4 + 80;
 
         treeX = w / 4 * 3;
         treeY = (int) (h / 5 * 3 - treeTrunk.getHeight() / 4 * SCALESIZE);
@@ -221,7 +216,7 @@ public class WeatherAnimView extends View {
         if (isDrawTree) {
             int degreeX = (int) (treeBallMiddle.getWidth() * SCALESIZEBALL / 5);
             int degreeY = 20;
-            treeLeaf_Matrix = new Matrix();
+            Matrix treeLeaf_Matrix = new Matrix();
             treeLeaf_Matrix.setScale(SCALESIZELEAF, SCALESIZELEAF);
             treeLeaf_Matrix.postTranslate(moveLeafX, moveLeafY);
             treeLeaf_Matrix.postRotate((float) (randomRotate + rotateValueLeaf)
@@ -252,28 +247,28 @@ public class WeatherAnimView extends View {
     }
 
     private void drawTree(Canvas canvas, float currentOffsetX) {
-        treeTrunk_Matrix = new Matrix();
+        Matrix treeTrunk_Matrix = new Matrix();
         treeTrunk_Matrix.setScale(SCALESIZE, SCALESIZE);
         treeTrunk_Matrix.postTranslate(treeX, treeY);
 
-        treeBranch_Matrix = new Matrix();
+        Matrix treeBranch_Matrix = new Matrix();
         treeBranch_Matrix.setScale(SCALESIZE, SCALESIZE);
         treeBranch_Matrix.postTranslate(treeX - treeBranch.getWidth() * SCALESIZE / 2, treeY + treeTrunk.getHeight() * SCALESIZE / 8);
 
-        treeBallMiddle_Matrix = new Matrix();
+        Matrix treeBallMiddle_Matrix = new Matrix();
         treeBallMiddle_Matrix.setScale(SCALESIZEBALL, SCALESIZEBALL);
         treeBallMiddle_Matrix.postTranslate(treeX - treeBallMiddle.getWidth() / 2 * SCALESIZEBALL
                 , treeY - treeBallMiddle.getWidth() * SCALESIZEBALL + 10);
 
         float offsetXY = getoffsetXY(treeBallLeft.getWidth() * SCALESIZEBALL / 2);
-        treeBallLeft_Matrix = new Matrix();
+        Matrix treeBallLeft_Matrix = new Matrix();
         treeBallLeft_Matrix.setScale(SCALESIZEBALL, SCALESIZEBALL);
         treeBallLeft_Matrix.postTranslate(treeX - treeBranch.getWidth() * SCALESIZE / 2 - treeBallLeft.getWidth() * SCALESIZEBALL + offsetXY
                 , treeY + treeTrunk.getHeight() * SCALESIZE / 8 - treeBallLeft.getHeight() * SCALESIZEBALL + offsetXY);
 
         offsetXY = getoffsetXY(treeBallRight.getWidth() * SCALESIZEBALL / 2) +
                 CalculateUtil.getPythagorean(treeBranch.getWidth() * SCALESIZE / 2, treeBranch.getHeight() * SCALESIZE) / 4;
-        treeBallRight_Matrix = new Matrix();
+        Matrix treeBallRight_Matrix = new Matrix();
         treeBallRight_Matrix.setScale(SCALESIZEBALL, SCALESIZEBALL);
         treeBallRight_Matrix.postTranslate(treeX + treeBranch.getWidth() * SCALESIZE / 2 - offsetXY
                 , treeY + treeTrunk.getHeight() * SCALESIZE / 8 - treeBallRight.getHeight() * SCALESIZEBALL + offsetXY);

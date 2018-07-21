@@ -45,10 +45,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_weight="2"
                 android:background="#D95238"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -158,7 +158,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="4">
+                    android:weightSum="4"
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -190,17 +191,15 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_content1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="120"
                             android:textColor="#ffffff"
-                            android:textSize="30dp" />
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_content1"
                             android:text="mmHg"
                             android:textColor="#ffffff"
                             android:textSize="15sp" />
@@ -218,12 +217,11 @@
                             android:layout_height="wrap_content"
                             android:text="80"
                             android:textColor="#ffffff"
-                            android:textSize="30dp" />
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_content1"
                             android:text="mmHg"
                             android:textColor="#ffffff"
                             android:textSize="15sp" />
@@ -242,13 +240,12 @@
                             android:layout_height="wrap_content"
                             android:text="100"
                             android:textColor="#ffffff"
-                            android:textSize="30dp" />
+                            android:textSize="30sp" />
 
                         <TextView
                             android:id="@+id/tv_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_content"
                             android:text="mmHg"
                             android:textColor="#ffffff"
                             android:textSize="15sp" />
@@ -265,8 +262,6 @@
                     android:id="@+id/score"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/std"
                     android:layout_marginTop="10dp"
                     app:dvAngleRotateSpan="360"
 

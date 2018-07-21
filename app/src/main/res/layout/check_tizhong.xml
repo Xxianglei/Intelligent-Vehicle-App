@@ -67,14 +67,14 @@
                     android:layout_height="wrap_content"
                     android:text="60.0"
                     android:textColor="#ffffff"
-                    android:textSize="50dp" />
+                    android:textSize="50sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Kg"
                     android:textColor="#ffffff"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:text="BMI "
                     android:textColor="#c4c4c4"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/BMI"
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:text="20.7"
                     android:textColor="#c4c4c4"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
                 <View
                     android:layout_width="2dp"
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:text="标准"
                     android:textColor="#c4c4c4"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
         </RelativeLayout>
 

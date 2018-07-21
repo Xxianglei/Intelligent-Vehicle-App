@@ -14,7 +14,6 @@
             android:id="@+id/list"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.0"
             android:divider="#ffc6c6c6"
             android:scrollingCache="false"
             android:visibility="gone" />

@@ -61,21 +61,15 @@ public class StepArcView extends View {
      * 所要绘制的当前步数的红色圆弧终点到起点的夹角
      */
     private float currentAngleLength = 0;
-    /**
-     * 动画时长
-     */
-    private int animationLength = 3500;
     private PointF point;
     private float centerX;
     private Bitmap bitmap;
-    private int totalStepNum;
     private String air;
 
     /**
      * 要绘制的三角形指示器的半径
      **/
     private float triangleRadius;
-    private float clockRadius;
 
     public StepArcView(Context context) {
         super(context);
@@ -323,7 +317,7 @@ public class StepArcView extends View {
         /**要绘制的表盘线条长度**/
         int lineLength = dpToPx(6);
         /**要绘制的表盘的最长的半径**/
-        clockRadius = centerX - marginWidth - borderWidthw - borderWidth - bitmap.getHeight() - marginWidth - lineLength;
+        float clockRadius = centerX - marginWidth - borderWidthw - borderWidth - bitmap.getHeight() - marginWidth - lineLength;
         /**起始点**/
         PointF point1 = new PointF();
         /**终止点**/
@@ -377,7 +371,7 @@ public class StepArcView extends View {
      */
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public void setCurrentCount(int totalStepNum, int currentCounts ) {
-        this.totalStepNum = totalStepNum;
+        int totalStepNum1 = totalStepNum;
         stepNumber = currentCounts + "";
         //setTextSize(currentCounts);
         /**如果当前走的步数超过总步数则圆弧还是270度，不能成为园*/
@@ -390,6 +384,10 @@ public class StepArcView extends View {
         /**换算成弧度最后要到达的角度的长度-->弧长*/
         currentAngleLength = scale * angleLength;
         /**开始执行动画*/
+        /*
+      动画时长
+     */
+        int animationLength = 3500;
         setAnimation(0, currentAngleLength, animationLength);
     }
 

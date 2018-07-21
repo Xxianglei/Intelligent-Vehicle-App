@@ -26,24 +26,14 @@ public class RingView extends View {
 	/**
 	 * 整个View的宽高
 	 * */
-	private int mTotalHeight, mTotalWidth;
+	private int mTotalHeight;
 
-	/**
+    /**
 	 * 心跳线的总宽度 -- 圆环的宽度
 	 * */
 	private int mHeartBeatWidth;
 
-	/**
-	 * 圆环半径 根据view的宽度计算
-	 * */
-	private int mRadius = 200;
-
-	/**
-	 * 圆环的中心点 -- 画圆环和旋转画布时需要使用
-	 * */
-	private int x, y;
-
-	/**
+    /**
 	 * 圆环使用
 	 * */
 	private Paint mRingPaint;
@@ -80,17 +70,8 @@ public class RingView extends View {
 	 * */
 	private float [] mDefaultYPostion;
 	// y = Asin(w*x)+Y
-	/**
-	 * sin函数 周期因子
-	 * */
-	private float mPeriodFraction = 0;
 
-	/**
-	 * 期初的偏移量
-	 * */
-	private final int OFFSET_Y = 0;
-
-	/**
+    /**
 	 * canvas抗锯齿开启需要
 	 * */
 	private DrawFilter mDrawFilter;
@@ -100,17 +81,7 @@ public class RingView extends View {
 	 * */
 	private volatile int mOffset=0;
 
-	/**
-	 * 振幅
-	 * */
-	private float AmplitudeA = 200;// 振幅
-
-	/**
-	 * 心跳线条速度
-	 * */
-	private final int SPEED = 5;
-
-	/**
+    /**
 	 * 将SPEED转换为实际速度
 	 * */
 	private int mOffsetSpeed;
@@ -142,7 +113,11 @@ public class RingView extends View {
 
 		//初始化心跳曲线
 		mDrawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
-		mOffsetSpeed = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SPEED, mContext.getResources().getDisplayMetrics());
+		/*
+	  心跳线条速度
+	  */
+        int SPEED = 5;
+        mOffsetSpeed = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SPEED, mContext.getResources().getDisplayMetrics());
 		mHeartBeatPaint  =new Paint(Paint.ANTI_ALIAS_FLAG);
 		mHeartBeatPaint.setStrokeWidth(5);
 		//mHeartBeatPaint.setStyle(Style.STROKE);
@@ -160,22 +135,38 @@ public class RingView extends View {
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		mTotalHeight = h;
-		mTotalWidth = w;
+        int mTotalWidth = w;
 		mHeartBeatWidth = w - mHeartPaintWidth*2-40; //内圆宽度
 		mFirstFrameOffset  =mHeartBeatWidth-1;
-		AmplitudeA = (mTotalHeight-2*mHeartPaintWidth)/4;
+		/*
+	  振幅
+	  */
+        float amplitudeA = (mTotalHeight - 2 * mHeartPaintWidth) / 4;
 		mOriginalYPositon = new float[mHeartBeatWidth];//正弦曲线 Y坐标
 		mDefaultYPostion = new float[mHeartBeatWidth];
 		Arrays.fill(mOriginalYPositon, 0);
 		Arrays.fill(mDefaultYPostion, -1);
 		// 周期定位总宽度的1/4
-		mPeriodFraction = (float) (Math.PI * 2 / mHeartBeatWidth * 3);
+		/*
+	  sin函数 周期因子
+	  */
+        float mPeriodFraction = (float) (Math.PI * 2 / mHeartBeatWidth * 3);
 		for (int i =  mHeartBeatWidth/3*2; i < mHeartBeatWidth; i++) {
-			mOriginalYPositon[i] = (float) (AmplitudeA * Math.sin(mPeriodFraction * i) + OFFSET_Y);
+			/*
+	  期初的偏移量
+	  */
+            int OFFSET_Y = 0;
+            mOriginalYPositon[i] = (float) (amplitudeA * Math.sin(mPeriodFraction * i) + OFFSET_Y);
 		}
-		x = w / 2;
-		y = h / 2;
-		mRadius = w / 2 - mHeartPaintWidth / 2; //因为制定了Paint的宽度，因此计算半径需要减去这个
+		/*
+	  圆环的中心点 -- 画圆环和旋转画布时需要使用
+	  */
+        int x = w / 2;
+        int y = h / 2;
+		/*
+	  圆环半径 根据view的宽度计算
+	  */
+        int mRadius = w / 2 - mHeartPaintWidth / 2;
 		mRectf = new RectF(x - mRadius, y - mRadius, x + mRadius, y + mRadius);
 	}
 

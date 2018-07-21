@@ -62,7 +62,7 @@ public class MyOneLineView extends LinearLayout {
     /**
      * 整个一行被点击
      */
-    public static interface OnRootClickListener {
+    public interface OnRootClickListener {
         void onRootClick(View view);
     }
 
@@ -70,7 +70,7 @@ public class MyOneLineView extends LinearLayout {
     /**
      * 右边箭头的点击事件
      */
-    public static interface OnArrowClickListener {
+    public interface OnArrowClickListener {
         void onArrowClick(View view);
     }
 

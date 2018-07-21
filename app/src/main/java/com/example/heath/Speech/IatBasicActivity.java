@@ -52,8 +52,6 @@ public class IatBasicActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
 
     private Toast mToast;
-    // 引擎类型
-    private String mEngineType = SpeechConstant.TYPE_CLOUD;
     int ret = 0; // 函数调用返回值
 
 
@@ -195,6 +193,7 @@ public class IatBasicActivity extends AppCompatActivity {
         // 清空参数
         mIat.setParameter(SpeechConstant.PARAMS, null);
         // 设置听写引擎
+        String mEngineType = SpeechConstant.TYPE_CLOUD;
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, mEngineType);
         // 设置返回结果格式
         mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");

@@ -35,7 +35,6 @@ public class DataRecord extends BaseActivity {
     private HeaderViewPager scrollableLayout;
     private ViewPager pagerHeader;
     private View titleBar_Bg;
-    private TextView titleBar_title;
     private View status_bar_fix;
     private View titleBar;
 
@@ -58,7 +57,7 @@ public class DataRecord extends BaseActivity {
         //当状态栏透明后，内容布局会上移，这里使用一个和状态栏高度相同的view来修正内容区域
         status_bar_fix = titleBar.findViewById(R.id.status_bar_fix);
         status_bar_fix.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.getStatusHeight(this)));
-        titleBar_title = (TextView) titleBar.findViewById(R.id.title);
+        TextView titleBar_title = (TextView) titleBar.findViewById(R.id.title);
         titleBar_Bg.setAlpha(0);
         status_bar_fix.setAlpha(0);
       //  titleBar_title.setText("标题栏透明度(0%)");

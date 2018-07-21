@@ -46,7 +46,6 @@
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_content"
             android:text="2016-05-03 00:22:36"
             android:textColor="#ABABAB" />
     </LinearLayout>

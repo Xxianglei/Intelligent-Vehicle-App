@@ -12,15 +12,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,16 +28,10 @@ import com.example.heath.Model.Code;
 import com.example.heath.MyApplication;
 import com.example.heath.R;
 import com.google.gson.Gson;
-import com.kaopiz.kprogresshud.KProgressHUD;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.RunnableFuture;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -52,16 +43,12 @@ public class Log_in extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btGo;
-    private CardView cv;
     private TextView forgot_key;
     private FloatingActionButton fab;
-    private String url = "http://47.94.21.55/houtai/login.php";               //url = "网络请求的地址";
     private String name;
     private String password;
     private Code code;
-    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
-    private CheckBox checkBox;
     private NetworkChangeReceiver networkChangeReceiver;
     private MyApplication myApplication;
     private LoadingDialog ld;
@@ -89,16 +76,16 @@ public class Log_in extends AppCompatActivity {
         networkChangeReceiver = new NetworkChangeReceiver();
         //动态注册
         registerReceiver(networkChangeReceiver, intentFilter);
-        sharedPreferences = getSharedPreferences("log_tag", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("log_tag", MODE_PRIVATE);
         forgot_key = (TextView) findViewById(R.id.forgot_key);  // 忘记密码
         etUsername = (EditText) findViewById(R.id.et_username);
         etPassword = (EditText) findViewById(R.id.et_password);
         btGo = (Button) findViewById(R.id.bt_go);     //登录
         btGo.setClickable(false);
-        cv = (CardView) findViewById(R.id.cv);
+        CardView cv = (CardView) findViewById(R.id.cv);
         fab = (FloatingActionButton) findViewById(R.id.fab);  // 注册
         code = new Code();
-        checkBox = (CheckBox) findViewById(R.id.checkbox);
+        CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox);
         myApplication = (MyApplication) getApplication();
     }
 
@@ -175,6 +162,7 @@ public class Log_in extends AppCompatActivity {
         params.put("phone", name);
         params.put("password", password);
 
+        String url = "http://47.94.21.55/houtai/login.php";
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override

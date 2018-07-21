@@ -30,7 +30,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,7 +38,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +49,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.example.heath.Bluteooth.BindBlutooh;
-import com.example.heath.Datebase.CardModle;
 import com.example.heath.Datebase.ConnectModle;
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.HttpUtils.OkNetRequest;
@@ -124,16 +121,12 @@ public class MainActivity extends IatBasicActivity
     private TextView now_weather;
     private TextView Your_city;
     private NavigationView navigationView;
-    private String city = "jilin";
     private StringBuffer buffer;
-    private Weather_model nowWeather;
 
     private SharedPreferences Sp;
     private static int CODE = 0x00;
     private TextView name;
     private MyApplication myApplication;
-    private View headerView;
-    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private ImageView headimage;
     private LinearLayout linearLayout;
@@ -147,21 +140,13 @@ public class MainActivity extends IatBasicActivity
     private ImageView main_img;
     private TextView mian_tv;
     private NetworkChangeReceiver networkChangeReceiver;
-    private DrawerLayout mDrawerLayout;
-    private String blu;
     private Timer timer;
     private BluetoothAdapter mBluetoothAdapter;
     private double a;
     private double b;
-    private float speed;
-    private String street;
     private String s;
-    private float sp;
     private List<ConnectModle> con_persons;
-    private boolean tag;
-    private HashMap<String, String> params;
     private LoadingDialog ld;
-    private boolean tag1;
     private DrawerLayout drawer;
     private Timer timer4;
     private String minlin;
@@ -187,10 +172,10 @@ public class MainActivity extends IatBasicActivity
                         .show();
             }
         });
-        params = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
         myApplication = (MyApplication) getApplication();
         params.put("user", "13166991256");
-        tag1 = false;
+        boolean tag1 = false;
         down_data(params);
         down_data2(params);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -370,7 +355,18 @@ public class MainActivity extends IatBasicActivity
             }.run();
             drawer.closeDrawer(GravityCompat.START);
             drawer.openDrawer(Gravity.LEFT);
-        } else if (id == R.id.about) {
+        } else if (id == R.id.med) {
+            new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(MainActivity.this, MainActivity_med.class));
+
+                }
+            }.run();
+            drawer.closeDrawer(GravityCompat.START);
+            drawer.openDrawer(Gravity.LEFT);
+        }
+        else if (id == R.id.about) {
             new Runnable() {
                 @Override
                 public void run() {
@@ -410,7 +406,7 @@ public class MainActivity extends IatBasicActivity
                 Sp = getSharedPreferences("CITY", Context.MODE_PRIVATE);
                 editor = Sp.edit();
                 editor.clear();
-                editor.commit();
+                editor.apply();
                 DataBaseManager dataBaseManager = new DataBaseManager();
                 dataBaseManager.clearAll();
                 MainActivity.this.finish();
@@ -454,7 +450,7 @@ public class MainActivity extends IatBasicActivity
         guide = (LinearLayout) findViewById(R.id.guide);
         doctor_tab = (LinearLayout) findViewById(R.id.doctor);
         jiance_tab = (LinearLayout) findViewById(R.id.jiance);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         doctor = (ImageView) findViewById(R.id.doctor_img);
         jiance = (ImageView) findViewById(R.id.jiance_img);
@@ -470,7 +466,7 @@ public class MainActivity extends IatBasicActivity
         dataBaseManager = new DataBaseManager();
         // 找到天气控件
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        headerView = navigationView.getHeaderView(0);
+        View headerView = navigationView.getHeaderView(0);
         now_weather = headerView.findViewById(R.id.now_weather);
         Your_city = headerView.findViewById(R.id.Your_city);
         name = headerView.findViewById(R.id.my_name);
@@ -648,9 +644,9 @@ public class MainActivity extends IatBasicActivity
                 aMapLocation.getCity();//城市信息
                 lat = aMapLocation.getLatitude();//获取纬度
                 //街道信息
-                tag = true;
-                street = aMapLocation.getStreet();
-                speed = aMapLocation.getSpeed();
+                boolean tag = true;
+                String street = aMapLocation.getStreet();
+                float speed = aMapLocation.getSpeed();
                 if (tag) {
                     if (s != street || speed >= 5) {
                         //   车子开始移动    隔两秒刷新一次    传给全局变量
@@ -661,7 +657,7 @@ public class MainActivity extends IatBasicActivity
                     }
                 }
                 s = street;
-                sp = speed;
+                float sp = speed;
                 Log.e("lat", lat + "");
 
                 lon = aMapLocation.getLongitude();//获取经度
@@ -669,7 +665,7 @@ public class MainActivity extends IatBasicActivity
 
                 buffer = new StringBuffer();
                 buffer.append(aMapLocation.getCity() + "");
-                city = buffer.toString();
+                String city = buffer.toString();
                 myApplication.setCity(buffer.toString());
                 Log.e("定位", "xx" + buffer.toString());
                 //设置城市 保存当前位置
@@ -678,7 +674,7 @@ public class MainActivity extends IatBasicActivity
                 SharedPreferences.Editor editor = Sp.edit();
                 editor.putString("CITY", buffer.toString());
 
-                editor.commit();
+                editor.apply();
                 Log.e("天气", "123456");
                 mLocationClient.stopLocation(); //停止定位
             } else {
@@ -732,10 +728,10 @@ public class MainActivity extends IatBasicActivity
 
         if ((myApplication.getPhone()) != null) {
             name.setText((myApplication.getPhone()).toString());
-            sharedPreferences = MainActivity.this.getSharedPreferences("P_NAME", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("P_NAME", MODE_PRIVATE);
             editor = sharedPreferences.edit();
             editor.putString("NAME", name.getText().toString());
-            editor.commit();
+            editor.apply();
         }
         if ((myApplication.getImage_String()) != null) {
             // 保存偏好头像
@@ -743,7 +739,7 @@ public class MainActivity extends IatBasicActivity
             SharedPreferences sharedPreferences = getSharedPreferences("headimage", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("image", imageString);
-            editor.commit();
+            editor.apply();
             Log.e("存入头像", imageString);
             //第二步:利用Base64将字符串转换为ByteArrayInputStream
             byte[] byteArray = Base64.decode(imageString, Base64.DEFAULT);
@@ -876,7 +872,7 @@ public class MainActivity extends IatBasicActivity
                 try {
                     String jsonString = (String) msg.obj;
                     ParseNowWeatherUtil parseNowWeatherUtil = new ParseNowWeatherUtil();
-                    nowWeather = parseNowWeatherUtil.getInfomation(jsonString);
+                    Weather_model nowWeather = parseNowWeatherUtil.getInfomation(jsonString);
                     Log.e("天气", nowWeather.getTemperature());
                     now_weather.setText(nowWeather.getTemperature() + "℃");
 
@@ -994,6 +990,7 @@ public class MainActivity extends IatBasicActivity
         public void onReceive(Context context, Intent intent) {
             // TODO Auto-generated method stub
             int blueState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, 0);
+            String blu;
             switch (blueState) {
                 case BluetoothAdapter.STATE_OFF:
                     Log.i("TAG", "blueState: STATE_OFF");

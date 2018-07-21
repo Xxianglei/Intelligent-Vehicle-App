@@ -1,17 +1,14 @@
 package com.example.heath;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,9 +29,6 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.Datebase.CardModle;
 import com.example.heath.HttpUtils.OkNetRequest;
-import com.example.heath.Model.Code;
-import com.example.heath.Register.Log_in;
-import com.example.heath.Register.Set_password;
 import com.google.gson.Gson;
 import com.pedaily.yc.ycdialoglib.selectDialog.CustomSelectDialog;
 
@@ -53,7 +47,6 @@ import okhttp3.Response;
 public class SaveCard extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
 
-    private Toolbar toolbar;
     private EditText editText1;
     private EditText editText2;
     private EditText editText3;
@@ -63,27 +56,11 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
     private TextView editText8;
     private TextView editText5;
     private String strDate;
-    private Window window;
-    private CheckBox checkBox1;
-    private CheckBox checkBox2;
-    private CheckBox checkBox3;
-    private CheckBox checkBox4;
-    private CheckBox checkBox11;
-    private CheckBox checkBox12;
-    private CheckBox checkBox13;
-    private CheckBox checkBox14;
-    private CheckBox checkBox15;
-    private CheckBox checkBox17;
-    private CheckBox checkBox16;
-    private CheckBox checkBox18;
     private View myView;
     private View myView1;
     private ArrayList<String> lists;
-    private CheckBox checkBox5;
     private DataBaseManager dataBaseManager;
-    private List<CardModle> save_list;
     private boolean tag = true;
-    private String url = "http://47.94.21.55/houtai/addxinxi.php";
     private MyApplication myApplication;
     private boolean tag2 = false;
 
@@ -109,7 +86,7 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
         editText6 = (TextView) findViewById(R.id.text6);
         editText7 = (TextView) findViewById(R.id.text7);
         editText8 = (TextView) findViewById(R.id.text8);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("急救卡");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.mipmap.back);
@@ -166,7 +143,7 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
     }
 
     private void preLoad() {
-        save_list = dataBaseManager.readcardList();
+        List<CardModle> save_list = dataBaseManager.readcardList();
         if (save_list.size() > 0) {
             editText1.setText(save_list.get(save_list.size() - 1).getName());
             editText2.setText(save_list.get(save_list.size() - 1).getHigh());
@@ -238,14 +215,14 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
                 break;
             case R.id.text7:
                 View myView = LayoutInflater.from(this).inflate(R.layout.react, null);
-                checkBox11 = myView.findViewById(R.id.one);
-                checkBox12 = myView.findViewById(R.id.one1);
-                checkBox13 = myView.findViewById(R.id.one2);
-                checkBox14 = myView.findViewById(R.id.one3);
-                checkBox15 = myView.findViewById(R.id.one4);
-                checkBox16 = myView.findViewById(R.id.one5);
-                checkBox17 = myView.findViewById(R.id.one6);
-                checkBox18 = myView.findViewById(R.id.one7);
+                CheckBox checkBox11 = myView.findViewById(R.id.one);
+                CheckBox checkBox12 = myView.findViewById(R.id.one1);
+                CheckBox checkBox13 = myView.findViewById(R.id.one2);
+                CheckBox checkBox14 = myView.findViewById(R.id.one3);
+                CheckBox checkBox15 = myView.findViewById(R.id.one4);
+                CheckBox checkBox16 = myView.findViewById(R.id.one5);
+                CheckBox checkBox17 = myView.findViewById(R.id.one6);
+                CheckBox checkBox18 = myView.findViewById(R.id.one7);
                 checkBox11.setOnCheckedChangeListener(this);
                 checkBox12.setOnCheckedChangeListener(this);
                 checkBox13.setOnCheckedChangeListener(this);
@@ -276,17 +253,17 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
                 dialog.setTitle("过敏反应");
                 dialog.setView(myView);
                 //为Window设置动画
-                window = dialog.getWindow();
+                Window window = dialog.getWindow();
                 window.setWindowAnimations(R.style.animTranslate);
                 dialog.show();
                 break;
             case R.id.text8:
                 View myView1 = LayoutInflater.from(this).inflate(R.layout.hobbies, null);
-                checkBox1 = myView1.findViewById(R.id.one);
-                checkBox2 = myView1.findViewById(R.id.one1);
-                checkBox3 = myView1.findViewById(R.id.one2);
-                checkBox4 = myView1.findViewById(R.id.one3);
-                checkBox5 = myView1.findViewById(R.id.one4);
+                CheckBox checkBox1 = myView1.findViewById(R.id.one);
+                CheckBox checkBox2 = myView1.findViewById(R.id.one1);
+                CheckBox checkBox3 = myView1.findViewById(R.id.one2);
+                CheckBox checkBox4 = myView1.findViewById(R.id.one3);
+                CheckBox checkBox5 = myView1.findViewById(R.id.one4);
                 checkBox1.setOnCheckedChangeListener(this);
                 checkBox2.setOnCheckedChangeListener(this);
                 checkBox3.setOnCheckedChangeListener(this);
@@ -363,6 +340,7 @@ public class SaveCard extends AppCompatActivity implements View.OnClickListener,
         params.put("xiguan", xiguan);
         params.put("user", myApplication.getName().toString());
 
+        String url = "http://47.94.21.55/houtai/addxinxi.php";
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override

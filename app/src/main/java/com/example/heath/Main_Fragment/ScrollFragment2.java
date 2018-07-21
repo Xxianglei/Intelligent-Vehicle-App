@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -34,12 +33,10 @@ public class ScrollFragment2 extends HeaderViewPagerFragment {
 
     @BindView(R.id.scrollView)
     NestedScrollView mScrollView;
-    private BarChart barChart;
     private List<XinlvModle> list;
     private TextView zhi;
     private TextView date;
     private MyScrollView end;
-    private LinearLayout ll;
 
     public static ScrollFragment2 newInstance() {
         return new ScrollFragment2();
@@ -64,8 +61,8 @@ public class ScrollFragment2 extends HeaderViewPagerFragment {
         //绑定控件
         DataBaseManager dataBaseManager=new DataBaseManager();
         list = dataBaseManager.readxlList();
-        barChart = view.findViewById(R.id.BarChart);
-        ll = view.findViewById(R.id.cry_nodata);
+        BarChart barChart = view.findViewById(R.id.BarChart);
+        LinearLayout ll = view.findViewById(R.id.cry_nodata);
         if (list.size()>=7){
             ll.setVisibility(View.GONE);
             barChart.setVisibility(View.VISIBLE);

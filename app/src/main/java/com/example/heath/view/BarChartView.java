@@ -25,24 +25,17 @@ public class BarChartView extends View {
 
     private int mStartX;//x坐标开始值
     private int mStartY;//Y坐标结束的值
-    private int mStopX;//x坐标结束的值
     private int mStopY;//y坐标结束的值
     private int barWidth;//每条柱形图的柱宽度
     private int totalBarNum = 6;//柱形图中的柱数量
     private float max = -1;//最大值，用于计算比例
-    private int deltaY;//刻度值间距
     private int deltaX;//柱形图之间的间距
-    private int currentVerticalLineProgress;//每条柱图的当前比例
     float numPerUnit;//刻度值
     int measuredWidth;//测量后屏幕的宽度
     int measuredHeight;//测量后屏幕的高度
     private int horizentalLineNum = 2;//刻度线的数量值
-    private int totalBarWidth;//柱形图总宽度
     private List<VvalueAndHunit> datas;
     private String unit = "单位";//单位
-    private int lineColor = Color.parseColor("#333333");//线条颜色
-    private int chartColor = Color.parseColor("#666666");//图表颜色
-    private int textColor = Color.parseColor("#666666");
     private int gradientStartColor = Color.parseColor("#ffa666");
     private int gradientEndColor = Color.parseColor("#e57a2e");
 
@@ -90,13 +83,13 @@ public class BarChartView extends View {
 
         unit = typedArray.getString(R.styleable.BarChartView_unit);
 
-        lineColor = typedArray.getColor(R.styleable.BarChartView_lineColor, Color.parseColor("#333333"));
+        int lineColor = typedArray.getColor(R.styleable.BarChartView_lineColor, Color.parseColor("#333333"));
 
 
-        chartColor = typedArray.getColor(R.styleable.BarChartView_chartColor, Color.parseColor("#666666"));
+        int chartColor = typedArray.getColor(R.styleable.BarChartView_chartColor, Color.parseColor("#666666"));
 
 
-        textColor = typedArray.getColor(R.styleable.BarChartView_textColor, Color.parseColor("#666666"));
+        int textColor = typedArray.getColor(R.styleable.BarChartView_textColor, Color.parseColor("#666666"));
         gradientStartColor=typedArray.getColor(R.styleable.BarChartView_gradientStartColor,Color.parseColor("#ffa666"));
         gradientEndColor=typedArray.getColor(R.styleable.BarChartView_gradientEndColor,Color.parseColor("#e57a2e"));
 
@@ -138,7 +131,7 @@ public class BarChartView extends View {
         super.onLayout(changed, left, top, right, bottom);
         //测量后的宽度
         measuredWidth = getMeasuredWidth();
-        totalBarWidth = measuredWidth * 4 / 5;
+        int totalBarWidth = measuredWidth * 4 / 5;
         //测量后的高度
         measuredHeight = getMeasuredHeight();
         //计算结束Y的值
@@ -146,12 +139,12 @@ public class BarChartView extends View {
         mStartX = 0 * barWidth;
         // y坐标开始值为50
         mStartY = 0 * barWidth;
-        mStopX = measuredWidth - 2 * barWidth;
+        int mStopX = measuredWidth - 2 * barWidth;
         mStopY = measuredHeight - 2 * barWidth;
-        deltaY = (mStopY - (mStartY + 7 * barWidth / 5)) / horizentalLineNum;
+        int deltaY = (mStopY - (mStartY + 7 * barWidth / 5)) / horizentalLineNum;
         deltaX = (totalBarWidth - mStartX - barWidth * totalBarNum) / totalBarNum;
         numPerUnit = (int) max / horizentalLineNum;
-        currentVerticalLineProgress = mStopY;
+        int currentVerticalLineProgress = mStopY;
     }
 
     @Override

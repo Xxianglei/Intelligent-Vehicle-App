@@ -43,7 +43,6 @@ public class HRingView extends View {
 
     private int sWidthringPaint = 0;
     private int sWidthprogerssPaint = 0;
-    private int textPaintSize = 0;
     private int progerssPaintSize = 0;
     private int pointShadowLayer = 0;
     private int pointPaintSize = 0;
@@ -83,7 +82,7 @@ public class HRingView extends View {
 
 
         progerssPaintSize = dip2px(getContext(), 50f);
-        textPaintSize = dip2px(getContext(), 8f);
+        int textPaintSize = dip2px(getContext(), 8f);
         sWidthringPaint = dip2px(getContext(), 1.5f);
         sWidthprogerssPaint = dip2px(getContext(), 7.0f);
         pointPaintSize = dip2px(getContext(), 2.0f);

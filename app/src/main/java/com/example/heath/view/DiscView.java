@@ -28,7 +28,6 @@ import com.example.heath.utils.DiscViewUtils;
 public class DiscView extends FrameLayout {
     public static final int ANIMATION_DURING = 1100;
 
-    private Context mContext;
     private CircleView mCircleView;
     private ValueAnimator animator;
     private TextView headText;//头部Text
@@ -59,7 +58,7 @@ public class DiscView extends FrameLayout {
     }
 
     private void initView(Context context, AttributeSet attrs) {
-        this.mContext = context;
+        Context mContext = context;
         animator = ValueAnimator.ofInt(0, 0);//属性动画差值器
 
         final LayoutInflater inflater = LayoutInflater.from(context);

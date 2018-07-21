@@ -282,16 +282,18 @@
                 android:background="#ededed"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:weightSum="1">
 
                 <TextView
                     android:id="@+id/report"
-                    android:layout_width="80dp"
+                    android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.25"
                     android:background="@drawable/text_bg"
                     android:gravity="center"
                     android:text="健康报告"
@@ -300,12 +302,12 @@
 
                 <TextView
                     android:id="@+id/his_data"
-                    android:layout_width="80dp"
+                    android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.25"
                     android:background="@drawable/text_bg"
                     android:gravity="center"
                     android:text="历史数据"
@@ -313,15 +315,28 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/weather"
-                    android:layout_width="80dp"
+                    android:layout_marginRight="5dp"
+                android:id="@+id/weather"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/text_bg"
+                android:gravity="center"
+                android:text="天气情况"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/medicine"
+                    android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.25"
                     android:background="@drawable/text_bg"
                     android:gravity="center"
-                    android:text="天气情况"
+                    android:text="用药提醒"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -365,7 +380,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="1">
@@ -578,7 +593,7 @@
                         android:layout_margin="10dp"
                         android:text="高德地图"
                         android:textColor="#40aeaa"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -586,7 +601,7 @@
                         android:layout_margin="10dp"
                         android:text="讯飞语音"
                         android:textColor="#40aeaa"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -594,7 +609,7 @@
                         android:layout_margin="10dp"
                         android:text="和风天气"
                         android:textColor="#40aeaa"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -602,7 +617,7 @@
                         android:layout_margin="10dp"
                         android:text="阿里云"
                         android:textColor="#40aeaa"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -619,7 +634,7 @@
                         android:layout_margin="5dp"
                         android:text="OkHttp"
                         android:textColor="#40aeaa"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -627,7 +642,7 @@
                         android:layout_margin="5dp"
                         android:text="RollingText"
                         android:textColor="#40aeaa"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -635,7 +650,7 @@
                         android:layout_margin="5dp"
                         android:text="MPAndroidChart"
                         android:textColor="#40aeaa"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -643,7 +658,7 @@
                         android:layout_margin="5dp"
                         android:text="materialviewpager"
                         android:textColor="#40aeaa"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
             </LinearLayout>

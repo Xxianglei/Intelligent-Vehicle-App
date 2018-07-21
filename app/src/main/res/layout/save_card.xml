@@ -37,7 +37,8 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:gravity="center"
@@ -54,7 +55,7 @@
                         android:gravity="center"
                         android:text="姓名"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -63,7 +64,7 @@
                         android:gravity="center"
                         android:text="身高"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -72,7 +73,7 @@
                         android:gravity="center"
                         android:text="体重"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
                         android:gravity="center"
                         android:text="病史"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -90,7 +91,7 @@
                         android:gravity="center"
                         android:text="出生日期"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -99,7 +100,7 @@
                         android:gravity="center"
                         android:text="ABO血型"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -108,7 +109,7 @@
                         android:gravity="center"
                         android:text="过敏反应"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
@@ -116,7 +117,7 @@
                         android:gravity="center"
                         android:text="生活习惯"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -136,10 +137,9 @@
                         android:gravity="center"
                         android:hint="未填写"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <EditText
-                        android:phoneNumber="true"
 
                         android:id="@+id/text2"
                         android:layout_width="match_parent"
@@ -148,10 +148,9 @@
                         android:gravity="center"
                         android:hint="未填写"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <EditText
-                        android:phoneNumber="true"
 
                         android:id="@+id/text3"
                         android:layout_width="match_parent"
@@ -160,7 +159,7 @@
                         android:gravity="center"
                         android:hint="未填写"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
 
@@ -171,7 +170,7 @@
                         android:gravity="center"
                         android:hint="未填写"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
 
@@ -183,7 +182,7 @@
                         android:gravity="center"
                         android:hint="未填写"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
 
@@ -194,7 +193,7 @@
                         android:gravity="center"
                         android:hint="未填写"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
 
@@ -205,7 +204,7 @@
                         android:gravity="center"
                         android:hint="未填写"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
 
@@ -216,7 +215,7 @@
                         android:gravity="center"
                         android:hint="未填写"
                         android:textColor="#046ed9"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
 </LinearLayout>
             </LinearLayout>

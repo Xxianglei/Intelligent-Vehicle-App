@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.Datebase.XueyangModle;
-import com.example.heath.Guide.RouteNaviActivity;
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.utils.TimeUtils;
 import com.example.heath.utils.Utils;
@@ -48,7 +47,6 @@ public class Check_o2 extends AppCompatActivity {
     private List<HeartbeatEntity> mData = new ArrayList<>();
     private HeartbeatAdapter mAdapter;
     private View emptyView;
-    private BluetoothAdapter bluetoothAdapter;
     private MyApplication myApplication;
     private String url="http://47.94.21.55/houtai/addtj.php";
 
@@ -88,7 +86,7 @@ public class Check_o2 extends AppCompatActivity {
                 finish();
             }
         });
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         emptyView = findViewById(R.id.cry_nodata);
         mHeartbeatRecycler = (RecyclerView) findViewById(R.id.recycler_heartbeat);
         mHeartbeatRecycler.setLayoutManager(new LinearLayoutManager(this));

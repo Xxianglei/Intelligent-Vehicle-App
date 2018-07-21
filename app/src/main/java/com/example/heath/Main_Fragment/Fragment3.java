@@ -49,22 +49,17 @@ public class Fragment3 extends Fragment implements AMapLocationListener, AMap.In
     private AMap mMap;
     private PoiSearch mPoiSearch;
     private AMapLocationClient mLocationClient;
-    private AMapLocationClientOption mLocationOption;
     private Marker mLocationMarker;
     private Circle mLocationCircle;
     private PoiOverlay mPoiOverlay;
     private AMapLocation mCurrentLocation;
     private String hospital = "医院";
     private EditText search;
-    private ImageButton search_img;
-    private ImageButton lukuang;
     private ImageButton heibai;
     private boolean tag1;
     private boolean tag2;
     private double x;
     private double y;
-    private ImageButton location;
-    private Spinner spinner;
     private  int r=2000;
 
     @Nullable
@@ -78,12 +73,12 @@ public class Fragment3 extends Fragment implements AMapLocationListener, AMap.In
     }
 
     private void initView(View view) {
-        location = view.findViewById(R.id.location);
+        ImageButton location = view.findViewById(R.id.location);
         search = view.findViewById(R.id.search_tv);
-        search_img = view.findViewById(R.id.search_img);
-        lukuang = view.findViewById(R.id.lukuang);
+        ImageButton search_img = view.findViewById(R.id.search_img);
+        ImageButton lukuang = view.findViewById(R.id.lukuang);
         heibai = view.findViewById(R.id.heibai);
-        spinner = view.findViewById(R.id.spinner);
+        Spinner spinner = view.findViewById(R.id.spinner);
         search_img.setOnClickListener(this);
         lukuang.setOnClickListener(this);
         heibai.setOnClickListener(this);
@@ -202,7 +197,7 @@ public class Fragment3 extends Fragment implements AMapLocationListener, AMap.In
      * 初始化定位
      */
     private void initLocation() {
-        mLocationOption = new AMapLocationClientOption();
+        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setOnceLocation(true);
         mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());

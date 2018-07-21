@@ -19,7 +19,7 @@ public class ObservableScrollView extends ScrollView {
     }
 
     public interface OnScrollChangedListener {
-        public void onScrollChanged(int x, int y, int oldX, int oldY);
+        void onScrollChanged(int x, int y, int oldX, int oldY);
     }
 
     private OnScrollChangedListener onScrollChangedListener;

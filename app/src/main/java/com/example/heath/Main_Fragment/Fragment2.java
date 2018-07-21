@@ -51,7 +51,6 @@ import com.example.heath.Datebase.ConnectModle;
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.Datebase.UserModle;
 import com.example.heath.HttpUtils.OkNetRequest;
-import com.example.heath.MainActivity;
 import com.example.heath.Model.Person_Bpre;
 import com.example.heath.Model.Person_Bsur;
 import com.example.heath.Model.Person_weight;
@@ -67,8 +66,6 @@ import com.example.heath.utils.StringClass;
 import com.example.heath.utils.TimeUtils;
 import com.example.heath.view.ExpandView.ExpandView;
 import com.example.heath.view.circlerefresh.CircleRefreshLayout;
-import com.example.heath.view.weather.GyroscopeObserver;
-import com.example.heath.view.weather.WeatherAnimView;
 import com.google.gson.Gson;
 import com.liangmayong.text2speech.Text2Speech;
 import com.mylhyl.acp.Acp;
@@ -91,21 +88,16 @@ import me.leefeng.promptlibrary.OnAdClickListener;
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Request;
 import okhttp3.Response;
-import xyz.matteobattilana.library.Common.Constants;
-import xyz.matteobattilana.library.WeatherView;
 
-import static com.mob.tools.utils.DeviceHelper.getApplication;
 import static com.xiasuhuei321.loadingdialog.view.LoadingDialog.Speed.SPEED_TWO;
 
 
 public class Fragment2 extends Fragment implements View.OnClickListener {
 
-    private ImageView iv;
     private MultiScrollNumber heart_num;
     private MultiScrollNumber heart_pre;
     private MultiScrollNumber heart_tmp;
     private TextView air;
-    private Weather_model pm;
     private MyApplication myApplication;
     private String city;
     private String down_url = "http://47.94.21.55/houtai/select.php?";
@@ -132,11 +124,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private TextView low_text5;
     private TextView suggest_text5;
 
-    private String url_heartpre = "http://dtbp.market.alicloudapi.com/alicloudapi/dailyTest/bloodPressure";
-    private String url_heartsur = "http://idp02.market.alicloudapi.com/alicloudapi/dailyTest/bloodGlucose";
-    private String url_weight = "http://idp03.market.alicloudapi.com/alicloudapi/dailyTest/bmi";
     private String appcode = "e5245cb4f806431185e56bb2efd5eaf9";
-    private String checkurl = "http://47.94.21.55/houtai/sj-model/sj/model.php";
 
     private Person_weight person_weight;
     private Person_Bpre person_bpre;
@@ -215,8 +203,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private TextView cheneikq;
     private BluetoothAdapter bluetoothAdapter;
     private Timer timer;
-    private View contentView;
-    private View rootview;
     private Timer timer2;
     private DataBaseManager dataBaseManager;
     private Timer timer3;
@@ -227,8 +213,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private String url = "http://47.94.21.55/houtai/sj-model/sj/model.php";
     private String shigh;
     private String weight;
-    private String his;
-    private String hobb;
     private TextView sug;
     private TextView one;
     private TextView two;
@@ -242,10 +226,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private LinearLayout ll3;
     private TextView zhuangtai;
     private TextView zhongti;
-    private double time;
     private LoadingDialog ld;
-    private HashMap<String, String> params;
-    private LayoutInflater inflater;
     private int drivetime = 0;
     private LinearLayout ll13;
 
@@ -253,7 +234,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment2, container, false);
-        iv = view.findViewById(R.id.heart_img);
+        ImageView iv = view.findViewById(R.id.heart_img);
         Animator anim = AnimatorInflater.loadAnimator(getActivity(), R.anim.heart_anim);
         anim.setTarget(iv);
         anim.start();
@@ -296,7 +277,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 .setFailedText("拉取失败")
                 .setLoadSpeed(SPEED_TWO)
                 .show();
-        params = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
         myApplication = (MyApplication) getActivity().getApplication();
         params.put("user", myApplication.getName().toString());
         down_data(params);
@@ -413,7 +394,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
     private void showPopupWindow() {
         //2.填充布局
-        inflater = LayoutInflater.from(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
         dialogView = inflater.inflate(R.layout.view_dialog, null);
 
         //  报告页面
@@ -424,12 +405,12 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         four = dialogView.findViewById(R.id.tizhong);
         five = dialogView.findViewById(R.id.o2);
         zhuangtai = dialogView.findViewById(R.id.zhuangtai);
-        contentView = LayoutInflater.from(getActivity()).inflate(R.layout.item, null);
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.item, null);
         loadingWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
 
         loadingWindow.setContentView(contentView);
-        rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_main, null);
+        View rootview = LayoutInflater.from(getActivity()).inflate(R.layout.activity_main, null);
         loadingWindow.showAtLocation(rootview, Gravity.CENTER, 0, 0);
         loadingWindow.setOutsideTouchable(false);
 
@@ -624,8 +605,8 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         if (list2.size() > 0) {
             shigh = list2.get(list2.size() - 1).getHigh();
             weight = list2.get(list2.size() - 1).getWeight();
-            his = list2.get(list2.size() - 1).getHis();
-            hobb = list2.get(list2.size() - 1).getHobbit();
+            String his = list2.get(list2.size() - 1).getHis();
+            String hobb = list2.get(list2.size() - 1).getHobbit();
 
 
             if (his.toString().equals("心脏病")) {
@@ -656,6 +637,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         HashMap<String, String> params = new HashMap<>();
         // 添加请求参数
         params.put("shuju", tag1 + "  " + shigh + "  " + weight + "  " + tiwen + "  " + high + "  " + low + "  " + xinlv + "  " + xueyang + "  " + tag2 + "  " + tag3 + "  " + tag4 + "  " + tag5 + "  " + tag6 + "  " + tag7 + "  " + time + "  " + exp);
+        String checkurl = "http://47.94.21.55/houtai/sj-model/sj/model.php";
         OkNetRequest.postFormRequest(checkurl, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -734,6 +716,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         params.put("testTime", time);
         params.put("highValue", "" + high);
         params.put("lowValue", "" + low);
+        String url_heartpre = "http://dtbp.market.alicloudapi.com/alicloudapi/dailyTest/bloodPressure";
         OkNetRequest.alypostFormRequest(url_heartpre, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
@@ -783,6 +766,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         params.put("weightValue", low + "");
 
 
+        String url_weight = "http://idp03.market.alicloudapi.com/alicloudapi/dailyTest/bmi";
         OkNetRequest.alypostFormRequest(url_weight, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
@@ -826,6 +810,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         params.put("glucoseValue", glucoseValue + "");
         params.put("testTime", time);
         params.put("memberId", memberId);
+        String url_heartsur = "http://idp02.market.alicloudapi.com/alicloudapi/dailyTest/bloodGlucose";
         OkNetRequest.alypostFormRequest(url_heartsur, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response, String result) throws Exception {
@@ -865,7 +850,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                     String jsonString = (String) msg.obj;
                     Log.i("空气质量Josn数据", jsonString);
                     ParsePm parsePm = new ParsePm();
-                    pm = new Weather_model();
+                    Weather_model pm = new Weather_model();
                     pm = parsePm.getpmInfomation(jsonString);
                     Log.i("空气质量", pm.getAir());
                     if (pm.getAir().equals("良")) {
@@ -1264,7 +1249,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             count = 0;
             //  获取驾驶时长
             //  时间扩大了两倍
-            time = intent.getExtras().getDouble("time");
+            double time = intent.getExtras().getDouble("time");
             Log.e("驾驶时长", time + "");
 
             Message message = new Message();

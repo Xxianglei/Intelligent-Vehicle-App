@@ -54,10 +54,6 @@ public class StepView extends View {
 
     private Paint mPaint;
 
-    private int mWidth;
-
-    private int mHeight;
-
     /**
      * 交错圆环线条宽度
      */
@@ -66,17 +62,6 @@ public class StepView extends View {
      * 交错圆环的半径
      */
     private int mStaggerRadius;
-
-    /**
-     * 交错圆环的起始颜色
-     */
-    private int mStaggerStartColor = 0x11ffffff;
-
-    private int mStaggerEndColor = 0xffffffff;
-
-    private int mFinishStartColor = 0xffffffff;
-
-    private int mFinishEndColor = 0x66ffffff;
 
     private int mFinishBackStartColor = 0x66ffffff;
 
@@ -87,11 +72,6 @@ public class StepView extends View {
     private int mCenterX;
 
     private int mCenterY;
-
-    /**
-     * 半径参考值
-     */
-    private int mRadius;
 
     /**
      * 大圆半径padding值
@@ -122,16 +102,6 @@ public class StepView extends View {
      * 圆点的半径
      */
     private int mDotRadius;
-
-    /**
-     * 圆点的颜色
-     */
-    private int mDotColor = Color.WHITE;
-
-    /**
-     * 在手机内的显示范围
-     */
-    private RectF mViewRectF;
 
     /**
      * 小圆点们
@@ -246,15 +216,21 @@ public class StepView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        mWidth = getWidth();
-        mHeight = getHeight();
+        int mWidth = getWidth();
+        int mHeight = getHeight();
 
-        mViewRectF = new RectF(0, 0, mWidth, mHeight);
+        /*
+      在手机内的显示范围
+     */
+        RectF mViewRectF = new RectF(0, 0, mWidth, mHeight);
 
         mCenterX = mWidth / 2;
         mCenterY = mHeight / 2;
 
-        mRadius = mCenterX > mCenterY ? mCenterY : mCenterX;
+        /*
+      半径参考值
+     */
+        int mRadius = mCenterX > mCenterY ? mCenterY : mCenterX;
 
         mStaggerStrokeWidth = DensityUtils.dp2px(getContext(), 1.0f);
         mStaggerRadius = mRadius - mRadiusPadding;
@@ -267,10 +243,17 @@ public class StepView extends View {
         mBaseCircleRadius = mStaggerRadius;
         mFinishCircleRadius = mBaseCircleRadius;
 
+        int mStaggerEndColor = 0xffffffff;
+        /*
+      交错圆环的起始颜色
+     */
+        int mStaggerStartColor = 0x11ffffff;
         mStaggerSweepGradient = new SweepGradient(mCenterX, mCenterY,
                 new int[]{mStaggerStartColor, mStaggerEndColor},
                 new float[]{0.0f, 1.0f});
 
+        int mFinishEndColor = 0x66ffffff;
+        int mFinishStartColor = 0xffffffff;
         mFinishSweepGradient = new SweepGradient(mCenterX, mCenterY,
                 new int[]{mFinishStartColor, mFinishEndColor, mFinishStartColor},
                 new float[]{0.0f, 0.5f, 1.0f});
@@ -451,6 +434,10 @@ public class StepView extends View {
         int alpha = mPaint.getAlpha();
 
         mPaint.setStyle(Paint.Style.FILL);
+        /*
+      圆点的颜色
+     */
+        int mDotColor = Color.WHITE;
         mPaint.setColor(mDotColor);
 
         canvas.save();

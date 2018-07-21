@@ -48,7 +48,6 @@ public class Check_tep extends AppCompatActivity {
     private List<HeartbeatEntity> mData = new ArrayList<>();
     private HeartbeatAdapter mAdapter;
     private View emptyView;
-    private BluetoothAdapter bluetoothAdapter;
     private String url = "http://47.94.21.55/houtai/addtj.php";
     private MyApplication myApplication;
 
@@ -84,7 +83,7 @@ public class Check_tep extends AppCompatActivity {
                 finish();
             }
         });
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         emptyView = findViewById(R.id.cry_nodata);
         mHeartbeatRecycler = (RecyclerView) findViewById(R.id.recycler_heartbeat);
         mHeartbeatRecycler.setLayoutManager(new LinearLayoutManager(this));

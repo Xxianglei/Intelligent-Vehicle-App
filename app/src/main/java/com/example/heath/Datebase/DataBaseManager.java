@@ -15,7 +15,6 @@ import java.util.List;
  */
 
 public class DataBaseManager {
-    private Context mContext;
 
     private final TiwenModle tiwenModle;
     private final XinlvModle xinlvModle;
@@ -29,7 +28,7 @@ public class DataBaseManager {
 
 
     public DataBaseManager() {
-        this.mContext = MyApplication.getContext();
+        Context mContext = MyApplication.getContext();
         tizhong = new TizhongModle();
         tiwenModle = new TiwenModle();
         xinlvModle = new XinlvModle();

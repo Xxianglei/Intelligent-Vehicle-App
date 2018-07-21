@@ -22,9 +22,7 @@ public class SpringProgressView extends View {
 	private float maxCount;
 	/**进度条当前值*/
 	private float currentCount;
-	/**画笔*/
-	private Paint mPaint;
-	private int mWidth,mHeight;
+    private int mWidth,mHeight;
 	
 	public SpringProgressView(Context context, AttributeSet attrs,
 			int defStyleAttr) {
@@ -48,7 +46,8 @@ public class SpringProgressView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		mPaint = new Paint();
+		/*画笔*/
+        Paint mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		int round = mHeight/2;
 		System.out.println("max="+maxCount + "  current="+currentCount);

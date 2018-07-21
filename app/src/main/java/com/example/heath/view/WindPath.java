@@ -18,14 +18,13 @@ import android.view.animation.RotateAnimation;
  */
 public class WindPath extends View {
 
-    private float width, height;
+    private float width;
 
     private float centerX, centerY; //圆心
     //扇叶的五个坐标点
     private float x1, y1, x2, y2, x3, y3, x4, y4, x5, y5;
 
     private RotateAnimation mAnimation;
-    private int mWindVelocity = 1; //风速
 
     private Paint mWindPaint; //扇叶画笔
 
@@ -60,7 +59,7 @@ public class WindPath extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         width = MeasureSpec.getSize(widthMeasureSpec);
-        height = MeasureSpec.getSize(heightMeasureSpec);
+        float height = MeasureSpec.getSize(heightMeasureSpec);
         if (height > width) {
             height = width;
         } else {
@@ -134,7 +133,7 @@ public class WindPath extends View {
         if (value > 17) {
             value = 17;
         }
-        this.mWindVelocity = value;
+        int mWindVelocity = value;
     }
 
     public void startAnim() {

@@ -5,13 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="50dp">
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="16dp"
+        android:layout_alignParentTop="true"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="?attr/colorPrimary"
         />
 </LinearLayout>

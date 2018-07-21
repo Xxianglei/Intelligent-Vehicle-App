@@ -10,7 +10,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
 import com.example.heath.Register.Log_in;
-import com.liangmayong.text2speech.Text2Speech;
 
 /**
  * Created by 丽丽超可爱 on 2018/3/11.

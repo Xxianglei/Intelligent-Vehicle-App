@@ -68,13 +68,8 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private ObservableScrollView mScrollView = null;
     private MaterialRefreshLayout materialRefreshLayout;
 
-
-    private NumberPicker numberPicker_age;
-    private NumberPicker numberPicker_weight;
-    private NumberPicker numberPicker_high;
 
     private static int my_high;
     private static int my_tizong;
@@ -85,29 +80,19 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
     private EditText set_name;
     private static final String TAG = "PersonCentter";
 
-    private String url = "http://47.94.21.55/houtai/addUSer.php";
-
     protected static final int CHOOSE_PICTURE = 0;
     protected static final int TAKE_PICTURE = 1;
     private static final int CROP_SMALL_PICTURE = 2;
     protected static Uri tempUri;
-    private Window window;
     private MyApplication myApp;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private MyApplication application;
     private HashMap<String, String> params;
-
-    private boolean bool;
 
     private int mScrollerY;
     private BlurredView blurredView;
     private int mAlpha = 1;
     private DataBaseManager dataBaseManager;
-    private MyOneLineView oneItem;
-    private MyOneLineView twoItem;
-    private MyOneLineView thereItem;
-    private MyOneLineView fourItem;
     private TextView name;
     private ImageView xingbie;
     private CircleImageView headImage;
@@ -115,11 +100,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
     private TextView age;
     private TextView tizong;
     private TextView high;
-    private LinearLayout llhigh;
-    private LinearLayout llAge;
-    private LinearLayout llTizong;
 
-    private Button button;
     private MyApplication myApplication;
 
     @Override
@@ -170,7 +151,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
                 AlertDialog dialog4 = builder4.create();
 
-                window = dialog4.getWindow();
+                Window window = dialog4.getWindow();
                 //为Window设置动画
                 window.setWindowAnimations(R.style.animTranslate);
                 dialog4.show();
@@ -188,7 +169,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
                 // Dialog在被第二次打开的时候其试图已经存在，而你再次打开它，
                 // Dialog会认为此视图已有了父容器而你还要为人家添加一个父容器
                 View myView3 = LayoutInflater.from(PersonCenter.this).inflate(R.layout.choosehigh, null);
-                numberPicker_high = myView3.findViewById(R.id._high);
+                NumberPicker numberPicker_high = myView3.findViewById(R.id._high);
                 numberPicker_high.setMaxValue(250);
                 numberPicker_high.setMinValue(140);
                 numberPicker_high.setValue(170);
@@ -232,7 +213,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
             case R.id.ll_tizong:
 
                 View myView2 = LayoutInflater.from(PersonCenter.this).inflate(R.layout.chooseweight, null);
-                numberPicker_weight = myView2.findViewById(R.id.my_weight);
+                NumberPicker numberPicker_weight = myView2.findViewById(R.id.my_weight);
                 numberPicker_weight.setMaxValue(200);
                 numberPicker_weight.setMinValue(30);
                 numberPicker_weight.setValue(70);
@@ -275,7 +256,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
             case R.id.ll_age:
 
                 View myView = LayoutInflater.from(PersonCenter.this).inflate(R.layout.chooseage, null);
-                numberPicker_age = myView.findViewById(R.id._age);
+                NumberPicker numberPicker_age = myView.findViewById(R.id._age);
                 numberPicker_age.setMaxValue(120);
                 numberPicker_age.setMinValue(0);
                 numberPicker_age.setValue(25);
@@ -537,7 +518,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
      * @param
      */
     protected void setImageToView(Intent data) {
-        bool = false;
+        boolean bool = false;
         Bundle extras = data.getExtras();
         Log.i(TAG, String.valueOf(data.getExtras().getParcelable("data")));
         if (extras != null) {
@@ -559,10 +540,10 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
             SharedPreferences sharedPreferences = getSharedPreferences("testSP", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("image", imageString);
-            editor.commit();
+            editor.apply();
 
             //加入全局变量 主页同步显示
-            application = (MyApplication) getApplication();
+            MyApplication application = (MyApplication) getApplication();
             application.setImage_String(imageString);
             Log.e("头像全局保存", imageString.toString());
 
@@ -615,11 +596,11 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
     private void initViews() {
         myApplication = (MyApplication)getApplication();
-        button = (Button) findViewById(R.id.log_out);
+        Button button = (Button) findViewById(R.id.log_out);
         name = (TextView) findViewById(R.id.name);
-        llhigh = (LinearLayout) findViewById(R.id.ll_high);
-        llAge = (LinearLayout) findViewById(R.id.ll_age);
-        llTizong = (LinearLayout) findViewById(R.id.ll_tizong);
+        LinearLayout llhigh = (LinearLayout) findViewById(R.id.ll_high);
+        LinearLayout llAge = (LinearLayout) findViewById(R.id.ll_age);
+        LinearLayout llTizong = (LinearLayout) findViewById(R.id.ll_tizong);
         high = (TextView) findViewById(R.id.high);
         tizong = (TextView) findViewById(R.id.tizong);
         age = (TextView) findViewById(R.id.age);
@@ -634,10 +615,10 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         xingbie.setOnClickListener(this);
         button.setOnClickListener(this);
 
-        oneItem = (MyOneLineView) findViewById(R.id.one_item);
-        twoItem = (MyOneLineView) findViewById(R.id.two_item);
-        thereItem = (MyOneLineView) findViewById(R.id.there_item);
-        fourItem = (MyOneLineView) findViewById(R.id.four_item);
+        MyOneLineView oneItem = (MyOneLineView) findViewById(R.id.one_item);
+        MyOneLineView twoItem = (MyOneLineView) findViewById(R.id.two_item);
+        MyOneLineView thereItem = (MyOneLineView) findViewById(R.id.there_item);
+        MyOneLineView fourItem = (MyOneLineView) findViewById(R.id.four_item);
         headImage = (CircleImageView) findViewById(R.id.head_image);
         // 初始化item
         oneItem.initMine(R.mipmap.cen_shezhi, "我的设备", "", true);
@@ -654,7 +635,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         dataBaseManager = new DataBaseManager();
         blurredView = (BlurredView) findViewById(R.id.mohu);
         materialRefreshLayout = (MaterialRefreshLayout) findViewById(R.id.refresh);
-        mScrollView = (ObservableScrollView) findViewById(R.id.id_scrollview);
+        ObservableScrollView mScrollView = (ObservableScrollView) findViewById(R.id.id_scrollview);
         // 滚动监听
         mScrollView.setOnScrollListener(new ObservableScrollView.OnScrollChangedListener() {
 
@@ -718,6 +699,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
     private void upload_data(HashMap<String, String> params) {
         params.put("user",myApplication.getName().toString());
+        String url = "http://47.94.21.55/houtai/addUSer.php";
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @Override
             public void requestSuccess(Response response,String result) throws Exception {

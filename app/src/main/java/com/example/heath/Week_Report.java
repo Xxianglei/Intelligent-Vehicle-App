@@ -12,19 +12,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
-import com.example.heath.Datebase.DataBaseManager;
-import com.example.heath.Datebase.XueyaModle;
-import com.example.heath.HttpUtils.OkNetRequest;
-import com.example.heath.Model.Person_Bpre;
 import com.example.heath.utils.LoadWeb;
-import com.google.gson.Gson;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import okhttp3.Request;
 
 /**
  * Created by 丽丽超可爱 on 2018/4/23.
@@ -32,8 +20,6 @@ import okhttp3.Request;
 
 public class Week_Report extends AppCompatActivity {
     private WebView webView;
-    private ProgressBar progressBar;
-    private LoadWeb loadWeb;
 
 
     @Override
@@ -56,9 +42,9 @@ public class Week_Report extends AppCompatActivity {
                 finish();
             }
         });
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);//进度条
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
         webView = (WebView) findViewById(R.id.webview);
-        loadWeb = new LoadWeb(webView, progressBar, this);
+        LoadWeb loadWeb = new LoadWeb(webView, progressBar, this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (intent.getExtras() != null) {

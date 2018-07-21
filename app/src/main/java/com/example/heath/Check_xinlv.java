@@ -46,7 +46,6 @@ public class Check_xinlv extends AppCompatActivity {
     private DataBaseManager dataBaseManager;
     private boolean Tag = false;
     private View emptyView;
-    private BluetoothAdapter bluetoothAdapter;
     private String url="http://47.94.21.55/houtai/addtj.php";
     private MyApplication myApplication;
 
@@ -86,7 +85,7 @@ public class Check_xinlv extends AppCompatActivity {
             }
         });
         myApplication = (MyApplication)getApplication();
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         emptyView = findViewById(R.id.cry_nodata);
         mHeartbeatView = (HeartbeatView) findViewById(R.id.heartbeat);
         mDigiResult = (DigitalGroupView) findViewById(R.id.digi_heartbeat_result);

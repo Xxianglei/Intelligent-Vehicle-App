@@ -67,7 +67,7 @@
                             android:focusable="true"
                             android:text="80/120"
                             android:textColor="#f25151"
-                            android:textSize="50dp" />
+                            android:textSize="50sp" />
 
                         <TextView
                             android:id="@+id/date"
@@ -109,7 +109,7 @@
                             android:padding="5dp"
                             android:text="  血压趋势图"
                             android:textColor="#2e2e2e"
-                            android:textSize="12dp"
+                            android:textSize="12sp"
 
                             />
 
@@ -135,7 +135,7 @@
                                 android:layout_height="match_parent">
                                 <ImageView
                                     android:layout_weight="1"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="100dp"
                                     android:adjustViewBounds="true"
                                     android:scaleType="fitCenter"
@@ -205,7 +205,7 @@
                                 android:gravity="center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="50dp"
-                                android:textSize="18dp"
+                                android:textSize="18sp"
                                 android:text="详细历史数据"
 
                                 />
@@ -237,28 +237,28 @@
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:text="参考标准"
-                            android:textSize="12dp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:text="正常范围："
-                            android:textSize="12dp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:text="90mmHg-收缩压-140mmHg"
-                            android:textSize="12dp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:text="60mmHg-舒张压-90mmHg"
-                            android:textSize="12dp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
 
 
