@@ -38,7 +38,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2017/8/8.
  */
-public class Fragment4 extends Fragment implements View.OnClickListener, AMapLocationListener {
+public class Fragment4 extends Fragment implements View.OnClickListener{
     //AMap是地图对象
     private static final int REFRESH_COMPLETE = 0X110;
     private SwipeRefreshLayout mSwipeLayout;
@@ -85,7 +85,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        init_location();
+       // init_location();
         initView();
         initEvent();
     }
@@ -244,61 +244,10 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
     }
 
 
-
-    // 定位服务
-
-    private void init_location() {
-        //初始化定位
-        mLocationClient = new AMapLocationClient(getContext());
-        //设置定位回调监听
-        mLocationClient.setLocationListener(this);
-        //初始化定位参数
-        mLocationOption = new AMapLocationClientOption();
-        //设置定位模式为Hight_Accuracy高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //设置是否返回地址信息（默认返回地址信息）
-        mLocationOption.setNeedAddress(true);
-        //设置是否只定位一次,默认为false
-        mLocationOption.setOnceLocation(true);
-        //设置是否强制刷新WIFI，默认为强制刷新
-        mLocationOption.setWifiActiveScan(true);
-        //设置是否允许模拟位置,默认为false，不允许模拟位置
-        mLocationOption.setMockEnable(false);
-        //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(1000 * 60 * 60);
-        //给对定位客户端象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
-
-    }
-
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        if (aMapLocation != null) {
-            if (aMapLocation.getErrorCode() == 0) {
-                //定位成功回调信息，设置相关消息
-                aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见官方定位类型表
-                aMapLocation.getCity();//城市信息
-                lat = aMapLocation.getLatitude();//获取纬度
-                Log.e("lat", lat + "");
-                lon = aMapLocation.getLongitude();//获取经度
-                Log.e("lon", lon + "");
-                mLocationClient.stopLocation(); //停止定位
-            } else {
-                //显示错误信息ErrCode是错误码，详见错误码表。errInfo是错误信息，
-                Log.e("AmapError", "location Error, ErrCode:"
-                        + aMapLocation.getErrorCode() + ", errInfo:"
-                        + aMapLocation.getErrorInfo());
-
-            }
-        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mLocationClient.stopLocation();//停止定位
-        mLocationClient.onDestroy();//销毁定位客户端。
+
     }
 
 

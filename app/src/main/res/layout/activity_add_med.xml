@@ -25,7 +25,7 @@
         android:id="@+id/add_reminder_layout_top"
         android:background="@color/primary"
         android:orientation="vertical"
-        android:layout_height="200dp">
+        android:layout_height="220dp">
 
         <EditText
             android:layout_width="match_parent"
@@ -271,7 +271,7 @@
         fab:fab_colorPressed="@color/fab_pressed"
         app:fab_size="normal"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="244dp"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="8dp"/>
 
@@ -286,7 +286,7 @@
         fab:fab_colorPressed="@color/primary"
         app:fab_size="normal"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="244dp"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="8dp"/>
 
