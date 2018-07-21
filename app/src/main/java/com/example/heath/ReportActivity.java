@@ -43,7 +43,8 @@ public class ReportActivity extends AppCompatActivity {
     private String url;
     private String zhonghe = "http://47.94.21.55/houtai/jk/jiankang.php";
     private MyApplication myApplication;
-
+    private float downX ;    //按下时 的X坐标
+    private float downY ;    //按下时 的Y坐标
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +79,29 @@ public class ReportActivity extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                float x= event.getX();
+                float y = event.getY();
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         flage = 0;
                         Log.e("flage_down",flage+"");
+                        downX = x;
+                        downY = y;
+                        Log.e("Tag","=======按下时X："+x);
+                        Log.e("Tag","=======按下时Y："+y);
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        flage = 2;
+                        //获取到距离差
+                        float dx= x-downX;
+                        float dy = y-downY;
+                        Log.e("Tag","=======滑动时X："+dx);
+                        Log.e("Tag","=======滑动时Y："+dy);
+                        /****
+                         * 优化滑动距离判断是否点击
+                         */
+                        if (Math.abs(dx)>100||Math.abs(dy)>100) {
+                            flage = 2;
+                        }
                         Log.e("flage_move",flage+"");
                         break;
                     case MotionEvent.ACTION_UP:

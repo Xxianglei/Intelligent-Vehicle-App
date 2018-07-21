@@ -68,6 +68,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
     private LinearLayout check_air;
     private LinearLayout check_o2;
     private LinearLayout check_tmp;
+    private BannerView bannerView1;
 
     @Nullable
     @Override
@@ -103,6 +104,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
         check_air.setOnClickListener(this);
         check_o2.setOnClickListener(this);
         check_tmp.setOnClickListener(this);
+
     }
 
     private void initView() {
@@ -150,9 +152,10 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
                 startActivity(intent);
                 break;
             case R.id.banner:
+                Log.e("点击banner","");
                 Intent intent2 = new Intent(getActivity(), Week_Report.class);
                 Bundle bundle2 = new Bundle();
-                bundle2.putString("url", "url");
+                bundle2.putString("url", "http://www.pcauto.com.cn/playcar/zt/2007/czjk/");
                 intent2.putExtras(bundle2);
                 startActivity(intent2);
                 break;
@@ -195,7 +198,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
             case R.id.image8:
                 Intent intent7 = new Intent(getActivity(), Week_Report.class);
                 Bundle bundle7 = new Bundle();
-                bundle7.putString("url", "http://muzhi.baidu.com/");
+                bundle7.putString("url", "https://m.haodf.com/");
                 intent7.putExtras(bundle7);
                 startActivity(intent7);
                 break;

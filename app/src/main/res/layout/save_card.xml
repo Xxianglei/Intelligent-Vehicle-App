@@ -15,11 +15,23 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="18dp"
             app:cardUseCompatPadding="true"
             android:layout_height="match_parent"
-            android:layout_margin="20dp">
-
+            android:layout_margin="15dp">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent">
+              <ImageView
+                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="10dp"
+                  android:layout_gravity="center"
+                  android:layout_width="100dp"
+                  android:adjustViewBounds="true"
+                  android:scaleType="centerInside"
+                  android:src="@mipmap/card"
+                  android:layout_height="80dp" />
             <LinearLayout
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -206,7 +218,7 @@
                         android:textColor="#046ed9"
                         android:textSize="20dp" />
                 </LinearLayout>
-
+</LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

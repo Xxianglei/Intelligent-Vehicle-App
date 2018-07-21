@@ -37,7 +37,7 @@ public class Fragment1 extends Fragment{
         progressBar = view.findViewById(R.id.progressbar);
         webView = view.findViewById(R.id.webview);
         loadWeb = new LoadWeb(webView,progressBar,getActivity());
-        loadWeb.load("http://muzhi.baidu.com/");
+        loadWeb.load("https://m.haodf.com/");
     }
     private View.OnKeyListener backListener = new View.OnKeyListener() {
         @Override
