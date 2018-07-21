@@ -388,9 +388,7 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="140dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
+                       android:layout_margin="10dp"
                         android:layout_weight="0.25">
 
                         <LinearLayout
