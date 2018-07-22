@@ -72,12 +72,13 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
     private BluetoothAdapter bluetoothAdapter;
     private String url = "http://47.94.21.55/houtai/addtj.php";
     private MyApplication myApplication;
-
+    private boolean stopThread = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_tizhong);
         initView();
+
         MyApplication.getInstance().addActivity(this);
         initEvent();
 
@@ -173,7 +174,14 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        /**
+         * 修复退出crash bug  及时关闭线程
+         */
+        stopThread = true;
+        super.onDestroy();
+    }
     private void initEvent() {
 
         tips.setOnClickListener(this);
@@ -414,11 +422,12 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
         new Thread() {
             @Override
             public void run() {
-                try {
-                    sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                if (!stopThread){
+                    try {
+                        sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -438,7 +447,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
                         loadingWindow.dismiss();
                     }
                 });
-            }
+            }}
         }.start();
     }
 

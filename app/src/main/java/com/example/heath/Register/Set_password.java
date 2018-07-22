@@ -85,11 +85,13 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(ld!=null)
+            ld=null;
         this.unregisterReceiver(networkChangeReceiver);
     }
 
     private void initView() {
-        ld = new LoadingDialog(Set_password.this);
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -116,6 +118,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         if (!validatepassword(pass)&&((etPassword.getText().toString()).equals(etRepeatpassword.getText().toString()))) {
             Toast.makeText(Set_password.this, "亲 请输入由英文和数字组成的密码哦！！", Toast.LENGTH_SHORT).show();
         } else {
+
             ld.setLoadingText("正在登录中...")
                     .setSuccessText("登录成功")//显示加载成功时的文字
                     .setFailedText("注册失败")
@@ -263,7 +266,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_go:
                 Log.e("点击按钮", "-----------");
-
+                ld = new LoadingDialog(Set_password.this);
                 CheckPass(phone, etRepeatpassword.getText().toString());
 
                 break;

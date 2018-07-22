@@ -50,6 +50,7 @@ public class Check_tep extends AppCompatActivity {
     private View emptyView;
     private String url = "http://47.94.21.55/houtai/addtj.php";
     private MyApplication myApplication;
+    private boolean stopThread = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +73,22 @@ public class Check_tep extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        /**
+         * 修复退出crash bug  及时关闭线程
+         */
+        stopThread = true;
+        if (mSvStep != null)
+            mSvStep = null;
+        super.onDestroy();
+    }
+
     private void LoadYunData() {
     }
 
     private void initView() {
-        ImageView imageView=(ImageView)findViewById(R.id.back);
+        ImageView imageView = (ImageView) findViewById(R.id.back);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,9 +105,9 @@ public class Check_tep extends AppCompatActivity {
         mHeartbeatRecycler.setAdapter(mAdapter);
         mSvStep = (StepView) findViewById(R.id.sv_step);
         mSvStep.setmMaxValueint(50);
-        if (bluetoothAdapter.isEnabled() ) {
+        if (bluetoothAdapter.isEnabled()) {
             mSvStep.setEnabled(true);
-        } else{
+        } else {
             mSvStep.setEnabled(false);
             Toast.makeText(this, "您还未连接设备!", Toast.LENGTH_SHORT).show();
         }
@@ -165,35 +177,39 @@ public class Check_tep extends AppCompatActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            try {
-                                Thread.sleep(5000);
-                                mHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        emptyView.setVisibility(GONE);
-                                        mHeartbeatRecycler.setVisibility(VISIBLE);
-                                        DataBaseManager dataBaseManager = new DataBaseManager();
-                                        float randomNum = (float) (35.1 + Math.random() * 3.2);
-                                        int i = (int) (randomNum * 10);
-                                        // 转回float类型,然后将乘上的数重新除去。
-                                        randomNum = (float) i / 10;
-                                        HeartbeatEntity e = new HeartbeatEntity();
-                                        e.date = TimeUtils.dateToString2();
-                                        e.datum = String.valueOf(randomNum);
-                                        //  数据存入数据库
-                                        String time = TimeUtils.dateToString2();
-                                        upload(myApplication.getName().toString(), url,  String.valueOf(randomNum),time);
-                                        dataBaseManager.saveSingle(null, null, null, time, null, 0, 0, 0, 0, randomNum, 0);
-                                        mData.add(0, e);
-                                        mAdapter.notifyItemInserted(0);
-                                        mHeartbeatRecycler.scrollToPosition(0);
-                                        showResult();
-                                        mSvStep.setmCurrentValue(randomNum);
-                                        mSvStep.finish();
-                                    }
-                                });
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            if(!stopThread) {
+                                try {
+                                    Thread.sleep(5000);
+                                    mHandler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            emptyView.setVisibility(GONE);
+                                            mHeartbeatRecycler.setVisibility(VISIBLE);
+                                            DataBaseManager dataBaseManager = new DataBaseManager();
+                                            float randomNum = (float) (35.1 + Math.random() * 3.2);
+                                            int i = (int) (randomNum * 10);
+                                            // 转回float类型,然后将乘上的数重新除去。
+                                            randomNum = (float) i / 10;
+                                            HeartbeatEntity e = new HeartbeatEntity();
+                                            e.date = TimeUtils.dateToString2();
+                                            e.datum = String.valueOf(randomNum);
+                                            //  数据存入数据库
+                                            String time = TimeUtils.dateToString2();
+                                            upload(myApplication.getName().toString(), url, String.valueOf(randomNum), time);
+                                            dataBaseManager.saveSingle(null, null, null, time, null, 0, 0, 0, 0, randomNum, 0);
+                                            mData.add(0, e);
+                                            mAdapter.notifyItemInserted(0);
+                                            mHeartbeatRecycler.scrollToPosition(0);
+                                            showResult();
+                                            if (mSvStep != null) {
+                                                mSvStep.setmCurrentValue(randomNum);
+                                                mSvStep.finish();
+                                            }
+                                        }
+                                    });
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }).start();
@@ -241,7 +257,7 @@ public class Check_tep extends AppCompatActivity {
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
-            public void requestSuccess(Response response,String result) throws Exception {
+            public void requestSuccess(Response response, String result) throws Exception {
                 // 请求成功的回调
                 Log.e("cccc", result.toString());
 

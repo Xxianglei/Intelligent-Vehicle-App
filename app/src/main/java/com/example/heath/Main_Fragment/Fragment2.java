@@ -434,7 +434,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                         int xinlv = (int) (50 + Math.random() * 50);
                         int tizhong = (int) (45 + Math.random() * 55);
                         int xueyang = (int) (85 + Math.random() * 15);
-                        float tiwen = (float) Math.round((float) ((float) (33.0 + Math.random() * 7.0) * 100)) / 100;
+                        float tiwen = (float) Math.round((float) ((float) (35.1 + Math.random() * 5) * 100)) / 100;
                         int high = (int) (90 + Math.random() * 60);
                         int low = (int) (70 + Math.random() * 25);
                         a.setText(xinlv + "");
@@ -882,12 +882,13 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             if (msg.what == 0x21) {
 
                 //  蹦出广告
-                PromptDialog promptDialog = new PromptDialog(getActivity());
-                // promptDialog.getDefaultBuilder().backAlpha(150);
-                Glide.with(getActivity()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532011943988&di=0c580bdf194c1979994db63c6b153ee9&imgtype=0&src=http%3A%2F%2Fimg1.0515yc.cn%2Fmaterial%2Fnews%2Fimg%2F640x%2F2017%2F01%2F20170118175400BAHN.jpg%3F7iLc")
+                final   PromptDialog promptDialog = new PromptDialog(getActivity());
+                promptDialog.getDefaultBuilder().backAlpha(150);
+                Glide.with(getActivity()).load("http://pic29.photophoto.cn/20131122/0020033011893123_b.jpg")
                         .into(promptDialog.showAd(true, new OnAdClickListener() {
                             @Override
                             public void onAdClick() {
+                                promptDialog.dismiss();
                                 Toast.makeText(getActivity(), "我知道了", Toast.LENGTH_SHORT).show();
                             }
                         }));
@@ -895,12 +896,13 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             if (msg.what == 0x22) {
 
                 //  蹦出广告
-                PromptDialog promptDialog = new PromptDialog(getActivity());
-                // promptDialog.getDefaultBuilder().backAlpha(150);
-                Glide.with(getActivity()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532011995137&di=c162cf831ee607580de6f87504eeb309&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fzj%2Fpics%2Fhv1%2F84%2F231%2F2222%2F144544539.jpg")
+                final PromptDialog promptDialog = new PromptDialog(getActivity());
+                 promptDialog.getDefaultBuilder().backAlpha(150);
+                Glide.with(getActivity()).load("http://pic29.photophoto.cn/20131122/0020033011893123_b.jpg")
                         .into(promptDialog.showAd(true, new OnAdClickListener() {
                             @Override
                             public void onAdClick() {
+                                promptDialog.dismiss();
                                 Toast.makeText(getActivity(), "我知道了", Toast.LENGTH_SHORT).show();
                             }
                         }));
@@ -930,16 +932,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     }
 
     public void initlun(View view) {
-        // 获取蓝牙设备适配器
-      /*  WeatherView mWeatherView = view.findViewById(R.id.weather);
-        //Optional
-        mWeatherView
-                .setLifeTime(2000)
-                .setFadeOutTime(1000)
-                .setParticles(43)
-                .setFPS(40)
-                .setAngle(-5)
-                .startAnimation();*/
+
 
 
         zhongti = view.findViewById(R.id.zhuangtai);
@@ -1223,11 +1216,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
     }
 
-    private String makeString() {
-        StringBuffer buffer = new StringBuffer();
-        return null;
-    }
-
     // 监听体检数据
     public class BroadcastMain extends BroadcastReceiver {
 
@@ -1264,16 +1252,16 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             if (time >= 8 * 1000 * 60 * 60) {
                 zhongti.setText("倦怠");
                 drivetime = 1;
-                Text2Speech.speech(getActivity(), "您已经连续驾驶超过四小时  建议您停靠休息二十分钟 如果你需要继续驾驶建议您用清凉空气或冷水刺激面部 或者打开车窗还入清凉空气", false);
+                Text2Speech.speech(getActivity(), "您已经连续驾驶超过四小时  建议您停靠休息二十分钟 ", false);
                 message.what = 0x21;
                 mHandler.sendMessage(message);
 
-            }
+           }
 
             if (time >= 16 * 1000 * 60 * 60) {
                 drivetime = 1;
                 zhongti.setText("疲劳");
-                Text2Speech.speech(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶 寻找最近的停靠点休息一会再继续驾驶", false);
+                Text2Speech.speech(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶 ", false);
                 Toast.makeText(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶", 5000).show();
                 message.what = 0x22;
                 mHandler.sendMessage(message);

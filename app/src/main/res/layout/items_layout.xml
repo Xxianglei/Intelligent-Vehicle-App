@@ -47,7 +47,6 @@
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/lay_bottom"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
             android:layout_toEndOf="@+id/thumbnail_image"

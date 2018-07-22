@@ -48,7 +48,7 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
     private ImageView mPoint;
     private PopupWindow loadingWindow;
     private MyApplication myApplication;
-
+    private boolean stopThread = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +60,14 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
         preLoad();
 
     }
-
+    @Override
+    protected void onDestroy() {
+        /**
+         * 修复退出crash bug  及时关闭线程
+         */
+        stopThread = true;
+        super.onDestroy();
+    }
     private void resImg() {
         down.setImageResource(R.mipmap.down2);
         tag = true;
@@ -189,6 +196,7 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
         new Thread() {
             @Override
             public void run() {
+                if (!stopThread) {
                 try {
                     sleep(10000);
                 } catch (InterruptedException e) {
@@ -202,7 +210,7 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
                         loadingWindow.dismiss();
                     }
                 });
-            }
+            }}
         }.start();
     }
 

@@ -66,11 +66,13 @@ public class Log_in extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(ld!=null)
+            ld=null;
         unregisterReceiver(networkChangeReceiver);
     }
 
     private void initView() {
-        ld = new LoadingDialog(Log_in.this);
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -97,8 +99,9 @@ public class Log_in extends AppCompatActivity {
                 // 登录
                 name = etUsername.getText().toString();
                 password = etPassword.getText().toString();
-
+                ld = new LoadingDialog(Log_in.this);
                 if (name.length()>0 && password.length()>0) {
+
                     myApplication.setName(name);
                     ld.setLoadingText("正在登录中...")
                             .setSuccessText("登录成功")//显示加载成功时的文字

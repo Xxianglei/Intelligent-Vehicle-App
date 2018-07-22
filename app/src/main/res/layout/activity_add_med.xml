@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:id="@+id/alarm_title"
             android:layout_marginStart="72dp"
-            android:hint="药品名"
+            android:hint="药品名称"
             android:textSize="25sp"
             android:lines="4"
             android:minLines="4"
@@ -60,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
                 android:text="@string/details"
-                android:id="@+id/details"
                 android:textSize="20sp"
                 android:gravity="center_vertical"
                 android:layout_marginStart="72dp"
@@ -95,7 +94,6 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/time_text"
                         android:textColor="@color/primary"
                         android:layout_width="wrap_content"
                         android:textSize="18sp"
@@ -119,7 +117,6 @@
                 android:clickable="true"
                 android:onClick="selectRepeat"
                 android:layout_width="match_parent"
-                android:id="@+id/repeat"
                 android:layout_height="72dp">
 
                 <ImageView
@@ -136,13 +133,11 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:orientation="vertical"
-                    android:id="@+id/repeat_ll"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/repeat_icon"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/repeat_text"
                         android:textColor="@color/primary"
                         android:layout_width="wrap_content"
                         android:textSize="18sp"
@@ -164,7 +159,6 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:id="@+id/wake_re"
                 android:clickable="true"
                 android:onClick="selectWake"
                 android:background="?android:attr/selectableItemBackground"
@@ -189,7 +183,6 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/wake_text"
                         android:textColor="@color/primary"
                         android:layout_width="wrap_content"
                         android:textSize="18sp"
@@ -210,7 +203,6 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:id="@+id/holdSleep"
                 android:clickable="true"
                 android:onClick="selectRing"
                 android:background="?android:attr/selectableItemBackground"
@@ -236,7 +228,6 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/holdSleep_text"
                         android:textColor="@color/primary"
                         android:layout_width="wrap_content"
                         android:textSize="18sp"

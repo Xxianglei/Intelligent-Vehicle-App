@@ -114,7 +114,7 @@ public class ReportActivity extends AppCompatActivity {
                                     Toast.makeText(ReportActivity.this, "您的数据太少了暂时无法查看血压周报!", Toast.LENGTH_SHORT).show();
 
                             } else if (item == 1) {
-                                List<TizhongModle> list = dataBaseManager.readxyList();
+                                List<TizhongModle> list = dataBaseManager.readtzList();
                                 Log.e("list.size()", list.size() + "***");
                                 if (list.size() >= 7) {
                                     url = tizhongweb(myApplication.getName().toString());

@@ -48,7 +48,8 @@ public class Check_o2 extends AppCompatActivity {
     private HeartbeatAdapter mAdapter;
     private View emptyView;
     private MyApplication myApplication;
-    private String url="http://47.94.21.55/houtai/addtj.php";
+    private String url = "http://47.94.21.55/houtai/addtj.php";
+    private boolean stopThread = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +75,23 @@ public class Check_o2 extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        /**
+         * 修复退出crash bug  及时关闭线程
+         */
+        stopThread = true;
+        if (mSvStep != null)
+            mSvStep = null;
+        super.onDestroy();
+    }
+
     private void LoadYunData() {
 
     }
 
     private void initView() {
-        ImageView imageView=(ImageView)findViewById(R.id.back);
+        ImageView imageView = (ImageView) findViewById(R.id.back);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,14 +109,13 @@ public class Check_o2 extends AppCompatActivity {
         mSvStep = (StepView) findViewById(R.id.sv_step);
         mSvStep.setmMaxValueint(100);
 
-        if (bluetoothAdapter.isEnabled()){
+        if (bluetoothAdapter.isEnabled()) {
             mSvStep.setEnabled(true);
-        }
-        else {
+        } else {
             mSvStep.setEnabled(false);
-            Toast.makeText(this,"您还未连接设备!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "您还未连接设备!", Toast.LENGTH_SHORT).show();
         }
-        myApplication = (MyApplication)getApplication();
+        myApplication = (MyApplication) getApplication();
     }
 
 
@@ -113,7 +124,7 @@ public class Check_o2 extends AppCompatActivity {
         DataBaseManager dataBaseManager = new DataBaseManager();
         List<XueyangModle> list = dataBaseManager.readxyangList();
         if (list.size() > 0) {
-            Log.e("list.size()",list.size()+"");
+            Log.e("list.size()", list.size() + "");
             for (int i = list.size(); i > 0; i--) {
                 HeartbeatEntity e = new HeartbeatEntity();
                 e.date = list.get(i - 1).getDate();
@@ -149,7 +160,7 @@ public class Check_o2 extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            Log.e("mData.size()",mData.size()+"");
+            Log.e("mData.size()", mData.size() + "");
             return mData.size();
         }
 
@@ -176,17 +187,18 @@ public class Check_o2 extends AppCompatActivity {
 
     private void initEvent() {
 
-            // 进行点击事件后的逻辑操作
+        // 进行点击事件后的逻辑操作
 
 
-            mSvStep.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (Utils.isFastClick()) {
-                        mSvStep.loading();
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
+        mSvStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Utils.isFastClick()) {
+                    mSvStep.loading();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!stopThread) {
                                 try {
                                     Thread.sleep(5000);
                                 } catch (InterruptedException e) {
@@ -204,24 +216,27 @@ public class Check_o2 extends AppCompatActivity {
                                         String time = TimeUtils.dateToString2();
                                         DataBaseManager dataBaseManager = new DataBaseManager();
                                         // 数据存入数据库
-                                        dataBaseManager.saveSingle(time , null, null, null, null, randomNum, 0, 0, 0, 0, 0);
-                                        upload(myApplication.getName().toString(),url ,String.valueOf(randomNum),time);
+                                        dataBaseManager.saveSingle(time, null, null, null, null, randomNum, 0, 0, 0, 0, 0);
+                                        upload(myApplication.getName().toString(), url, String.valueOf(randomNum), time);
                                         mData.add(0, e);
                                         mAdapter.notifyItemInserted(0);
                                         mHeartbeatRecycler.scrollToPosition(0);
-
-                                        mSvStep.setmCurrentValue(randomNum);
-                                        mSvStep.finish();
+                                        if (mSvStep != null) {
+                                            mSvStep.setmCurrentValue(randomNum);
+                                            mSvStep.finish();
+                                        }
                                     }
                                 });
                             }
-                        }).start();
-                    }
+                        }
+                    }).start();
                 }
-            });
+            }
+        });
 
     }
-    private  void upload(String user,String url, String data,String date) {
+
+    private void upload(String user, String url, String data, String date) {
 
         HashMap<String, String> params = new HashMap<>();
         // 添加请求参数
@@ -232,9 +247,9 @@ public class Check_o2 extends AppCompatActivity {
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
-            public void requestSuccess(Response response,String result) throws Exception {
+            public void requestSuccess(Response response, String result) throws Exception {
                 // 请求成功的回调
-                Log.e("cccc",result.toString());
+                Log.e("cccc", result.toString());
 
             }
 

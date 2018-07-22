@@ -647,15 +647,6 @@ public class MainActivity extends IatBasicActivity
                 boolean tag = true;
                 String street = aMapLocation.getStreet();
                 float speed = aMapLocation.getSpeed();
-                if (tag) {
-                    if (s != street || speed >= 5) {
-                        //   车子开始移动    隔两秒刷新一次    传给全局变量
-                        recLen = 0.0;
-                        handler.postDelayed(runnable, 1000);
-
-                        tag = false;
-                    }
-                }
                 s = street;
                 float sp = speed;
                 Log.e("lat", lat + "");
@@ -687,15 +678,7 @@ public class MainActivity extends IatBasicActivity
         }
     }
 
-    Handler handler = new Handler();
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            recLen++;
-            myApplication.setTime(recLen);
-            handler.postDelayed(this, 1000);
-        }
-    };
+
 
     private void init_location() {
         //初始化定位

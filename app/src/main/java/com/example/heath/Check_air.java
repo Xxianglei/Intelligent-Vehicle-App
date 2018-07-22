@@ -3,6 +3,7 @@ package com.example.heath;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
     private Button start;
     private ImageView mPoint;
     private PopupWindow loadingWindow;
-
+    private boolean stopThread = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,12 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
         dataBaseManager = new DataBaseManager();
         list = dataBaseManager.readairList();
         preLoad();
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopThread=true;
+        super.onDestroy();
     }
 
 
@@ -118,21 +125,23 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
         new Thread() {
             @Override
             public void run() {
-                try {
-                    sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int data = (int)(Math.random()*50+80);
-                        check(TimeUtils.dateToString2(), data);
-                        sv.setCurrentCount(200, data);
-                        mPoint.clearAnimation();
-                        loadingWindow.dismiss();
+                if (!stopThread) {
+                    try {
+                        sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                });
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int data = (int) (Math.random() * 50 + 80);
+                            check(TimeUtils.dateToString2(), data);
+                            sv.setCurrentCount(200, data);
+                            mPoint.clearAnimation();
+                            loadingWindow.dismiss();
+                        }
+                    });
+                }
             }
         }.start();
     }

@@ -2,10 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
+        app:cardCornerRadius="20dp"
+        app:cardUseCompatPadding="true"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -49,7 +52,7 @@
                             android:layout_margin="10dp"
                             android:gravity="start"
                             android:text="心率:85Bpm"
-                            android:textColor="#e45131"
+                            android:textColor="#ffffff"
                             android:textSize="22sp" />
                     </LinearLayout>
 
@@ -73,7 +76,7 @@
                             android:layout_margin="10dp"
                             android:gravity="start"
                             android:text="体温:37℃"
-                            android:textColor="#f56f09"
+                            android:textColor="#ffffff"
                             android:textSize="22sp" />
                     </LinearLayout>
 
@@ -97,7 +100,7 @@
                             android:layout_margin="10dp"
                             android:gravity="start"
                             android:text="血压:100mmHg"
-                            android:textColor="#c0ba11"
+                            android:textColor="#ffffff"
                             android:textSize="22sp" />
                     </LinearLayout>
 
@@ -121,7 +124,7 @@
                             android:layout_margin="10dp"
                             android:gravity="start"
                             android:text="体重:85Kg"
-                            android:textColor="#57c011"
+                            android:textColor="#ffffff"
                             android:textSize="22sp" />
                     </LinearLayout>
 
@@ -145,7 +148,7 @@
                             android:layout_margin="10dp"
                             android:gravity="start"
                             android:text="血氧:85%"
-                            android:textColor="#118ec0"
+                            android:textColor="#ffffff"
                             android:textSize="22sp" />
                     </LinearLayout>
 
@@ -165,19 +168,11 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="良好"
-                        android:textColor="#40c082"
+                        android:textColor="#b8f60d"
                         android:textSize="50sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/weather"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="天气:良好"
-                        android:textColor="#ffffff"
-                        android:textSize="22sp" />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -188,12 +183,13 @@
                 android:weightSum="1">
 
                 <TextView
+                    android:padding="10dp"
                     android:id="@+id/suggesst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:gravity="center"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/end"
@@ -206,7 +202,7 @@
                     android:gravity="center"
                     android:text="我知道了"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
