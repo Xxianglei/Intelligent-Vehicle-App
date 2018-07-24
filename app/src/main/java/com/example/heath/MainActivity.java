@@ -103,9 +103,9 @@ public class MainActivity extends IatBasicActivity
     private LinearLayout jiance_tab;
     private LinearLayout mian;
     private LinearLayout guide;
-    private double lat;
-    private double lon;
-    private double recLen = 0;
+    private double lat = 0.0;
+    private double lon = 0.0;
+
     private ImageView doctor;
     private ImageView jiance;
     private String down_url = "http://47.94.21.55/houtai/select.php?";
@@ -149,9 +149,9 @@ public class MainActivity extends IatBasicActivity
     private LoadingDialog ld;
     private DrawerLayout drawer;
     private Timer timer4;
-    private String minlin;
-    private boolean a1=false;
+    private boolean a1 = false;
     private DataBaseManager dataBaseManager;
+    private String content;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -219,7 +219,7 @@ public class MainActivity extends IatBasicActivity
                     }
                 });
 
-
+        init_location();
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -232,7 +232,7 @@ public class MainActivity extends IatBasicActivity
                     //会以Dialog样式显示一个Activity
                 }
             }
-        }, 10000*30, 24 * 60 * 60 * 1000);
+        }, 10000 * 30, 24 * 60 * 60 * 1000);
         // 注册蓝牙监听
         registerReceiver(blueStateBroadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
         registerReceiver(blueStateBroadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED));
@@ -242,8 +242,6 @@ public class MainActivity extends IatBasicActivity
         networkChangeReceiver = new NetworkChangeReceiver();
         //动态注册
         registerReceiver(networkChangeReceiver, intentFilter);
-
-        init_location();
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -263,7 +261,7 @@ public class MainActivity extends IatBasicActivity
 
     private boolean XunFeigned() {
 
-        if (minlin != null) {
+        if (content != null) {
 
             return true;
         }
@@ -365,8 +363,7 @@ public class MainActivity extends IatBasicActivity
             }.run();
             drawer.closeDrawer(GravityCompat.START);
             drawer.openDrawer(Gravity.LEFT);
-        }
-        else if (id == R.id.about) {
+        } else if (id == R.id.about) {
             new Runnable() {
                 @Override
                 public void run() {
@@ -510,7 +507,7 @@ public class MainActivity extends IatBasicActivity
                 break;
             case R.id.main:
                 setSelect(1);  //首页
-                a1=false;
+                a1 = false;
                 mian_tv.setTextColor(R.color.tv_color);
                 break;
             case R.id.guide:
@@ -528,14 +525,14 @@ public class MainActivity extends IatBasicActivity
                 startActivity(new Intent(MainActivity.this, PersonCenter.class));
                 break;
             case R.id.now_weather:
-
-                Intent intent = new Intent(MainActivity.this, Week_Report.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("url", "http://m.weather.com.cn/d/town/index?lat=" + lat + "&" + "lon=" + lon);
-                Log.e("url", "http://m.weather.com.cn/d/town/index?lat=" + lat + "&" + "lon=" + lon);
-                intent.putExtras(bundle);
-                startActivity(intent);
-
+                if (myApplication!=null) {
+                    Intent intent = new Intent(MainActivity.this, Week_Report.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", "http://m.weather.com.cn/d/town/index?lat=" + myApplication.getbDouble() + "&" + "lon=" + myApplication.getaDouble());
+                    Log.e("url", "http://m.weather.com.cn/d/town/index?lat=" + myApplication.getbDouble() + "&" + "lon=" + myApplication.getaDouble());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
                 break;
 
 
@@ -642,18 +639,9 @@ public class MainActivity extends IatBasicActivity
                 //   aMapLocation.getCountry();//国家信息
                 // aMapLocation.getProvince();//省信息
                 aMapLocation.getCity();//城市信息
-                lat = aMapLocation.getLatitude();//获取纬度
-                //街道信息
-                boolean tag = true;
-                String street = aMapLocation.getStreet();
-                float speed = aMapLocation.getSpeed();
-                s = street;
-                float sp = speed;
-                Log.e("lat", lat + "");
-
-                lon = aMapLocation.getLongitude();//获取经度
-                Log.e("lon", lon + "");
-
+                myApplication.setbDouble(aMapLocation.getLatitude());
+                //获取经
+                myApplication.setbDouble( aMapLocation.getLongitude());
                 buffer = new StringBuffer();
                 buffer.append(aMapLocation.getCity() + "");
                 String city = buffer.toString();
@@ -679,7 +667,6 @@ public class MainActivity extends IatBasicActivity
     }
 
 
-
     private void init_location() {
         //初始化定位
         mLocationClient = new AMapLocationClient(getApplicationContext());
@@ -698,7 +685,7 @@ public class MainActivity extends IatBasicActivity
         //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable(false);
         //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(1000*60*30);
+        mLocationOption.setInterval(1000 * 60 * 30);
         //给对定位客户端象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位
@@ -789,14 +776,9 @@ public class MainActivity extends IatBasicActivity
                 break;
 
             case MotionEvent.ACTION_UP:
-
+                this.content = super.content;
                 if (a1) {
-                    if (myApplication.getMinlin() != null) {
-                        Log.e("获取语音信息", myApplication.getMinlin().toString());
-                        minlin = myApplication.getMinlin().toString();
-                    }
                     new Thread(new Runnable() {
-
                         @Override
                         public void run() {
                             if (XunFeigned()) {
@@ -808,7 +790,7 @@ public class MainActivity extends IatBasicActivity
                         }
                     }).start();
                 }
-                a1=false;
+                a1 = false;
                 break;
 
 
@@ -866,16 +848,8 @@ public class MainActivity extends IatBasicActivity
 
             }
             if (msg.what == 0x17) {
-
-                Log.e("back", minlin);
-                if (minlin.equals("医院") || minlin.equals("寻找医院") || minlin.equals("去医院") || minlin.equals("我要去医院") || minlin.equals("立即上医院") || minlin.equals("导航") || minlin.equals("紧急导航")) {
-                    // 切换导航界面
-                    resetImgs();
-                    setSelect(2);         //导航
-                    guide_tv.setTextColor(R.color.tv_color);
-
-                }
-                if (minlin.equals("电话") || minlin.equals("拨打电话") || minlin.equals("立即拨打电话") || minlin.equals("打电话") || minlin.equals("我要打电话") || minlin.equals("求救") || minlin.equals("拨打紧急联系人")) {
+                Log.e("立即返回语音内容:", content);
+                if (content.equals("电话") || content.equals("拨打电话") || content.equals("立即拨打电话") || content.equals("打电话") || content.equals("我要打电话") || content.equals("求救") || content.equals("拨打紧急联系人")) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         DataBaseManager dataBaseManager = new DataBaseManager();
                         con_persons = dataBaseManager.readconnList();
@@ -883,7 +857,7 @@ public class MainActivity extends IatBasicActivity
                             // 6.0以上权限申请
                             intentToCall(con_persons.get(con_persons.size() - 1).getPhone().toString());
                             Log.e("拨打电话", con_persons.get(con_persons.size() - 1).getPhone().toString());
-                            Toast.makeText(MainActivity.this,"拨打电话"+con_persons.get(con_persons.size() - 1).getPhone().toString(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "拨打电话" + con_persons.get(con_persons.size() - 1).getPhone().toString(), Toast.LENGTH_SHORT).show();
                         } else
                             Toast.makeText(MainActivity.this, "您还没有添加联系人", Toast.LENGTH_SHORT).show();
 
@@ -903,11 +877,11 @@ public class MainActivity extends IatBasicActivity
 
             }
 
+
         }
     };
 
     //定位天气服务尾
-
 
 
     class NetworkChangeReceiver extends BroadcastReceiver {
@@ -1034,7 +1008,7 @@ public class MainActivity extends IatBasicActivity
 
                 // 请求成功的回调
                 Log.e("下载同步成功", result.toString());
-                String s=result.trim();
+                String s = result.trim();
 
                 JSONObject jsonObject = new JSONObject(JsonUtil.JSONTokener(s));
                 JSONObject data = jsonObject.getJSONObject("data");
@@ -1042,7 +1016,7 @@ public class MainActivity extends IatBasicActivity
 
                 Log.e("OK咯", data.getString("name").toString());
 
-                name.setText(data.getString("name")+"");
+                name.setText(data.getString("name") + "");
                 dataBaseManager.saveCard(data.getString("name"), data.getString("shengao"), data.getString("tizhong"), data.getString("bingshi"), data.getString("bron"), data.getString("xuexing"), data.getString("guoming"), data.getString("xiguan"));
 
                 //存入数据库
@@ -1076,13 +1050,12 @@ public class MainActivity extends IatBasicActivity
                 // 请求成功的回调
 
                 Log.e("下载同步成功", result.toString());
-                String s=result.trim();
+                String s = result.trim();
 
                 JSONObject jsonObject = new JSONObject(JsonUtil.JSONTokener(s));
                 jsonObject.length();
-                Log.d("data",  jsonObject.length()+"");
+                Log.d("data", jsonObject.length() + "");
                 JSONObject data = jsonObject.getJSONObject("data");
-
 
                 //存入数据库
 

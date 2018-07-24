@@ -44,7 +44,6 @@ public class IatBasicActivity extends AppCompatActivity {
     private EditText mContent;                          //显示内容
     // 语音听写对象
     private SpeechRecognizer mIat;
-    private static String content;
     // 语音听写UI
     private RecognizerDialog mIatDialog;
     // 用HashMap存储听写结果
@@ -53,6 +52,7 @@ public class IatBasicActivity extends AppCompatActivity {
 
     private Toast mToast;
     int ret = 0; // 函数调用返回值
+    public String content;
 
 
     @Override
@@ -273,7 +273,7 @@ public class IatBasicActivity extends AppCompatActivity {
         for (String key : mIatResults.keySet()) {
             resultBuffer.append(mIatResults.get(key));
         }
-        String content = resultBuffer.toString();
+        content = resultBuffer.toString();
         Log.d(TAG, content);
         content = content.replace("。", "".trim());           //去掉最后面的 。
 
@@ -292,9 +292,7 @@ public class IatBasicActivity extends AppCompatActivity {
     private String BackString(String content) {
         return this.content=content;
     }
-    public static String GetBackString() {
-        return content;
-    }
+
 
     @Override
     public void onStart() {
@@ -305,9 +303,5 @@ public class IatBasicActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
     }
-    public String backString() {
-        String result="null";
-        result=re;
-        return result;
-    }
+
 }

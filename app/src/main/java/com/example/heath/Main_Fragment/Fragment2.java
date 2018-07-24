@@ -795,51 +795,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
     }
 
-    /**
-     * 血糖
-     *
-     * @param time         时间
-     * @param memberId     id
-     * @param glucoseType  类型
-     * @param glucoseValue 值
-     * @return
-     */
-    private void heartsur(String time, String memberId, int glucoseType, float glucoseValue) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("glucoseType", glucoseType + "");
-        params.put("glucoseValue", glucoseValue + "");
-        params.put("testTime", time);
-        params.put("memberId", memberId);
-        String url_heartsur = "http://idp02.market.alicloudapi.com/alicloudapi/dailyTest/bloodGlucose";
-        OkNetRequest.alypostFormRequest(url_heartsur, params, new OkNetRequest.DataCallBack() {
-            @Override
-            public void requestSuccess(Response response, String result) throws Exception {
-                Log.e("血糖测试成功", result.toString());
-                Gson gson = new Gson();
-                psur_result = result.toString();
-                person_bsur = gson.fromJson(psur_result, Person_Bsur.class);
-                Log.e("保存返回报告数据", person_bsur + "");
-                person_bsur = gson.fromJson(result.toString(), Person_Bsur.class);
-                time_msg3.setText(person_bsur.getData().getTestTime().toString());
-                discrible_text3.setText(person_bsur.getData().getDescribe().toString());
-                result_text3.setText(person_bsur.getData().getResult().toString());
-                suggest_text3.setText(person_bsur.getData().getSuggest().toString());
-                pre_end3 = true;
-
-            }
-
-            @Override
-            public void progressSuccess(Response response) throws Exception {
-
-            }
-
-            @Override
-            public void requestFailure(Request request, IOException e) {
-                Log.e("血糖测试失败", request.body().toString());
-            }
-        }, appcode);
-
-    }
 
     Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -1236,7 +1191,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             timer3 = new Timer();
             count = 0;
             //  获取驾驶时长
-            //  时间扩大了两倍
             double time = intent.getExtras().getDouble("time");
             Log.e("驾驶时长", time + "");
 

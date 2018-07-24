@@ -1,6 +1,7 @@
 package com.example.heath.Main_Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,18 +18,18 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.example.heath.AddAlarmActivity;
 import com.example.heath.Check_air;
 import com.example.heath.Check_o2;
 import com.example.heath.Check_tep;
 import com.example.heath.Check_tizhong;
 import com.example.heath.Check_xinlv;
 import com.example.heath.DataRecord;
+import com.example.heath.MainActivity;
 import com.example.heath.MainActivity_med;
+import com.example.heath.MyApplication;
 import com.example.heath.R;
 import com.example.heath.ReportActivity;
 import com.example.heath.SaveCard;
-import com.example.heath.TimeLineActivity;
 import com.example.heath.Week_Report;
 import com.example.heath.Check_xueya;
 import com.oragee.banners.BannerView;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2017/8/8.
  */
-public class Fragment4 extends Fragment implements View.OnClickListener{
+public class Fragment4 extends Fragment implements View.OnClickListener, AMapLocationListener {
     //AMap是地图对象
     private static final int REFRESH_COMPLETE = 0X110;
     private SwipeRefreshLayout mSwipeLayout;
@@ -72,6 +73,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
     private LinearLayout check_tmp;
     private BannerView bannerView1;
     private TextView medicine;
+    private MyApplication myApplication;
 
     @Nullable
     @Override
@@ -85,9 +87,10 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       // init_location();
+        init_location();
         initView();
         initEvent();
+
     }
 
 
@@ -128,6 +131,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         check_air = getActivity().findViewById(R.id.image5);
         check_o2 = getActivity().findViewById(R.id.image4);
         check_tmp = getActivity().findViewById(R.id.image2);
+
     }
 
     private void initBanner() {
@@ -149,6 +153,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.weather:
+
                 Intent intent = new Intent(getActivity(), Week_Report.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("url", "http://m.weather.com.cn/d/town/index?lat=" + lat + "&" + "lon=" + lon);
@@ -247,6 +252,57 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+    }
+    // 定位天气服务头
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null) {
+            if (aMapLocation.getErrorCode() == 0) {
+                //定位成功回调信息，设置相关消息
+                aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见官方定位类型表
+                //   aMapLocation.getCountry();//国家信息
+                // aMapLocation.getProvince();//省信息
+                aMapLocation.getCity();//城市信息
+                lat=aMapLocation.getLatitude();
+                //获取经
+                lon= aMapLocation.getLongitude();
+
+                mLocationClient.stopLocation(); //停止定位
+            } else {
+                //显示错误信息ErrCode是错误码，详见错误码表。errInfo是错误信息，
+                Log.e("AmapError", "location Error, ErrCode:"
+                        + aMapLocation.getErrorCode() + ", errInfo:"
+                        + aMapLocation.getErrorInfo());
+
+            }
+        }
+    }
+
+
+    private void init_location() {
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getActivity());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(this);
+        //初始化定位参数
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为Hight_Accuracy高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //设置是否只定位一次,默认为false
+        mLocationOption.setOnceLocation(false);
+        //设置是否强制刷新WIFI，默认为强制刷新
+        mLocationOption.setWifiActiveScan(true);
+        //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setMockEnable(false);
+        //设置定位间隔,单位毫秒,默认为2000ms
+        mLocationOption.setInterval(1000 * 60 * 30);
+        //给对定位客户端象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
 
     }
 

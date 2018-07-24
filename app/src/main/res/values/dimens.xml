@@ -6,9 +6,7 @@
 
     <!-- 引导页标题下面描述字号 -->
 
-    <dimen name="materialviewpager_logoHeight">35dp</dimen>
-
-        <dimen name="cardMarginHorizontal">10dp</dimen>
+    <dimen name="cardMarginHorizontal">10dp</dimen>
         <dimen name="cardMarginVertical">8dp</dimen>
 
 

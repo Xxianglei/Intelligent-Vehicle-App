@@ -27,6 +27,25 @@ public class MyApplication extends Application {
     private String image_String;
     private String blu="";
 
+    public double getaDouble() {
+        return aDouble;
+    }
+
+    public void setaDouble(double aDouble) {
+        this.aDouble = aDouble;
+    }
+
+    public double getbDouble() {
+        return bDouble;
+    }
+
+    public void setbDouble(double bDouble) {
+        this.bDouble = bDouble;
+    }
+
+    private double aDouble;
+    private double bDouble;
+
     public String getMinlin() {
         return minlin;
     }
