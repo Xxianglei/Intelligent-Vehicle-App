@@ -23,13 +23,17 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.heath.Datebase.ConnectModle;
 import com.example.heath.Datebase.DataBaseManager;
 import com.example.heath.HttpUtils.OkNetRequest;
-import com.example.heath.Model.Con_person;
-import com.example.heath.adpter.MyAdapter;
+import com.example.heath.Model.Contact;
+import com.example.heath.adpter.ContactAdapter;
+import com.example.heath.presenter.ContactPresenter;
+import com.example.heath.view.IContactView;
+import com.king.view.slidebar.SlideBar;
 import com.mylhyl.acp.Acp;
 import com.mylhyl.acp.AcpListener;
 import com.mylhyl.acp.AcpOptions;
@@ -47,16 +51,26 @@ import okhttp3.Response;
  * Created by 丽丽超可爱 on 2018/4/30.
  */
 
-public class ConnActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class ConnActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener , IContactView{
 
-    private ListView listView;
     private boolean Tag = false;
     private DataBaseManager database;
-    private MyAdapter adapter;
-    private List<Con_person> con_persons = new ArrayList<Con_person>();
+
 
     private MyApplication myApplication;
     private NetworkInfo info;
+    private SlideBar slideBar;
+
+    private TextView tvLetter;
+
+    private ListView listView;
+
+    private ContactAdapter contactAdapter;
+
+    private ContactPresenter presenter;
+
+    private Context context;
+    private List<Contact> list;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,44 +78,39 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
         setContentView(R.layout.connect_person);
         initView();
         MyApplication.getInstance().addActivity(this);
-
-        if (LoadLocalData() == false) {
-            LoadYunData();
-        } else {
-            LoadLocalData();
-        }
-    }
-
-
-    private void LoadYunData() {
+        LoadLocalData();
 
     }
 
-    private boolean LoadLocalData() {
 
-        List<ConnectModle> list1 = database.readconnList();
-        con_persons.clear();
-        if (list1.size() >= 1) {
-            for (int i = list1.size() - 1; i >= 0; i--) {
-                Con_person con_person = new Con_person();
-                con_person.setName(list1.get((i)).getName());
-                con_person.setPhone(list1.get((i)).getPhone());
-                con_persons.add(con_person);
-                Log.e("电话***", list1.get((i)).getName() + list1.get((i)).getPhone());
-            }
-            listView.setAdapter(adapter);
-            return true;
-        } else
-            return false;
+
+
+    private void LoadLocalData() {
+        listView.setAdapter(contactAdapter);
     }
 
     private void initView() {
         ConnectivityManager manager = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         info = manager.getActiveNetworkInfo();
-        adapter = new MyAdapter(con_persons, this);
         database = new DataBaseManager();
-        listView = findViewById(R.id.list_item);
+        context = this;
+        slideBar = (SlideBar) findViewById(R.id.slideBar);
+        tvLetter = (TextView) findViewById(R.id.tvLetter);
+        listView = (ListView) findViewById(R.id.listview);
+        list = new ArrayList<Contact>();
+        List<ConnectModle> list1 = database.readconnList();
+        if (list1.size() >= 1) {
+            for (int i = list1.size() - 1; i >= 0; i--) {
+                Contact c = new Contact();
+                c.setName(list1.get((i)).getName().toString());
+                c.setNumber(list1.get((i)).getPhone().toString());
+                list.add(c);
+                Log.e("电话***", list1.get((i)).getName() + list1.get((i)).getPhone());
+            }
+        }
+        contactAdapter = new ContactAdapter(context, list);
+        presenter = new ContactPresenter(context,  this);
         ImageView imageView = findViewById(R.id.add);
         imageView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
@@ -115,6 +124,19 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
         else {
             Toast.makeText(ConnActivity.this, "请打开网络!", Toast.LENGTH_SHORT).show();
         }
+
+
+
+        slideBar.setOnTouchLetterChangeListenner(new SlideBar.OnTouchLetterChangeListenner() {
+            @Override
+            public void onTouchLetterChange(boolean isTouch, String letter) {
+                int pos = contactAdapter.getPositionByLetter(letter);
+                listView.setSelection(pos);
+                presenter.showLetter(letter);
+
+            }
+        });
+
     }
 
 
@@ -134,14 +156,13 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
                         Log.e("姓名***1", name.getText().toString() + phone.getText().toString());
                         if (name.getText().toString() != null && phone.getText().toString() != null) {
                             database.saveConn(name.getText().toString(), phone.getText().toString());
-                            Con_person con_person = new Con_person();
-                            con_person.setName(name.getText().toString());
-                            con_person.setPhone(phone.getText().toString());
-                            Log.e("姓名***2", name.getText().toString() + phone.getText().toString());
-                            con_persons.add(0, con_person);
-                            adapter.notifyDataSetChanged();
-                            adapter.notifyDataSetInvalidated();
-                            listView.setAdapter(adapter);
+                            Contact c = new Contact();
+                            c.setName(name.getText().toString());
+                            c.setNumber(phone.getText().toString());
+                            list.add(c);
+                            contactAdapter = new ContactAdapter(context,list);
+                            listView.setAdapter(contactAdapter);
+                            contactAdapter.notifyDataSetInvalidated();
                             //网络状态存在并且是已连接状态
                             if (info != null && info.isConnected()) {
                                 Upload(myApplication.getName(), name.getText().toString(), phone.getText().toString());
@@ -184,12 +205,12 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
             public void onClick(DialogInterface dialog, int which) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     // 6.0以上权限申请
-                    intentToCall(con_persons.get(position).getPhone().toString());
-                    Log.e("拨打电话", con_persons.get(position).getPhone().toString());
+                    intentToCall(list.get(position).getNumber().toString());
+                    Log.e("拨打电话", list.get(position).getNumber().toString());
                 } else {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse("tel:" + con_persons.get(position).getPhone().toString()));
+                    intent.setData(Uri.parse("tel:" + list.get(position).getNumber().toString()));
                     startActivity(intent);
                 }
             }
@@ -218,13 +239,14 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.e("删除某人", con_persons.get(position).getName().toString());
+                Log.e("删除某人", list.get(position).getName().toString());
                 Log.e("position", position + "");
-                if (database.deletConnSingle(con_persons.get(position).getName().toString())) {
+                if (database.deletConnSingle(list.get(position).getName().toString())) {
                     Toast.makeText(ConnActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
-                    con_persons.remove(position);
-                    adapter.notifyDataSetChanged();
-                    adapter.notifyDataSetInvalidated();
+                    list.remove(position);
+                    contactAdapter = new ContactAdapter(context,list);
+                    listView.setAdapter(contactAdapter);
+                    contactAdapter.notifyDataSetInvalidated();
                 } else
                     Toast.makeText(ConnActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
             }
@@ -312,6 +334,25 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
         });
     }
 
+    @Override
+    public void getListContact(List<Contact> list) {
+        contactAdapter.setListData(list);
+        contactAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void showLetter(String letter) {
+        tvLetter.setText(letter);
+        if(tvLetter.getVisibility()!=View.VISIBLE){
+            tvLetter.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    @Override
+    public void hideLetter() {
+        tvLetter.setVisibility(View.GONE);
+        tvLetter.setText("");
+    }
 
 }

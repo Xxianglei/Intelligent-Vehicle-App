@@ -132,4 +132,7 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:1.2.1'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile 'com.king.view:slidebar:1.1.0'
+    compile files('libs/pinyin4j-2.5.0.jar')
+
 }

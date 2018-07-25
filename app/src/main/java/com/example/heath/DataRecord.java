@@ -134,8 +134,8 @@ public class DataRecord extends BaseActivity {
     private class HeaderAdapter extends PagerAdapter {
 
         public int[] images = new int[]{//
-                R.mipmap.jiank, R.mipmap.ban4, R.mipmap.image3,//
-                R.mipmap.image4, R.mipmap.image5};
+                R.mipmap.jiank, R.mipmap.ban4, R.mipmap.ban2,//
+                R.mipmap.image4, R.mipmap.ban1};
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {

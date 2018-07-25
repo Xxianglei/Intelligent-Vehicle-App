@@ -165,25 +165,22 @@ public class ReportActivity extends AppCompatActivity {
         List<xueya> xueyas = new ArrayList<xueya>();
         Log.e("list.size()", list.size() + "***");
         if (list.size() >= 7) {
-            int b = 23;
+
             for (int a = list.size() - 1; a >= list.size() - 7; a--) {
                 xueya xue = new xueya();
                 xue.setId(String.valueOf(list.get(a).getId()));
-                if (b == 32) {
-                    xue.setTestTime("2018-07-01 21:17:12");
-                } else
-                    xue.setTestTime("2018-06-" + b + " 21:17:12");
 
-                // xue.setTestTime(list.get(a).getDate());
+
+                 xue.setTestTime(list.get(a).getDate());
                 xue.setHighValue(list.get(a).getHigh_data());
                 xue.setLowValue(list.get(a).getLow_data());
                 Log.e("details", String.valueOf(list.get(a).getHigh_data()) + String.valueOf(list.get(a).getHigh_data()));
                 xueyas.add(xue);
-                b++;
+
             }
         }
         String str = gson.toJson(xueyas);
-        params.put("memberId", "M102309100192");
+        params.put("memberId", memberId);
         params.put("dataList", str);
         Log.e("血压数据", str);
         String xueya_week = "http://bpweek.market.alicloudapi.com/alicloudapi/report/bloodPressureWeek";
@@ -229,19 +226,25 @@ public class ReportActivity extends AppCompatActivity {
             int b = 7;
             for (int a = list.size() - 1; a >= list.size() - 7; a--) {
                 tizhong tizhong = new tizhong();
-                tizhong.setId(String.valueOf(list.get(a).getId()));
-                tizhong.setTestTime("2018-06-" + b + " 21:17:12");
-                // xue.setTestTime(list.get(a).getDate());
-                tizhong.setWeightValue(list.get(a).getData());
-                if (list1.size() > 0) {
-                    tizhong.setHightVlaue(list1.get(list1.size() - 1).getHigh());
-                } else tizhong.setHightVlaue(170);  // 默认170
+
+                if (list.get(a).getData()<=31){
+                    continue;
+                }else {
+                    tizhong.setId(String.valueOf(list.get(a).getId()));
+                    tizhong.setTestTime("2018-06-" + b + " 21:17:12");
+                    // xue.setTestTime(list.get(a).getDate());
+                    tizhong.setWeightValue(list.get(a).getData());
+                    if (list1.size() > 0) {
+                        tizhong.setHightVlaue(list1.get(list1.size() - 1).getHigh());
+                    } else tizhong.setHightVlaue(170);  // 默认170
+                }
+
                 tizhongs.add(tizhong);
                 b++;
             }
         }
         String str = gson.toJson(tizhongs);
-        params.put("memberId", "M102309100192");
+        params.put("memberId", memberId);
         params.put("dataList", str);
         Log.e("体重数据", str);
         String tizhong_week = "http://weightweek.market.alicloudapi.com/alicloudapi/report/weightWeek";

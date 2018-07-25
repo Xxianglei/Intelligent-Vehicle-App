@@ -47,6 +47,7 @@ import com.example.heath.Datebase.UserModle;
 import com.example.heath.HttpUtils.OkNetRequest;
 import com.example.heath.Model.Code;
 import com.example.heath.utils.ImageUtils;
+import com.example.heath.utils.JsonUtil;
 import com.example.heath.view.CircleImageView;
 import com.example.heath.view.MyOneLineView;
 import com.example.heath.view.ObservableScrollView;
@@ -708,7 +709,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
                 Gson gson = new Gson();
                 String deal_result = result.toString();
                 deal_result = deal_result.replace("连接成功", "");
-                Code code = gson.fromJson(deal_result, Code.class);
+                Code code = gson.fromJson(JsonUtil.JSONTokener(deal_result), Code.class);
                 int a = Integer.parseInt(code.getCode());
                 if (a == 301) {
                     Toast.makeText(PersonCenter.this, "信息同步成功", Toast.LENGTH_SHORT).show();

@@ -158,8 +158,8 @@ public class MainActivity extends IatBasicActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+
         MyApplication.getInstance().addActivity(this);
         ld = new LoadingDialog(MainActivity.this);
         runOnUiThread(new Runnable() {
@@ -357,7 +357,7 @@ public class MainActivity extends IatBasicActivity
             new Runnable() {
                 @Override
                 public void run() {
-                    startActivity(new Intent(MainActivity.this, MainActivity_med.class));
+                    startActivity(new Intent(MainActivity.this, MedActivity.class));
 
                 }
             }.run();
@@ -1016,7 +1016,7 @@ public class MainActivity extends IatBasicActivity
 
                 Log.e("OK咯", data.getString("name").toString());
 
-                name.setText(data.getString("name") + "");
+
                 dataBaseManager.saveCard(data.getString("name"), data.getString("shengao"), data.getString("tizhong"), data.getString("bingshi"), data.getString("bron"), data.getString("xuexing"), data.getString("guoming"), data.getString("xiguan"));
 
                 //存入数据库
@@ -1058,7 +1058,7 @@ public class MainActivity extends IatBasicActivity
                 JSONObject data = jsonObject.getJSONObject("data");
 
                 //存入数据库
-
+                name.setText(data.getString("userName") + "");
                 Log.e("OK咯", data.getString("userName") + data.getString("sex") + Integer.parseInt(data.getString("age")) + Integer.parseInt(data.getString("height")) + Integer.parseInt(data.getString("weight")));
                 dataBaseManager.saveUser(data.getString("userName"), data.getString("sex"), Integer.parseInt(data.getString("age")), Integer.parseInt(data.getString("height")), Integer.parseInt(data.getString("weight")));
                 ld.loadSuccess();

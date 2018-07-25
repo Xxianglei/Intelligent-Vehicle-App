@@ -40,7 +40,7 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity_med"
+            android:name=".MedActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PlayAlarmActivity"

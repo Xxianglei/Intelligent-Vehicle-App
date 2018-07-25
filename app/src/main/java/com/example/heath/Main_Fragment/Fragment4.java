@@ -1,7 +1,6 @@
 package com.example.heath.Main_Fragment;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,8 +23,7 @@ import com.example.heath.Check_tep;
 import com.example.heath.Check_tizhong;
 import com.example.heath.Check_xinlv;
 import com.example.heath.DataRecord;
-import com.example.heath.MainActivity;
-import com.example.heath.MainActivity_med;
+import com.example.heath.MedActivity;
 import com.example.heath.MyApplication;
 import com.example.heath.R;
 import com.example.heath.ReportActivity;
@@ -241,7 +239,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener, AMapLoc
                 startActivity(intent14);
                 break;
             case R.id.medicine:
-                Intent intent15 = new Intent(getActivity(), MainActivity_med.class);
+                Intent intent15 = new Intent(getActivity(), MedActivity.class);
                 startActivity(intent15);
                 break;
         }

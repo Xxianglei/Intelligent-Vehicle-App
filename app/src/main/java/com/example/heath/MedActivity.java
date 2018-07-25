@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +21,7 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+
 import com.example.heath.service.AlarmService;
 import com.example.heath.Model.AlarmModel;
 import com.example.heath.utils.DividerItemDecoration;
@@ -43,7 +41,7 @@ import java.util.List;
 /**
  *
  */
-public class MainActivity_med extends AppCompatActivity {
+public class MedActivity extends AppCompatActivity {
 
     private MyAlarmDataBase db;
     private Toolbar mToolBar;
@@ -55,6 +53,7 @@ public class MainActivity_med extends AppCompatActivity {
     private AlarmService.MyBinder binder;
     private ServiceConnection connection = null;
     private Toolbar mToolbar;
+
 
 
     @Override
@@ -69,6 +68,12 @@ public class MainActivity_med extends AppCompatActivity {
         getSupportActionBar().setTitle("吃药提醒");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();//返回
+            }
+        });
         mAddAlarmBtn = (FloatingActionButton) findViewById(R.id.add_reminder);
         mRecyclerView = (RecyclerView) findViewById(R.id.alarm_list);
         mNoAlarmTextView = (TextView) findViewById(R.id.no_alarm_text);
@@ -77,6 +82,7 @@ public class MainActivity_med extends AppCompatActivity {
 
         if (mAlarmList.isEmpty()) {
             mNoAlarmTextView.setVisibility(View.VISIBLE);
+
         }
 
 
@@ -127,14 +133,14 @@ public class MainActivity_med extends AppCompatActivity {
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Log.d("MainActivity_med","解绑服务");
+                Log.d("MedActivity","解绑服务");
             }
         };
         Intent intent = new Intent(this,AlarmService.class);
 
         bindService(intent, connection, BIND_AUTO_CREATE);
 
-        Log.d("MainActivity_med", "取消闹钟");
+        Log.d("MedActivity", "取消闹钟");
 
         unbindService(connection);
 
@@ -205,9 +211,9 @@ public class MainActivity_med extends AppCompatActivity {
 
                     adapter.removeItemSelected(po);
                     adapter.onDeleteItem();
-                    cancelAlarm(MainActivity_med.this, id, alarm);
+                    cancelAlarm(MedActivity.this, id, alarm);
 
-                    Toast.makeText(MainActivity_med.this, "已删除吃药提醒", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MedActivity.this, "已删除吃药提醒", Toast.LENGTH_SHORT).show();
 
 
                     List<AlarmModel> alarmModels = db.getAllAlarms();
@@ -269,8 +275,8 @@ public class MainActivity_med extends AppCompatActivity {
                             alarmModel.setActive("false");
                             setActiveImage(item.mActive);
                             db.updateAlarm(alarmModel);
-                            cancelAlarm(MainActivity_med.this, CheckedAlarmID, alarmModel);
-                            Toast.makeText(MainActivity_med.this, "已关闭提醒", Toast.LENGTH_SHORT).show();
+                            cancelAlarm(MedActivity.this, CheckedAlarmID, alarmModel);
+                            Toast.makeText(MedActivity.this, "已关闭提醒", Toast.LENGTH_SHORT).show();
 
                         } else if (item.mActive.equals("false")) {
 
@@ -279,7 +285,7 @@ public class MainActivity_med extends AppCompatActivity {
                             alarmModel.setActive("true");
                             db.updateAlarm(alarmModel);
                             restartAlarm(item.mTime, item.mRepeatType, CheckedAlarmID);
-                            Toast.makeText(MainActivity_med.this, "已开启提醒", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MedActivity.this, "已开启提醒", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -428,7 +434,7 @@ public class MainActivity_med extends AppCompatActivity {
             }
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Log.d("MainActivity_med","解绑服务");
+                Log.d("MedActivity","解绑服务");
             }
         };
         Intent intent = new Intent(this,AlarmService.class);

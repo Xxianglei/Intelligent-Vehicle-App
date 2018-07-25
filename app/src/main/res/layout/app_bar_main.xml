@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:statusBarColor="#00ffffff"
     tools:context="com.example.heath.MainActivity">
 
     <include layout="@layout/content_main" />
@@ -24,7 +25,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 android:background="#ffffff"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 

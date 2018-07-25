@@ -518,7 +518,7 @@ public class AddAlarmActivity extends AppCompatActivity implements
         bindService(intent,connection,BIND_AUTO_CREATE);
 
         Intent intent2 = new Intent();
-        intent2.setClass(AddAlarmActivity.this, MainActivity_med.class);
+        intent2.setClass(AddAlarmActivity.this, MedActivity.class);
         intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent2);
     }

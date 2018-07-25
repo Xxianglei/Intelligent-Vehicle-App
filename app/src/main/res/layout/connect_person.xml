@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/iii"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:background="#ffffff"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_marginLeft="10dp"
             android:layout_width="18dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:src="@mipmap/back" />
 
         <TextView
@@ -25,61 +26,57 @@
             android:text="联系人"
             android:textColor="@android:color/background_dark"
             android:textSize="20sp" />
+
         <ImageView
             android:id="@+id/add"
             android:layout_width="wrap_content"
-            android:adjustViewBounds="true"
             android:layout_height="match_parent"
-            android:src="@mipmap/add"
-            android:scaleType="center"
-            android:gravity="center"
             android:layout_alignParentEnd="true"
-            />
+            android:adjustViewBounds="true"
+            android:gravity="center"
+            android:scaleType="center"
+            android:src="@mipmap/add" />
     </RelativeLayout>
 
 
-    <LinearLayout
-        android:paddingLeft="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#ffffff"
-        android:weightSum="2">
-
-        <TextView
-
-            android:gravity="center"
-            android:text="姓名"
-            android:textSize="20sp"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:textSize="20sp"
-            android:gravity="center"
-            android:text="电话"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
     <ListView
+        android:padding="10dp"
 
+        android:id="@+id/listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iii"
         android:layout_gravity="center"
-        android:background="#ffffff"
-        android:id="@+id/list_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:background="#ffffff">
 
-  </ListView>
+    </ListView>
+
+    <com.king.view.slidebar.SlideBar
+        android:id="@+id/slideBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/iii"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/tvLetter"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/letter_bg"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="28sp"
+        android:visibility="gone" />
+
     <ImageView
+        android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/image"
         android:adjustViewBounds="true"
         android:scaleType="center"
-        android:visibility="gone"
         android:src="@mipmap/nodata"
-        />
-</LinearLayout>
+        android:visibility="gone" />
+</RelativeLayout>

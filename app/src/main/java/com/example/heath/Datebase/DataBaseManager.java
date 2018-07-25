@@ -16,15 +16,18 @@ import java.util.List;
 
 public class DataBaseManager {
 
-    private final TiwenModle tiwenModle;
-    private final XinlvModle xinlvModle;
-    private final XueyaModle xueyaModle;
-    private final XueyangModle xueyangModle;
-    private final TizhongModle tizhong;
-    private final UserModle userModle;
-    private final CardModle cardModle;
-    private final AirModle airModle;
-    private final ConnectModle connectModle;
+    /**
+     * 
+     */
+    private TiwenModle tiwenModle;
+    private XinlvModle xinlvModle;
+    private  XueyaModle xueyaModle;
+    private  XueyangModle xueyangModle;
+    private  TizhongModle tizhong;
+    private  UserModle userModle;
+    private  CardModle cardModle;
+    private  AirModle airModle;
+    private ConnectModle connectModle;
 
 
     public DataBaseManager() {
@@ -189,15 +192,17 @@ public class DataBaseManager {
     }
 
     public boolean deletConnSingle(String name) {
-        connectModle.name = name;
-        if (connectModle.delete())
+        Log.e("jjj",name.toString());
+        connectModle = SQLite.select()
+                .from(ConnectModle.class)
+                .where(ConnectModle_Table.name.eq(name))
+                .querySingle();
+        if ( connectModle!=null){
+            connectModle.delete();
             return true;
+        }
         else
             return false;
-
-        //people.update();//更新对象
-        //people.delete();//删除对象
-        //people.insert();//插入对象
 
     }
     public void clearAll(){
