@@ -1188,7 +1188,8 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             mCircleProgress2.setProgress(intent.getExtras().getInt("xueya", 0) - 20);
             if (tiwen_tag) {
                 int i = (int) (intent.getExtras().getFloat("tiwen", 0) * 10);
-                final double tiwen = (double) i / 10;
+                double tiwen = (double) i / 10;
+                tiwen= (double) Math.round(tiwen * 10) / 10;
                 heart_tmp.setNumber(tiwen);
             }
             Log.e("", intent.getExtras().getInt("warning", 1) + "xxxxxx");
@@ -1270,6 +1271,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 int i = Integer.parseInt(intent.getStringExtra("name")) * 10;
                 tiwen2 = (double) i / 10;
                 tiwen2 = tiwen2 +Math.random()*9;
+                tiwen2= (double) Math.round(tiwen2 * 10) / 10;
                 if (tiwen2 >36.0) {
                     tiwen_tag = false;
                     heart_tmp.setNumber(tiwen2);
