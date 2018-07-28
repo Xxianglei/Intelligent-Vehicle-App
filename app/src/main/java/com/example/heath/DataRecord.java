@@ -8,6 +8,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class DataRecord extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//继承AppCompatActivity使用
         setContentView(R.layout.data_record);
         MyApplication.getInstance().addActivity(this);
         //内容的fragment
@@ -54,6 +56,13 @@ public class DataRecord extends BaseActivity {
         scrollableLayout = (HeaderViewPager) findViewById(R.id.scrollableLayout);
         titleBar = findViewById(R.id.titleBar);
         titleBar_Bg = titleBar.findViewById(R.id.bg);
+        ImageView back=titleBar.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //当状态栏透明后，内容布局会上移，这里使用一个和状态栏高度相同的view来修正内容区域
         status_bar_fix = titleBar.findViewById(R.id.status_bar_fix);
         status_bar_fix.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.getStatusHeight(this)));

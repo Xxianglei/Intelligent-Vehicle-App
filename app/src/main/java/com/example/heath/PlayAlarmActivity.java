@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.Window;
 
 import com.example.heath.Model.AlarmModel;
 import com.example.heath.Datebase.MyAlarmDataBase;
@@ -36,6 +37,7 @@ public class PlayAlarmActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//继承AppCompatActivity使用
         setContentView(R.layout.activity_play_med);
         MyApplication.getInstance().addActivity(this);
         player =new MediaPlayer();

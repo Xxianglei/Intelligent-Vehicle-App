@@ -1,5 +1,9 @@
 package com.example.heath.Bluteooth;
 
+import java.util.ArrayList;
+import java.util.Set;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -12,138 +16,77 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 
-import com.example.heath.MyApplication;
 import com.example.heath.R;
+import com.example.heath.utils.Utils;
 import com.skyfishjy.library.RippleBackground;
 
-import java.util.ArrayList;
-import java.util.Set;
-
-@RequiresApi(api = Build.VERSION_CODES.ECLAIR)
-public class BindBlutooh extends AppCompatActivity {
+public class BindBlutooh extends Activity {
     protected static final int REQUEST_DISCOVERABLE = 0;
     private ImageView imageView;
     private RippleBackground rippleBackground;
-    private ListView mListView;
-    private ArrayList<SiriListItem> list;
-    ChatListAdapter mAdapter;
     private RelativeLayout re;
-    private Intent intent;
-    private TextView sug;
-
-    enum ServerOrCilent {
-        NONE,
-        SERVICE,
-        CILENT
-    }
-
-    private Context mContext;
-    static String BlueToothAddress = "null";
-    static ServerOrCilent serviceOrCilent = ServerOrCilent.NONE;
-    static boolean isOpen = false;
+    private ListView mListView;
+    private ArrayList<Bluetooth.SiriListItem> list;
+    ChatListAdapter mAdapter;
+    Context mContext;
+    broad mReceiver;
+    String address1 = "98:D3:51:FD:7F:4E";
+    String address2 = "43:34:18:04:03:26";
+    String address3 = "00:21:13:00:B2:FF";
     private BluetoothAdapter mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+    private TextView sug;
 
     @Override
     public void onStart() {
         super.onStart();
+
         if (!mBtAdapter.isEnabled()) {
-            imageView.setClickable(false);
-            sug.setVisibility(View.VISIBLE);
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, 3);
-        }
-        else {
-            imageView.setClickable(true);
-            sug.setVisibility(View.GONE);
+
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);// 隐藏标题
         setContentView(R.layout.devices);
-        MyApplication.getInstance().addActivity(this);
         mContext = this;
         init();
         initEvent();
     }
 
-    private void init() {
-        intent = new Intent(BindBlutooh.this, ChatService.class);
-        rippleBackground = (RippleBackground) findViewById(R.id.content);
-        imageView = (ImageView) findViewById(R.id.centerImage);
-        imageView.setVisibility(View.VISIBLE);
-        sug = (TextView) findViewById(R.id.suggesst);
-        re =(RelativeLayout) findViewById(R.id.re);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("搜索设备");
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setNavigationIcon(R.mipmap.back);
-        //取代原本的actionbar
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        list = new ArrayList<SiriListItem>();
-        mAdapter = new ChatListAdapter(mContext, list);
-        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-        mListView = (ListView) findViewById(R.id.list);
-
-        mListView.setAdapter(mAdapter);
-        mListView.setFastScrollEnabled(true);
-        mListView.setOnItemClickListener(mDeviceClickListener);
-        mListView.setOnItemLongClickListener(mDeviceClickListener2);
-
-        if (pairedDevices.size() > 0) {
-            mListView.setVisibility(View.VISIBLE);
-            re.setVisibility(View.GONE);
-            for (BluetoothDevice device : pairedDevices) {
-                list.add(new SiriListItem(device.getName() + "\n" + device.getAddress(), true));
-                mAdapter.notifyDataSetChanged();
-                mListView.setSelection(list.size() - 1);
-            }
-        } else {
-            list.add(new SiriListItem("No devices have been paired", true));
-            mAdapter.notifyDataSetChanged();
-            mListView.setSelection(list.size() - 1);
-            mListView.setVisibility(View.GONE);
-            re.setVisibility(View.VISIBLE);
-        }
-
-
-    }
-
     private void initEvent() {
-
-        //  注册广播
-        IntentFilter discoveryFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, discoveryFilter);
-        IntentFilter foundFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, foundFilter);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(BindBlutooh.this, "正在搜索蓝牙设备,请等待...", Toast.LENGTH_SHORT).show();
-                rippleBackground.startRippleAnimation();
-                results();
+                if (Utils.isFastClick()) {
+                    Toast.makeText(BindBlutooh.this, "正在搜索蓝牙设备,请等待...", Toast.LENGTH_SHORT).show();
+                    rippleBackground.startRippleAnimation();
+                    results();
+                }
             }
         });
     }
@@ -167,41 +110,63 @@ public class BindBlutooh extends AppCompatActivity {
 
     }
 
-    private AdapterView.OnItemLongClickListener mDeviceClickListener2 = new AdapterView.OnItemLongClickListener() {
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            mListView.setClickable(false);
-            AlertDialog.Builder StopDialog = new AlertDialog.Builder(mContext);
-            StopDialog.setTitle("断开连接");//标题
-            StopDialog.setMessage("您是否要断开蓝牙设备?");
-            StopDialog.setPositiveButton("断开", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
-                    //关闭服务
-                    //关闭广播
-                    unregisterReceiver(mReceiver);
-                    stopService(intent);
-                    Log.e("***", "已断开!");
-                    Toast.makeText(BindBlutooh.this, "断开成功!", Toast.LENGTH_SHORT).show();
+    private void init() {
+        rippleBackground = (RippleBackground) findViewById(R.id.content);
+        imageView = (ImageView) findViewById(R.id.centerImage);
+        imageView.setVisibility(View.VISIBLE);
+        sug = (TextView) findViewById(R.id.suggesst);
+        re = (RelativeLayout) findViewById(R.id.re);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("搜索设备");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.mipmap.back);
+        toolbar.setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        list = new ArrayList<>();
+        mAdapter = new ChatListAdapter(mContext, list);
+        mListView = (ListView) findViewById(R.id.list);
+        mListView.setAdapter(mAdapter);
+        mListView.setFastScrollEnabled(true);
+        mListView.setOnItemClickListener(mDeviceClickListener);
+        Log.e("aaa", "aaaaaaa");
+        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+
+        if (pairedDevices.size() > 0) {
+            re.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+            for (BluetoothDevice device : pairedDevices) {
+                if (device.getAddress().contains(address1)) {
+                    list.add(new Bluetooth.SiriListItem("蜗行—空气质量传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
+                } else if (device.getAddress().contains(address2)) {
+                    list.add(new Bluetooth.SiriListItem("蜗行—温度传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
+                } else if (device.getAddress().contains(address3)) {
+                    list.add(new Bluetooth.SiriListItem("蜗行—心率传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
+                } else {
+                    list.add(new Bluetooth.SiriListItem(device.getName() + "\n" + "蓝牙地址：" + device.getAddress(), true));
                 }
-            });
-            StopDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    BlueToothAddress = null;
-                }
-            });
-            StopDialog.show();
-            return true;
+
+                mAdapter.notifyDataSetChanged();
+                mListView.setSelection(list.size() - 1);
+            }
+        } else {
+            list.add(new Bluetooth.SiriListItem("No devices have been paired", true));
+            mAdapter.notifyDataSetChanged();
+            mListView.setSelection(list.size() - 1);
         }
 
-    };
+    }
+
     private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
 
-            SiriListItem item = list.get(arg2);
-            String info = item.message;
-            String address = info.substring(info.length() - 17);
-            BlueToothAddress = address;
+            Bluetooth.SiriListItem item = list.get(arg2);
+            final String info = item.message;
+            final String address = info.substring(info.length() - 17);
+            Bluetooth.BlueToothAddress = address;
 
             AlertDialog.Builder StopDialog = new AlertDialog.Builder(mContext);//定义一个弹出框对象
             StopDialog.setTitle("连接");//标题
@@ -211,46 +176,51 @@ public class BindBlutooh extends AppCompatActivity {
                     // TODO Auto-generated method stub
                     mBtAdapter.cancelDiscovery();
                     //开启服务
+                    Intent intent = new Intent(BindBlutooh.this, ChatService.class);
+                    intent.putExtra("address", address);
                     startService(intent);
-                    serviceOrCilent = ServerOrCilent.CILENT;
-                    Toast.makeText(BindBlutooh.this, "连接成功!", Toast.LENGTH_SHORT).show();
+                    Bluetooth.serviceOrCilent = Bluetooth.ServerOrCilent.CILENT;
                 }
             });
             StopDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    BlueToothAddress = null;
+                    Bluetooth.BlueToothAddress = null;
                 }
             });
             StopDialog.show();
         }
     };
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    public class broad extends BroadcastReceiver {
+
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-
+            Log.e("ccccc", "cccc");
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    list.add(new SiriListItem(device.getName() + "\n" + device.getAddress(), false));
+                    list.add(new Bluetooth.SiriListItem(device.getName() + "\n" + device.getAddress(), false));
                     mAdapter.notifyDataSetChanged();
                     mListView.setSelection(list.size() - 1);
                 }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 setProgressBarIndeterminateVisibility(false);
                 if (mListView.getCount() == 0) {
-                    list.add(new SiriListItem("未搜索到蓝牙设备", false));
+                    list.add(new Bluetooth.SiriListItem("未搜索到蓝牙设备", false));
                     mAdapter.notifyDataSetChanged();
                     mListView.setSelection(list.size() - 1);
                 }
+
             }
         }
-    };
 
-    public class SiriListItem {
+    }
+
+
+    public static class SiriListItem {
         String message;
         boolean isSiri;
 
@@ -266,38 +236,61 @@ public class BindBlutooh extends AppCompatActivity {
         if (mBtAdapter != null) {
             mBtAdapter.cancelDiscovery();
         }
-        if (mReceiver!=null) {
+        if (mReceiver != null)
             this.unregisterReceiver(mReceiver);
-        }
     }
 
     private android.os.Handler mHandler = new android.os.Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
             if (msg.what == 0x12) {
+                Log.e("bbbb", "bbbb");
+                // TODO Auto-generated method stub
                 if (mBtAdapter.isDiscovering()) {
                     mBtAdapter.cancelDiscovery();
+
                 } else {
+                    mListView.setVisibility(View.VISIBLE);
                     list.clear();
                     mAdapter.notifyDataSetChanged();
+
                     Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
                     if (pairedDevices.size() > 0) {
                         for (BluetoothDevice device : pairedDevices) {
-                            list.add(new SiriListItem(device.getName() + "\n" + device.getAddress(), true));
+                            if (device.getAddress().contains(address1)) {
+                                list.add(new Bluetooth.SiriListItem("蜗行—空气质量传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
+                            } else if (device.getAddress().contains(address2)) {
+                                list.add(new Bluetooth.SiriListItem("蜗行—温度传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
+                            } else if (device.getAddress().contains(address3)) {
+                                list.add(new Bluetooth.SiriListItem("蜗行—心率传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
+                            } else {
+                                list.add(new Bluetooth.SiriListItem(device.getName() + "\n" + "蓝牙地址：" + device.getAddress(), true));
+                            }
                             mAdapter.notifyDataSetChanged();
                             mListView.setSelection(list.size() - 1);
                         }
                     } else {
-                        list.add(new SiriListItem("No devices have been paired", true));
+                        list.add(new Bluetooth.SiriListItem("No devices have been paired", true));
                         mAdapter.notifyDataSetChanged();
                         mListView.setSelection(list.size() - 1);
                     }
                     /* 开始搜索 */
                     mBtAdapter.startDiscovery();
+                    mReceiver = new broad();
+                    IntentFilter filter = new IntentFilter();
+//发现设备
+                    filter.addAction(BluetoothDevice.ACTION_FOUND);
+//设备连接状态改变
+                    filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+//蓝牙设备状态改变
+                    filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+                    registerReceiver(mReceiver, filter);
+
                 }
+
+                Toast.makeText(BindBlutooh.this, "搜索到设备...", Toast.LENGTH_SHORT).show();
             }
-            re.setVisibility(View.GONE);
-            Toast.makeText(BindBlutooh.this, "搜索到设备...", Toast.LENGTH_SHORT).show();
         }
     };
 

@@ -37,6 +37,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -158,6 +159,7 @@ public class MainActivity extends IatBasicActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//继承AppCompatActivity使用
         setContentView(R.layout.activity_main);
 
         MyApplication.getInstance().addActivity(this);
@@ -174,7 +176,7 @@ public class MainActivity extends IatBasicActivity
         });
         HashMap<String, String> params = new HashMap<>();
         myApplication = (MyApplication) getApplication();
-        params.put("user", "13166991256");
+        params.put("user", myApplication.getName().toString());
         boolean tag1 = false;
         down_data(params);
         down_data2(params);

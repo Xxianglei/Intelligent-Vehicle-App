@@ -2,9 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/tool_bar" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="53dp"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="16dp"
+        android:layout_alignParentTop="true"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/primary"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,9 +25,13 @@
 
         <ListView
             android:id="@+id/list"
+            android:layout_marginTop="10dp"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:divider="#ffc6c6c6"
+            android:divider="#ffffff"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:dividerHeight="3dp"
             android:scrollingCache="false"
             android:visibility="gone" />
 

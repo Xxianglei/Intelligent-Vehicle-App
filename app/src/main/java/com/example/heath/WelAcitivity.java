@@ -27,8 +27,6 @@ public class WelAcitivity extends Activity {
         setContentView(view);
         MyApplication.getInstance().addActivity(this);
         //实例化语音引擎
-
-        //TTSUtils.getInstance().speak("");
         //渐变展示启动屏
         AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
         aa.setDuration(2000);

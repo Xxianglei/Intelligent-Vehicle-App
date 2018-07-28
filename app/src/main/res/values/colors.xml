@@ -44,10 +44,11 @@
     <color name="main_background">#FFFFFF</color>
     <color name="start_color">#69cfe5</color>
     <color name="secondly_text_white">#ABffffff</color>
-    <color name="primary_text_grey">#3c3f41</color>
+    <color name="primary_text_grey">#40494f</color>
     <color name="background_alarm_white">#ffffff</color>
     <color name="primary">#38A6F0</color>
     <color name="fab_pressed">#546e7a</color>
     <color name="accent">#eeeeee</color>
     <color name="editText_hint">#4Dffffff</color>
+    <color name="blutooth">#ec1e1e1e</color>
 </resources>

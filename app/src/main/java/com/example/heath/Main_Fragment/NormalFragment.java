@@ -52,8 +52,7 @@ public class NormalFragment extends Fragment {
         AlarmModel alarm = db.getAlarm(activity.getmId());
 
         Log.d("id " , String.valueOf(activity.getmId()));
-        alarmTittle.setText(alarm.getTitle() + "时间到");
-
+        alarmTittle.setText("请您按时吃药");
         Calendar calendar = Calendar.getInstance();
         String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
         String  minute = null;
@@ -104,7 +103,7 @@ public class NormalFragment extends Fragment {
         PendingIntent pi = PendingIntent.getBroadcast(getActivity(),SNOOZE_ALARM_ID,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         manager.set(AlarmManager.RTC_WAKEUP, mTimeInfo, pi);
-        Log.d("NormalFragment","已设置贪睡");
+
         activity.finish();
     }
 

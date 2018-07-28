@@ -27,6 +27,33 @@ public class MyApplication extends Application {
     private String image_String;
     private String blu="";
 
+    public boolean isTag1() {
+        return tag1;
+    }
+
+    public void setTag1(boolean tag1) {
+        this.tag1 = tag1;
+    }
+
+    public boolean isTag2() {
+        return tag2;
+    }
+
+    public void setTag2(boolean tag2) {
+        this.tag2 = tag2;
+    }
+
+    public boolean isTag3() {
+        return tag3;
+    }
+
+    public void setTag3(boolean tag3) {
+        this.tag3 = tag3;
+    }
+
+    private boolean tag1=false;
+    private boolean tag2=false;
+    private boolean tag3=false;
     public double getaDouble() {
         return aDouble;
     }

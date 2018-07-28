@@ -13,12 +13,12 @@ import com.example.heath.R;
 import java.util.ArrayList;
 
 public class ChatListAdapter extends BaseAdapter {
-    private ArrayList<BindBlutooh.SiriListItem> list;
+    private ArrayList<Bluetooth.SiriListItem> list;
     private LayoutInflater mInflater;
-  
-    public ChatListAdapter(Context context, ArrayList<BindBlutooh.SiriListItem> list2) {
-    	list = list2;
-		mInflater = LayoutInflater.from(context);
+
+    public ChatListAdapter(Context context, ArrayList<Bluetooth.SiriListItem> list2) {
+        list = list2;
+        mInflater = LayoutInflater.from(context);
     }
 
 
@@ -39,41 +39,35 @@ public class ChatListAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-    	ViewHolder viewHolder = null;
-    	BindBlutooh.SiriListItem item=list.get(position);
-        if(convertView == null){
-        	convertView = mInflater.inflate(R.layout.list_item, null);          
-        	viewHolder=new ViewHolder(
-        			(View) convertView.findViewById(R.id.list_child),
-        			(TextView) convertView.findViewById(R.id.chat_msg)
-        	       );
-        	convertView.setTag(viewHolder);
+        ViewHolder viewHolder = null;
+        Bluetooth.SiriListItem item = list.get(position);
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.list_item, null);
+            viewHolder = new ViewHolder(
+                    (View) convertView.findViewById(R.id.list_child),
+                    (TextView) convertView.findViewById(R.id.chat_msg)
+            );
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        else{
-        	viewHolder = (ViewHolder)convertView.getTag();
-        }       
-        
-        if(item.isSiri)
-        {
-        	viewHolder.child.setBackgroundResource(R.drawable.msgbox_rec);
+
+        if (item.isSiri) {
+            viewHolder.child.setBackgroundResource(R.drawable.surface_bg);
         }
-        else 
-        {
-        	viewHolder.child.setBackgroundResource(R.drawable.msgbox_send);
-        }
-        viewHolder.msg.setText(item.message);    
-        
+        viewHolder.msg.setText(item.message);
+
         return convertView;
     }
-    
+
     class ViewHolder {
-    	  protected View child;
-          protected TextView msg;
-  
-          public ViewHolder(View child, TextView msg){
-              this.child = child;
-              this.msg = msg;
-              
-          }
+        protected View child;
+        protected TextView msg;
+
+        public ViewHolder(View child, TextView msg) {
+            this.child = child;
+            this.msg = msg;
+
+        }
     }
 }

@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -57,6 +58,7 @@ public class Log_in extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//继承AppCompatActivity使用
         setContentView(R.layout.log_in);
         initView();
         MyApplication.getInstance().addActivity(this);
@@ -148,6 +150,7 @@ public class Log_in extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        if (ld!=null)
         ld.close();
         super.onPause();
     }

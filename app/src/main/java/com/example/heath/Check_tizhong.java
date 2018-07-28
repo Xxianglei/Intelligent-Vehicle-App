@@ -76,6 +76,7 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.check_tizhong);
         initView();
 

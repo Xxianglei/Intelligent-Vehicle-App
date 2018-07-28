@@ -6,7 +6,7 @@
         <!-- 填充的颜色,渐变色 -->
         <gradient
             android:endColor="#29cddf"
-            android:startColor="#0d407c"
+            android:startColor="#22e867"
             android:angle="90" />
         <!-- 设置按钮的四个角为弧形 -->
         <!-- android:radius 弧形的半径 -->

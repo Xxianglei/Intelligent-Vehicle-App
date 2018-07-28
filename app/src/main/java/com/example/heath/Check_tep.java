@@ -55,6 +55,7 @@ public class Check_tep extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.check_tep);
         initView();
         MyApplication.getInstance().addActivity(this);

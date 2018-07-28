@@ -5,6 +5,7 @@
     android:layout_height="55dp"
     android:clipChildren="false"
     android:background="#ffffff"
+    android:fitsSystemWindows="true"
     android:baselineAligned="false">
     <LinearLayout
         android:id="@+id/main"

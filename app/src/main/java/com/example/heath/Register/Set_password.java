@@ -79,6 +79,7 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected  void onPause(){
+        if (ld!=null)
         ld.close();
         super.onPause();
     }

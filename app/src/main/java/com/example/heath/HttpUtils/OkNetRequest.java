@@ -26,7 +26,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * Created by GuiFa on 2017/2/3.
+ *
  * 网络请求工具类
  */
 public class OkNetRequest {

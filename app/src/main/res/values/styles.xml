@@ -3,12 +3,8 @@
     <!-- Base application theme. -->
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="actionOverflowButtonStyle">@style/ToolbarOverflow</item>
-        <item name="colorPrimary">#ffffff</item>
-        <item name="colorPrimaryDark">#00000000</item>
-        <item name="colorAccent">#ff8c00</item>
-
+        <!-- toolbar（actionbar）颜色 -->
+        <item name="colorPrimary">#343434</item>
     </style>
 
     <style name="AppTheme.actionMenuTextSize" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu">
@@ -22,10 +18,11 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
+        <item name="colorPrimary">#00343434</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">#ff8c00</item>
-
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 

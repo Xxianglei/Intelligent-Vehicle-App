@@ -38,6 +38,7 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.check_air);
         initView();
         initEvent();

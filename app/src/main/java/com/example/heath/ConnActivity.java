@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,7 @@ import okhttp3.Response;
  * Created by 丽丽超可爱 on 2018/4/30.
  */
 
-public class ConnActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener , IContactView{
+public class ConnActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener , IContactView{
 
     private boolean Tag = false;
     private DataBaseManager database;
@@ -75,6 +76,7 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//继承AppCompatActivity使用
         setContentView(R.layout.connect_person);
         initView();
         MyApplication.getInstance().addActivity(this);
@@ -111,7 +113,7 @@ public class ConnActivity extends Activity implements View.OnClickListener, Adap
         }
         contactAdapter = new ContactAdapter(context, list);
         presenter = new ContactPresenter(context,  this);
-        ImageView imageView = findViewById(R.id.add);
+        ImageView imageView = (ImageView) findViewById(R.id.add);
         imageView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);

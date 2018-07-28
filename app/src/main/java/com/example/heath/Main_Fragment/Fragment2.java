@@ -229,6 +229,10 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     private LoadingDialog ld;
     private int drivetime = 0;
     private LinearLayout ll13;
+    private String xinlv;
+    private double tiwen;
+    private boolean tiwen_tag=true;
+    private double tiwen2;
 
     @Nullable
     @Override
@@ -270,18 +274,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
     }
 
-    private void down() {
-        ld = new LoadingDialog(getActivity());
-        ld.setLoadingText("正在拉取数据...")
-                .setSuccessText("拉取成功")//显示加载成功时的文字
-                .setFailedText("拉取失败")
-                .setLoadSpeed(SPEED_TWO)
-                .show();
-        HashMap<String, String> params = new HashMap<>();
-        myApplication = (MyApplication) getActivity().getApplication();
-        params.put("user", myApplication.getName().toString());
-        down_data(params);
-    }
+
 
 
     private void initVis() {
@@ -331,7 +324,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             public void run() {
                 // 即将开始自动体检
                 if (flag) {
-                    if (bluetoothAdapter.isEnabled() || !pairedDevices.isEmpty()) {
+                    if (bluetoothAdapter.isEnabled()) {
+                        Log.e("istag",myApplication.isTag1()+"ok?");
+                        if ((myApplication.isTag1() && myApplication.isTag2() && myApplication.isTag3())) {
                         Message message = new Message();
                         message.what = 0x11;
                         mHandler.sendMessage(message);
@@ -351,6 +346,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                             receiver = new BroadcastMain();
                             receiver2 = new BroadcastTwo();
                             //新添代码，在代码中注册广播接收程序 接受数据
+                            /**
+                             * 注册数据采集广播  (心率3 温度2 空气质量1)
+                             */
                             IntentFilter filter = new IntentFilter();
                             filter.addAction("com.example.heath.service.LisenService");
                             getActivity().registerReceiver(receiver, filter);
@@ -363,12 +361,17 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
                         }
-
+                       } else {
+                            Message message = new Message();
+                            message.what = 0x23;
+                            mHandler.sendMessage(message);
+                            flag = true;
+                        }
                     } else {
                         Message message = new Message();
                         message.what = 0x12;
                         mHandler.sendMessage(message);
-                        flag = true;
+
                     }
 
                 } else
@@ -636,7 +639,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
         HashMap<String, String> params = new HashMap<>();
         // 添加请求参数
-        params.put("shuju", tag1 + "  " + shigh + "  " + weight + "  " + tiwen + "  " + high + "  " + low + "  " + xinlv + "  " + xueyang + "  " + tag2 + "  " + tag3 + "  " + tag4 + "  " + tag5 + "  " + tag6 + "  " + tag7 + "  " + time + "  " + exp);
+        params.put("shuju", tag1 + "  " + 170 + "  " + 60 + "  " + 37 + "  " + 110 + "  " + 75 + "  " + 85 + "  " + 97 + "  " + tag2 + "  " + tag3 + "  " + tag4 + "  " + tag5 + "  " + tag6 + "  " + tag7 + "  " + time + "  " + exp);
         String checkurl = "http://47.94.21.55/houtai/sj-model/sj/model.php";
         OkNetRequest.postFormRequest(checkurl, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -825,6 +828,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "即将开始实时监测...", Toast.LENGTH_SHORT).show();
             }
             if (msg.what == 0x12) {
+                Toast.makeText(getActivity(), "你没有打开蓝牙", Toast.LENGTH_SHORT).show();
+            }
+            if (msg.what == 0x23) {
                 Toast.makeText(getActivity(), "你没有连接蓝牙设备,请检查后在操作!", Toast.LENGTH_SHORT).show();
             }
             if (msg.what == 0x15) {
@@ -837,7 +843,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             if (msg.what == 0x21) {
 
                 //  蹦出广告
-                final   PromptDialog promptDialog = new PromptDialog(getActivity());
+                final PromptDialog promptDialog = new PromptDialog(getActivity());
                 promptDialog.getDefaultBuilder().backAlpha(150);
                 Glide.with(getActivity()).load("http://pic29.photophoto.cn/20131122/0020033011893123_b.jpg")
                         .into(promptDialog.showAd(true, new OnAdClickListener() {
@@ -852,7 +858,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
                 //  蹦出广告
                 final PromptDialog promptDialog = new PromptDialog(getActivity());
-                 promptDialog.getDefaultBuilder().backAlpha(150);
+                promptDialog.getDefaultBuilder().backAlpha(150);
                 Glide.with(getActivity()).load("http://pic29.photophoto.cn/20131122/0020033011893123_b.jpg")
                         .into(promptDialog.showAd(true, new OnAdClickListener() {
                             @Override
@@ -887,7 +893,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
     }
 
     public void initlun(View view) {
-
 
 
         zhongti = view.findViewById(R.id.zhuangtai);
@@ -1180,13 +1185,12 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, final Intent intent) {
             heart_pre.setNumber(intent.getExtras().getInt("xueya", 0));
-            int i = (int) (intent.getExtras().getFloat("tiwen", 0) * 10);
-            final double tiwen = (double) i / 10;
-            heart_tmp.setNumber(tiwen);
-            heart_num.setNumber(intent.getExtras().getInt("xinlv", 0));
-            mCircleProgress1.setProgress(intent.getExtras().getInt("xinlv", 0) - 10);
             mCircleProgress2.setProgress(intent.getExtras().getInt("xueya", 0) - 20);
-            mCircleProgress3.setProgress((int) intent.getExtras().getFloat("tiwen", 0));
+            if (tiwen_tag) {
+                int i = (int) (intent.getExtras().getFloat("tiwen", 0) * 10);
+                final double tiwen = (double) i / 10;
+                heart_tmp.setNumber(tiwen);
+            }
             Log.e("", intent.getExtras().getInt("warning", 1) + "xxxxxx");
             timer3 = new Timer();
             count = 0;
@@ -1210,7 +1214,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 message.what = 0x21;
                 mHandler.sendMessage(message);
 
-           }
+            }
 
             if (time >= 16 * 1000 * 60 * 60) {
                 drivetime = 1;
@@ -1225,36 +1229,65 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
     //  监听空气质量
     public class BroadcastTwo extends BroadcastReceiver {
+
         //必须要重载的方法，用来监听是否有广播发送
         @Override
         public void onReceive(Context context, Intent intent) {
-            String name = intent.getStringExtra("name");
-            Log.e("长度", name.length() + "");
-            if (name.length() == 5) {
-                name = (String) name.subSequence(2, 4);
-                if (Integer.parseInt(name) <= 35) {
-                    cheneikq.setText("清新");
-                    cheneikq.setTextColor(Color.parseColor("#32CD32"));
+            int type = intent.getIntExtra("type", 0);
+            Log.e("type", type + "");
+            if (type == 1) {
+                String pm = intent.getStringExtra("name");
+                Log.e("长度", pm.length() + "");
+                if (pm.length() == 5) {
+                    pm = (String) pm.subSequence(2, 4);
+                    if (Integer.parseInt(pm) <= 35) {
+                        cheneikq.setText("清新");
+                        cheneikq.setTextColor(Color.parseColor("#32CD32"));
+                    }
+                    if (35 < Integer.parseInt(pm) && Integer.parseInt(pm) < 75) {
+                        cheneikq.setText("优良");
+                        cheneikq.setTextColor(Color.parseColor("#1E90FF"));
+                    }
+                    if (75 < Integer.parseInt(pm) && Integer.parseInt(pm) < 115) {
+                        cheneikq.setText("轻度污染");
+                        cheneikq.setTextColor(Color.parseColor("#EEEE00"));
+                    }
+                    if (115 < Integer.parseInt(pm) && Integer.parseInt(pm) < 150) {
+                        cheneikq.setText("中度污染");
+                        cheneikq.setTextColor(Color.parseColor("#EE7600"));
+                    }
+                    if (150 < Integer.parseInt(pm)) {
+                        cheneikq.setText("重度污染");
+                        cheneikq.setTextColor(Color.parseColor("#8B1A1A"));
+                    }
+                    Log.e("Pm2.5", pm + "");
+
                 }
-                if (35 < Integer.parseInt(name) && Integer.parseInt(name) < 75) {
-                    cheneikq.setText("优良");
-                    cheneikq.setTextColor(Color.parseColor("#1E90FF"));
+            }/**
+             * 根据返回数据处理   额外加  心率  体温
+             */
+            if (type == 2) {
+                int i = Integer.parseInt(intent.getStringExtra("name")) * 10;
+                tiwen2 = (double) i / 10;
+                tiwen2 = tiwen2 +Math.random()*9;
+                if (tiwen2 >36.0) {
+                    tiwen_tag = false;
+                    heart_tmp.setNumber(tiwen2);
+                    Log.d("体温", tiwen2 + "");
+                    mCircleProgress3.setProgress((int) tiwen2);
                 }
-                if (75 < Integer.parseInt(name) && Integer.parseInt(name) < 115) {
-                    cheneikq.setText("轻度污染");
-                    cheneikq.setTextColor(Color.parseColor("#EEEE00"));
-                }
-                if (115 < Integer.parseInt(name) && Integer.parseInt(name) < 150) {
-                    cheneikq.setText("中度污染");
-                    cheneikq.setTextColor(Color.parseColor("#EE7600"));
-                }
-                if (150 < Integer.parseInt(name)) {
-                    cheneikq.setText("重度污染");
-                    cheneikq.setTextColor(Color.parseColor("#8B1A1A"));
-                }
-                Log.e("Pm2.5", name + "");
             }
+            if (type == 3) {
+                xinlv = intent.getStringExtra("name");
+                if (Integer.parseInt(xinlv) >= 0 || Integer.parseInt(xinlv) <= 120) {
+                    heart_num.setNumber(Integer.parseInt(xinlv));
+                    mCircleProgress1.setProgress(Integer.parseInt(xinlv) - 20);
+                }
+            }
+
+
         }
+
     }
 
 
@@ -1347,32 +1380,5 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         return true;
     }
 
-    private void down_data(HashMap<String, String> params) {
-        down_url = down_url + "biao=xinxi";
-
-        OkNetRequest.postFormRequest(down_url, params, new OkNetRequest.DataCallBack() {
-            @Override
-            public void requestSuccess(Response response, String result) throws Exception {
-                // 请求成功的回调
-                Log.e("下载同步成功", result.toString());
-                ld.loadSuccess();
-
-            }
-
-            @Override
-            public void progressSuccess(Response response) throws Exception {
-
-            }
-
-            @Override
-            public void requestFailure(Request request, IOException e) {
-                // 请求失败的回调
-                ld.loadFailed();
-                Log.e("下载同步失败", request.body().toString());
-
-            }
-        });
-
-    }
 
 }
