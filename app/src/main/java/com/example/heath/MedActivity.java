@@ -58,7 +58,6 @@ public class MedActivity extends AppCompatActivity {
     private Toolbar mToolbar;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -100,7 +99,7 @@ public class MedActivity extends AppCompatActivity {
         adapter = new MyReAdapter();
         adapter.setItemCount();
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
         mAddAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,21 +130,21 @@ public class MedActivity extends AppCompatActivity {
 
     }
 
-    public void cancelAlarm(final Context context, final int id, final AlarmModel alarm){
+    public void cancelAlarm(final Context context, final int id, final AlarmModel alarm) {
 
-        connection = new ServiceConnection(){
+        connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                binder = (AlarmService.MyBinder)service;
-                binder.cancelAlarm(alarm,id, context);
+                binder = (AlarmService.MyBinder) service;
+                binder.cancelAlarm(alarm, id, context);
             }
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Log.d("MedActivity","解绑服务");
+                Log.d("MedActivity", "解绑服务");
             }
         };
-        Intent intent = new Intent(this,AlarmService.class);
+        Intent intent = new Intent(this, AlarmService.class);
 
         bindService(intent, connection, BIND_AUTO_CREATE);
 
@@ -221,10 +220,7 @@ public class MedActivity extends AppCompatActivity {
                     adapter.removeItemSelected(po);
                     adapter.onDeleteItem();
                     cancelAlarm(MedActivity.this, id, alarm);
-
                     Toast.makeText(MedActivity.this, "已删除吃药提醒", Toast.LENGTH_SHORT).show();
-
-
                     List<AlarmModel> alarmModels = db.getAllAlarms();
                     if (alarmModels.isEmpty()) {
                         mNoAlarmTextView.setVisibility(View.VISIBLE);
@@ -307,7 +303,6 @@ public class MedActivity extends AppCompatActivity {
                 int CheckedAlarmID = IDmap.get(id);
                 selectAlarm(CheckedAlarmID);
             }
-
 
 
             public void setAlarmTitle(String title) {
@@ -421,33 +416,34 @@ public class MedActivity extends AppCompatActivity {
 
     }
 
-    private void restartAlarm( final String time, final String repeat, final int id) {
+    private void restartAlarm(final String time, final String repeat, final int id) {
 
-        connection = new ServiceConnection(){
+        connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                binder = (AlarmService.MyBinder)service;
-                switch (repeat){
+                binder = (AlarmService.MyBinder) service;
+                switch (repeat) {
                     case "只响一次":
-                        binder.setSingleAlarm(getApplicationContext(),time,id);
+                        binder.setSingleAlarm(getApplicationContext(), time, id);
                         break;
                     case "每天":
-                        binder.setEverydayAlarm(getApplicationContext(),time,id);
+                        binder.setEverydayAlarm(getApplicationContext(), time, id);
                         break;
                     default:
                         AlarmModel model = db.getAlarm(id);
                         String repeatCode = model.getRepeatCode();
-                        binder.setDiyAlarm(getApplicationContext(),repeat,time,id, repeatCode);
+                        binder.setDiyAlarm(getApplicationContext(), repeat, time, id, repeatCode);
                 }
 
             }
+
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Log.d("MedActivity","解绑服务");
+                Log.d("MedActivity", "解绑服务");
             }
         };
-        Intent intent = new Intent(this,AlarmService.class);
-        bindService(intent,connection,BIND_AUTO_CREATE);
+        Intent intent = new Intent(this, AlarmService.class);
+        bindService(intent, connection, BIND_AUTO_CREATE);
         unbindService(connection);
 
     }
@@ -462,7 +458,6 @@ public class MedActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         adapter.setItemCount();
     }
-
 
 
     @Override

@@ -57,7 +57,8 @@ public class LisenService extends Service {
         @Override
         public void run() {
             super.run();
-            double time = 0;
+            // 模拟疲劳驾驶  三小时50分钟
+            double time = 3*1000*60*60+50*1000*60+9*1000*60;
             while (!isInterrupted())
 
             {
@@ -76,19 +77,23 @@ public class LisenService extends Service {
                     intent.putExtra("xueya", xueya);
                     intent.putExtra("xinlv", xinlv);
                     intent.putExtra("tiwen", tiwen);
+                    if (time == 2 * 1000 * 60 * 60)
+                        intent.putExtra("time", time);
+                    if (time == 3 * 1000 * 60 * 60)
+                        intent.putExtra("time", time);
                     if (time == 4 * 1000 * 60 * 60)
                         intent.putExtra("time", time);
                     if (time == 8 * 1000 * 60 * 60)
                         intent.putExtra("time", time);
 
                     Log.e("驾驶时长:", "-----" + time + "");
-                    if (xinlv < 60 && (tiwen > 38 || tiwen < 36) && (xueya < 80 || xueya > 115)) {
+                   // if (xinlv < 60 && (tiwen > 38 || tiwen < 36) && (xueya < 80 || xueya > 115)) {
                         ddd++;
-                        if (ddd >= 5) {
+                        if (ddd >= 3) {
                             intent.putExtra("warning", 0);
                             ddd = 0;
                         }
-                    } else intent.putExtra("warning", 2);
+                   // } else intent.putExtra("warning", 2);
                     sendBroadcast(intent);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block

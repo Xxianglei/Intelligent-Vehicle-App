@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Bundle b = i.getExtras();
                 phone = phoneNum.getText().toString().trim().replaceAll("/s", "");
                 myApplication.setName(phone);
-                if (phoneNum.getText().length() > 0 && etVcode.getText().length() > 0) {
+                if (phoneNum.getText().length() >=10 && etVcode.getText().length() >= 3) {
                     if (b.getInt("TAG") == 1) {
 
                         String code = etVcode.getText().toString().replaceAll("/s", "");

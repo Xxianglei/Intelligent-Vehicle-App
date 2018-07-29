@@ -1206,31 +1206,33 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             }
 
             // 驾驶时间
-            if (time >= 2* 1000 * 60 * 60) {
+            if (time == 2* 1000 * 60 * 60) {
                 zhongti.setText("良好");
 
-
             }
-            if (time >= 3* 1000 * 60 * 60) {
+            if (time == 3* 1000 * 60 * 60) {
                 zhongti.setText("一般");
             }
             // 驾驶时间
-            if (time >= 4* 1000 * 60 * 60) {
+            if (time == 4* 1000 * 60 * 60) {
                 zhongti.setText("倦怠");
                 drivetime = 1;
                 Text2Speech.speech(getActivity(), "您已经连续驾驶超过四小时  建议您停靠休息二十分钟 ", false);
-                message.what = 0x21;
-                mHandler.sendMessage(message);
+                Message message1=Message.obtain();
+                message1.what = 0x21;
+
+                mHandler.sendMessage(message1);
 
             }
 
-            if (time >= 8 * 1000 * 60 * 60) {
+            if (time == 8 * 1000 * 60 * 60) {
                 drivetime = 1;
                 zhongti.setText("疲劳");
                 Text2Speech.speech(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶 ", false);
                 Toast.makeText(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶", 5000).show();
-                message.what = 0x22;
-                mHandler.sendMessage(message);
+                Message message2=Message.obtain();
+                message2.what = 0x22;
+                mHandler.sendMessage(message2);
             }
         }
     }
@@ -1288,7 +1290,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             }
             if (type == 3) {
                 xinlv = intent.getStringExtra("name");
-                if (Integer.parseInt(xinlv) >= 0 || Integer.parseInt(xinlv) <= 120) {
+                if (Integer.parseInt(xinlv) >= 25 &&Integer.parseInt(xinlv) <= 120) {
                     heart_num.setNumber(Integer.parseInt(xinlv));
                     mCircleProgress1.setProgress(Integer.parseInt(xinlv) - 25);
                 }
@@ -1306,7 +1308,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
         builder1.setIcon(R.mipmap.delete);
         builder1.setTitle("危险提示");
         builder1.setMessage("您目前身体处于危险状况!请问您需要120吗?");
-        Text2Speech.speech(getActivity(), "请问需要为您呼叫120吗", false);
         builder1.setCancelable(true);
         builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
@@ -1332,7 +1333,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 dialog1.dismiss();
                 t.cancel();
             }
-        }, 0, 8000);
+        }, 10000);
         if (!tag) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // 6.0以上权限申请
@@ -1345,9 +1346,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 intent.setData(Uri.parse("tel:" + 120 + ""));
                 startActivity(intent);
             }
-            // Toast.makeText(getActivity(), "打电话了", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "打电话了", Toast.LENGTH_SHORT).show();
         }
-
+        Text2Speech.speech(getActivity(), "请问 需要为您呼叫120吗", false);
     }
 
 

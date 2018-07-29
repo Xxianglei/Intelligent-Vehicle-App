@@ -116,10 +116,9 @@ public class Set_password extends AppCompatActivity implements View.OnClickListe
     private void CheckPass(String num, String pass) {
 
         Log.e("log_demo", "sendSms:打包电话和密码 ");
-        if (!validatepassword(pass)&&((etPassword.getText().toString()).equals(etRepeatpassword.getText().toString()))) {
+        if (!validatepassword(pass)&&((etPassword.getText().length()==etRepeatpassword.getText().length()) )&&etPassword.getText()!=null&&etRepeatpassword.getText()!=null){
             Toast.makeText(Set_password.this, "亲 请输入由英文和数字组成的密码哦！！", Toast.LENGTH_SHORT).show();
         } else {
-
             ld.setLoadingText("正在登录中...")
                     .setSuccessText("登录成功")//显示加载成功时的文字
                     .setFailedText("注册失败")

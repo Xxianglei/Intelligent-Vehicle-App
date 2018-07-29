@@ -38,15 +38,16 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         int alarmId = Integer.parseInt(intent.getStringExtra(ID_FLAG));
         MyAlarmDataBase db = new MyAlarmDataBase(context);
         AlarmModel model = db.getAlarm(alarmId);
-        mRepeatType = model.getRepeatType();
-
-        switch (mRepeatType){
-            case "每天":
-                setRepeatAlarm(context, alarmId,ONE_DAY_TIME);
-                break;
-            default:
-                setRepeatAlarm(context,alarmId,ONE_WEEK_TIME);
-            break;
+        if(db.getAlarm(alarmId)!=null) {
+            mRepeatType = model.getRepeatType();
+            switch (mRepeatType) {
+                case "每天":
+                    setRepeatAlarm(context, alarmId, ONE_DAY_TIME);
+                    break;
+                default:
+                    setRepeatAlarm(context, alarmId, ONE_WEEK_TIME);
+                    break;
+            }
         }
 
         Log.d("AlarmReceiver","接收到提醒广播");

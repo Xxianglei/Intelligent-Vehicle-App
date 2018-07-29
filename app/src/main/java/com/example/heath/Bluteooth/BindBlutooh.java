@@ -133,29 +133,6 @@ public class BindBlutooh extends Activity {
         mListView.setFastScrollEnabled(true);
         mListView.setOnItemClickListener(mDeviceClickListener);
         Log.e("aaa", "aaaaaaa");
-        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-        if (pairedDevices.size() > 0) {
-            re.setVisibility(View.GONE);
-            mListView.setVisibility(View.VISIBLE);
-            for (BluetoothDevice device : pairedDevices) {
-                if (device.getAddress().contains(address1)) {
-                    list.add(new Bluetooth.SiriListItem("蜗行—空气质量传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
-                } else if (device.getAddress().contains(address2)) {
-                    list.add(new Bluetooth.SiriListItem("蜗行—温度传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
-                } else if (device.getAddress().contains(address3)) {
-                    list.add(new Bluetooth.SiriListItem("蜗行—心率传感器" + "\n" + "蓝牙地址：" + device.getAddress(), true));
-                } else {
-                    list.add(new Bluetooth.SiriListItem(device.getName() + "\n" + "蓝牙地址：" + device.getAddress(), true));
-                }
-
-                mAdapter.notifyDataSetChanged();
-                mListView.setSelection(list.size() - 1);
-            }
-        } else {
-            list.add(new Bluetooth.SiriListItem("No devices have been paired", true));
-            mAdapter.notifyDataSetChanged();
-            mListView.setSelection(list.size() - 1);
-        }
 
     }
 
@@ -179,6 +156,7 @@ public class BindBlutooh extends Activity {
                     intent.putExtra("address", address);
                     startService(intent);
                     Bluetooth.serviceOrCilent = Bluetooth.ServerOrCilent.CILENT;
+                    Toast.makeText(BindBlutooh.this, "连接成功!", Toast.LENGTH_SHORT).show();
                 }
             });
             StopDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {

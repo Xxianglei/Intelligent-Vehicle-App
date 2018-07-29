@@ -19,7 +19,6 @@ import com.example.heath.R;
 
 /**
  * 闹钟活动页面
- *
  */
 
 public class PlayAlarmActivity extends AppCompatActivity {
@@ -40,12 +39,12 @@ public class PlayAlarmActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//继承AppCompatActivity使用
         setContentView(R.layout.activity_play_med);
         MyApplication.getInstance().addActivity(this);
-        player =new MediaPlayer();
+        player = new MediaPlayer();
         //  调整闹钟声音大小
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (maxVolume/4)*3,
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (maxVolume / 4) * 3,
                 AudioManager.FLAG_PLAY_SOUND);
 
         mId = Integer.parseInt(getIntent().getStringExtra(ALARM_ID));
@@ -53,93 +52,94 @@ public class PlayAlarmActivity extends AppCompatActivity {
 
         MyAlarmDataBase db = new MyAlarmDataBase(this);
         AlarmModel am = db.getAlarm(mId);
+        if (db.getAlarm(mId) != null) {
+            mWake = am.getWakeType();
+            mRing = am.getRing();
+            normalFragment = new NormalFragment();
 
-        mWake = am.getWakeType();
-        mRing = am.getRing();
-        normalFragment = new NormalFragment();
+            if (mWake.equals("常规")) {
+                initFragment(0);
 
-        if (mWake.equals("常规")){
-            initFragment(0);
+            }
+
+            if (mRing.equals("震动")) {
+                startVibrate();
+
+            } else if (mRing.equals("响铃")) {
+                SharedPreferences pf = getSharedPreferences("ringCode", MODE_PRIVATE);
+                int ringCode = pf.getInt("key_ring", 1);
+
+                startRing(ringCode);
+
+            } else {
+                SharedPreferences pf = getSharedPreferences("ringCode", MODE_PRIVATE);
+                int ringCode = pf.getInt("key_ring", 1);
+                startRing(ringCode);
+                startVibrate();
+            }
 
         }
-
-        if (mRing.equals("震动")){
-            startVibrate();
-
-        }else if (mRing.equals("响铃")) {
-            SharedPreferences pf = getSharedPreferences("ringCode",MODE_PRIVATE);
-            int ringCode  = pf.getInt("key_ring",1);
-
-            startRing(ringCode);
-
-        }else {
-            SharedPreferences pf = getSharedPreferences("ringCode",MODE_PRIVATE);
-            int ringCode  = pf.getInt("key_ring",1);
-            startRing(ringCode);
-            startVibrate();
-        }
-
     }
 
     private void startRing(int ringCode) {
-        switch (ringCode){
+        switch (ringCode) {
             case 1:
-                if (player!=null && player.isPlaying()){
+                if (player != null && player.isPlaying()) {
                     player.stop();
                     player.release();
                     player = MediaPlayer.create(this, R.raw.ring01);
-                }else {
-                    player = MediaPlayer.create(this,R.raw.ring01);
+                } else {
+                    player = MediaPlayer.create(this, R.raw.ring01);
 
                 }
                 break;
             case 2:
-                if (player!=null && player.isPlaying()){
+                if (player != null && player.isPlaying()) {
                     player.stop();
                     player.release();
-                    player = MediaPlayer.create(this,R.raw.ring02);
-                }else {
-                    player = MediaPlayer.create(this,R.raw.ring02);
+                    player = MediaPlayer.create(this, R.raw.ring02);
+                } else {
+                    player = MediaPlayer.create(this, R.raw.ring02);
 
                 }
                 break;
             case 3:
-                if (player!=null && player.isPlaying()){
+                if (player != null && player.isPlaying()) {
                     player.stop();
                     player.release();
-                    player = MediaPlayer.create(this,R.raw.ring03);
-                }else {
-                    player = MediaPlayer.create(this,R.raw.ring03);
+                    player = MediaPlayer.create(this, R.raw.ring03);
+                } else {
+                    player = MediaPlayer.create(this, R.raw.ring03);
 
                 }
                 break;
             case 4:
-                if (player!=null && player.isPlaying()){
+                if (player != null && player.isPlaying()) {
                     player.stop();
                     player.release();
-                    player = MediaPlayer.create(this,R.raw.ring04);
-                }else {
-                    player = MediaPlayer.create(this,R.raw.ring04);
+                    player = MediaPlayer.create(this, R.raw.ring04);
+                } else {
+                    player = MediaPlayer.create(this, R.raw.ring04);
 
                 }
                 break;
             case 5:
-                if (player!=null && player.isPlaying()){
+                if (player != null && player.isPlaying()) {
                     player.stop();
                     player.release();
-                    player = MediaPlayer.create(this,R.raw.ring05);
-                }else {
-                    player = MediaPlayer.create(this,R.raw.ring05);
+                    player = MediaPlayer.create(this, R.raw.ring05);
+                } else {
+                    player = MediaPlayer.create(this, R.raw.ring05);
 
                 }
                 break;
             case 6:
-                if (player!=null && player.isPlaying()){
+                if (player != null && player.isPlaying()) {
                     player.stop();
                     player.release();
-                    player = MediaPlayer.create(this,R.raw.ring06);
-                }else {
-                    player = MediaPlayer.create(this,R.raw.ring06);
+                    player = MediaPlayer.create(this, R.raw.ring06);
+                } else {
+                    player = MediaPlayer.create(this, R.raw.ring06);
 
                 }
                 break;
@@ -158,7 +158,7 @@ public class PlayAlarmActivity extends AppCompatActivity {
 
     private void startVibrate() {
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        long[] pattern = {1000,5000,1000,5000};
+        long[] pattern = {1000, 5000, 1000, 5000};
         vibrator.vibrate(pattern, 0);
 
     }
@@ -167,9 +167,9 @@ public class PlayAlarmActivity extends AppCompatActivity {
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
         hideFragment(transaction);
-        switch (i){
+        switch (i) {
             case 0:
-                transaction.add(R.id.frag_content,normalFragment);
+                transaction.add(R.id.frag_content, normalFragment);
                 transaction.show(normalFragment);
                 break;
 
@@ -180,7 +180,7 @@ public class PlayAlarmActivity extends AppCompatActivity {
     }
 
     private void hideFragment(android.support.v4.app.FragmentTransaction transaction) {
-        if (normalFragment != null){
+        if (normalFragment != null) {
             transaction.hide(normalFragment);
         }
 
@@ -190,16 +190,16 @@ public class PlayAlarmActivity extends AppCompatActivity {
         this.mId = mId;
     }
 
-    public int getmId(){
+    public int getmId() {
         return mId;
     }
 
     @Override
     protected void onDestroy() {
-        if (player!=null){
+        if (player != null) {
             player.release();
         }
-        if (vibrator!=null){
+        if (vibrator != null) {
             vibrator.cancel();
         }
 
@@ -208,7 +208,7 @@ public class PlayAlarmActivity extends AppCompatActivity {
 
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             return true;
         } else {
             return super.onKeyDown(keyCode, event);
