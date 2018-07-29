@@ -24,6 +24,8 @@
         <item>Text2Speach</item>
         <item>MaterialTabs</item>
         <item>YCDialogLib</item>
+        <item>Android-PromptDialog</item>
+
 
 
     </string-array>

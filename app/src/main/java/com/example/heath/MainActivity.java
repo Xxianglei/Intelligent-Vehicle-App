@@ -638,7 +638,7 @@ public class MainActivity extends IatBasicActivity
             if (aMapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
                 aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见官方定位类型表
-                //   aMapLocation.getCountry();//国家信息
+                // aMapLocation.getCountry();//国家信息
                 // aMapLocation.getProvince();//省信息
                 aMapLocation.getCity();//城市信息
                 myApplication.setbDouble(aMapLocation.getLatitude());
