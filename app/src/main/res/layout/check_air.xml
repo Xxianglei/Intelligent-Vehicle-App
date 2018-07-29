@@ -112,7 +112,7 @@
             android:layout_weight="0.5">
 
             <TextView
-                android:gravity="center"
+                android:gravity="center|bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="保持车内空气清新,可以有效缓解疲劳哟!"
@@ -120,8 +120,9 @@
                 android:textSize="20sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="63dp" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

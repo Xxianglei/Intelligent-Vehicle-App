@@ -106,7 +106,8 @@ public class Check_tizhong extends Activity implements View.OnClickListener {
         bmi = findViewById(R.id.BMI);
         std = findViewById(R.id.zhuangtai);
         dataBaseManager = new DataBaseManager();
-        if (bluetoothAdapter.isEnabled()) {
+        MyApplication myApplication = (MyApplication) getApplication();
+        if (bluetoothAdapter.isEnabled() && (myApplication.isTag1() && myApplication.isTag2() && myApplication.isTag3())) {
             start.setEnabled(true);
         } else {
             start.setEnabled(false);

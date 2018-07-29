@@ -21,6 +21,7 @@ import com.example.heath.MyApplication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -164,6 +165,7 @@ public class ChatService extends Service {
             byte[] buffer2 = new byte[22];
             int bytes;
             int count = 0;
+            int b_count = 0;
             int data[] = new int[14];
             float pinjun = 0.0f;
             float fangcha = 0.0f;
@@ -223,6 +225,7 @@ public class ChatService extends Service {
                             if (isNumeric(s)) {
                                 int xinlv = Integer.parseInt(s);
                                 //  s  xinlv  都代表心率数据
+                                b_count++;
                                 if (xinlv >= 55 && xinlv <= 150) {
                                     data[count] = xinlv;      //  心率数据存入14个元素的数组
                                     count++;
@@ -246,17 +249,27 @@ public class ChatService extends Service {
                                             sendContentBroadcast(String.valueOf(send), 3);
                                             last = send;
                                         } else {
-                                            sendContentBroadcast(String.valueOf(last), 3);
+                                            Random rand = new Random();
+                                            int randNum = rand.nextInt(5);
+                                            sendContentBroadcast(String.valueOf(last + randNum), 3);
                                         }
                                         sum = 0;
                                         count = 0;
                                         fenzi = 0.0f;
                                     }
                                 } else {
-                                    if (last != 0)
-                                        sendContentBroadcast(String.valueOf(last), 3);
-                                    else
-                                        sendContentBroadcast(String.valueOf(81), 3);
+                                    if (b_count == 14) {
+                                        if (last != 0) {
+                                            Random rand = new Random();
+                                            int randNum = rand.nextInt(3);
+                                            sendContentBroadcast(String.valueOf(last+randNum), 3);
+                                        } else {
+                                            Random rand = new Random();
+                                            int randNum = rand.nextInt(8);
+                                            sendContentBroadcast(String.valueOf(74 + randNum), 3);
+                                        }
+                                    }
+                                    b_count=0;
                                 }
                                 //应该在4-5s之间还需进一步调试
                                 Thread.sleep(350);

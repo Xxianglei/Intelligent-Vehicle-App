@@ -106,7 +106,8 @@ public class Check_tep extends AppCompatActivity {
         mHeartbeatRecycler.setAdapter(mAdapter);
         mSvStep = (StepView) findViewById(R.id.sv_step);
         mSvStep.setmMaxValueint(50);
-        if (bluetoothAdapter.isEnabled()) {
+        MyApplication myApplication = (MyApplication) getApplication();
+        if (bluetoothAdapter.isEnabled() && (myApplication.isTag1() && myApplication.isTag2() && myApplication.isTag3())) {
             mSvStep.setEnabled(true);
         } else {
             mSvStep.setEnabled(false);

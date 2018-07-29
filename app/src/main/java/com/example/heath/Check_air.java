@@ -35,6 +35,7 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
     private ImageView mPoint;
     private PopupWindow loadingWindow;
     private boolean stopThread = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +50,13 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
 
     @Override
     protected void onDestroy() {
-        stopThread=true;
+        stopThread = true;
         super.onDestroy();
     }
 
 
     private void initView() {
-        ImageView imageView=(ImageView)findViewById(R.id.back);
+        ImageView imageView = (ImageView) findViewById(R.id.back);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,14 +67,13 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
         mBigWindMill = (WindPath) findViewById(R.id.id_wind);
         mSmallWindMill = (WindPath) findViewById(R.id.id_windsmall);
         sv = (StepArcView) findViewById(R.id.sv);
-        start = (Button)findViewById(R.id.start);
-
-        if (bluetoothAdapter.isEnabled()){
+        start = (Button) findViewById(R.id.start);
+        MyApplication myApplication = (MyApplication) getApplication();
+        if (bluetoothAdapter.isEnabled() && (myApplication.isTag1() && myApplication.isTag2() && myApplication.isTag3())) {
             start.setEnabled(true);
-        }
-        else{
+        } else {
             start.setEnabled(false);
-            Toast.makeText(this,"您还未连接设备!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "您还未连接设备!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -104,9 +104,10 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
 
     private void preLoad() {
         if (list.size() > 0) {
-            sv.setCurrentCount(200,list.get(list.size()-1).getData());
-        }else   sv.setCurrentCount(200,0);
+            sv.setCurrentCount(200, list.get(list.size() - 1).getData());
+        } else sv.setCurrentCount(200, 0);
     }
+
     private void showPopupWindow() {
 
         View contentView = LayoutInflater.from(this).inflate(R.layout.item, null);
@@ -135,7 +136,7 @@ public class Check_air extends AppCompatActivity implements View.OnClickListener
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            int data = (int) (Math.random() * 50 + 80);
+                            int data = (int) (Math.random() * 50 + 60);
                             check(TimeUtils.dateToString2(), data);
                             sv.setCurrentCount(200, data);
                             mPoint.clearAnimation();

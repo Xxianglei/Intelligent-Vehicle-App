@@ -643,7 +643,7 @@ public class MainActivity extends IatBasicActivity
                 aMapLocation.getCity();//城市信息
                 myApplication.setbDouble(aMapLocation.getLatitude());
                 //获取经
-                myApplication.setbDouble( aMapLocation.getLongitude());
+                myApplication.setaDouble( aMapLocation.getLongitude());
                 buffer = new StringBuffer();
                 buffer.append(aMapLocation.getCity() + "");
                 String city = buffer.toString();

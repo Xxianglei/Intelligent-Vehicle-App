@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -63,10 +64,13 @@ import okhttp3.Response;
 public class PersonCenter extends AppCompatActivity implements View.OnClickListener {
 
 
-
     @Override
     protected void onStop() {
-        upload_data(params);
+
+        if (params.get("age") != null && params.get("height") != null && params.get("weight") != null) {
+            upload_data(params);
+            dataBaseManager.saveUser(params.get("userName"), params.get("sex"), Integer.parseInt(params.get("age")), Integer.parseInt(params.get("height")), Integer.parseInt(params.get("weight")));
+        }
         super.onStop();
     }
 
@@ -108,7 +112,6 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
 
             case R.id.xingbie:
@@ -305,7 +308,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //  修改ui信息
-                        if (set_name.getText().length()>=1) {
+                        if (set_name.getText().length() >= 1) {
                             name.setText(set_name.getText().toString());
                             //保存偏好设置 写入全局变量  ...  多出调用
                             editor.putString("NAME", set_name.getText().toString());
@@ -318,8 +321,8 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
                             Log.i("偏好", sp.getString("NAME", null).toString());
 
                             myApp.setPhone(set_name.getText().toString());
-                        }else {
-                            Toast.makeText(PersonCenter.this,"您输入的内容为空!",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(PersonCenter.this, "您输入的内容为空!", Toast.LENGTH_SHORT).show();
                             name.setText("蜗行");
                             //保存偏好设置 写入全局变量  ...  多出调用
                             editor.putString("NAME", "蜗行");
@@ -328,7 +331,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
                             params.put("userName", "蜗行");
 
 
-                            Log.i("测试","蜗行");
+                            Log.i("测试", "蜗行");
                             Log.i("偏好", sp.getString("NAME", null).toString());
 
                             myApp.setPhone("蜗行");
@@ -406,10 +409,14 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         }
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);//继承AppCompatActivity使用
         setContentView(R.layout.person_con);
+        //解决Android7.0调用相机时出现新的错误
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
         getWindow().setBackgroundDrawable(null);
         initViews();
         MyApplication.getInstance().addActivity(this);
-        params.put("user",myApplication.getName().toString());
+        params.put("user", myApplication.getName().toString());
         // 获取偏好头像
         getBitmapFromSharedPreferences();
         LoadLocal();
@@ -418,7 +425,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
 
-               // upload_data(params);
+                // upload_data(params);
                 Handler mHandler = new Handler();
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -602,7 +609,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
 
 
     private void initViews() {
-        myApplication = (MyApplication)getApplication();
+        myApplication = (MyApplication) getApplication();
         Button button = (Button) findViewById(R.id.log_out);
         name = (TextView) findViewById(R.id.name);
         LinearLayout llhigh = (LinearLayout) findViewById(R.id.ll_high);
@@ -670,26 +677,6 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         myApp = (MyApplication) getApplication();
         params = new HashMap<>();
 
-        // 判断是否含有   避免 获取空对象 cash
-        if (sp.contains("AGE") && sp.contains("HIGH") && sp.contains("SEX") && sp.contains("NAME") && sp.contains("TAG")) {
-            Log.i("偏好", sp.getString("AGE", null).toString());
-            age.setText((sp.getString("AGE", null).toString()));
-            high.setText((sp.getString("HIGH", null).toString()) + "cm");
-            tizong.setText((sp.getString("WEIGHT", null).toString()) + "kg");
-            textView.setText(sp.getString("SEX", null).toString());
-            name.setText(sp.getString("NAME", "蜗行").toString());
-
-
-            // 存入数据库
-             dataBaseManager.saveUser(sp.getString("NAME", null).toString(),sp.getString("AGE", null).toString(),Integer.parseInt(sp.getString("AGE", null).toString()),Integer.parseInt(sp.getString("HIGH", null).toString()),Integer.parseInt(sp.getString("WEIGHT", null).toString()));
-
-
-            if (sp.getInt("TAG", 0) != 0) {
-                xingbie.setImageResource(R.mipmap.girl);
-            } else {
-                xingbie.setImageResource(R.mipmap.boy);
-            }
-        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("个人中心");
@@ -705,11 +692,11 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
     }
 
     private void upload_data(HashMap<String, String> params) {
-        params.put("user",myApplication.getName().toString());
+        params.put("user", myApplication.getName().toString());
         String url = "http://47.94.21.55/houtai/addUSer.php";
         OkNetRequest.postFormRequest(url, params, new OkNetRequest.DataCallBack() {
             @Override
-            public void requestSuccess(Response response,String result) throws Exception {
+            public void requestSuccess(Response response, String result) throws Exception {
                 // 请求成功的回调
                 Log.e("同步成功", result.toString());
                 Gson gson = new Gson();
@@ -738,31 +725,27 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
         });
 
     }
-   /* private TextView name;
-    private ImageView xingbie;
 
-    private TextView textView;
-    private TextView age;
-    private TextView tizong;
-    private TextView high;*/
-private void  LoadLocal(){
-    List<UserModle>list=  dataBaseManager.readuserList();
-    if (list.size()>0){
-        name.setText(list.get(list.size()-1).getName());
-        age.setText(list.get(list.size()-1).getAge()+"岁");
-        tizong.setText(list.get(list.size()-1).getWeight()+"kg");
-        high.setText(list.get(list.size()-1).getHigh()+"cm");
-        if (list.get(list.size()-1).getXingbie().equals("女")){
-            xingbie.setImageResource(R.mipmap.girl);
-            textView.setText("女");
-        }
-        else {
-            xingbie.setImageResource(R.mipmap.boy);
-            textView.setText("男");
+    private void LoadLocal() {
+        List<UserModle> list = dataBaseManager.readuserList();
+        if (list.size() > 0) {
+            if (list.get(list.size() - 1).getXingbie() != null&&list.get(list.size() - 1).getName()!=null) {
+            name.setText(list.get(list.size() - 1).getName());
+            age.setText(list.get(list.size() - 1).getAge() + "岁");
+            tizong.setText(list.get(list.size() - 1).getWeight() + "kg");
+            high.setText(list.get(list.size() - 1).getHigh() + "cm");
+
+                if (list.get(list.size() - 1).getXingbie().equals("女")) {
+                    xingbie.setImageResource(R.mipmap.girl);
+                    textView.setText("女");
+                } else {
+                    xingbie.setImageResource(R.mipmap.boy);
+                    textView.setText("男");
+                }
+
+            }
         }
 
     }
-
-}
 
 }

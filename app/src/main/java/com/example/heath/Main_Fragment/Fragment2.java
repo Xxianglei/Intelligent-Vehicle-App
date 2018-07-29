@@ -639,7 +639,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
         HashMap<String, String> params = new HashMap<>();
         // 添加请求参数
-        params.put("shuju", tag1 + "  " + 170 + "  " + 60 + "  " + 37 + "  " + 110 + "  " + 75 + "  " + 85 + "  " + 97 + "  " + tag2 + "  " + tag3 + "  " + tag4 + "  " + tag5 + "  " + tag6 + "  " + tag7 + "  " + time + "  " + exp);
+        params.put("shuju", tag1 + "  " + shigh + "  " + weight + "  " + tiwen + "  " + high + "  " + low + "  " + xinlv + "  " + xueyang + "  " + tag2 + "  " + tag3 + "  " + tag4 + "  " + tag5 + "  " + tag6 + "  " + tag7 + "  " + time + "  " + exp);
         String checkurl = "http://47.94.21.55/houtai/sj-model/sj/model.php";
         OkNetRequest.postFormRequest(checkurl, params, new OkNetRequest.DataCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -1205,10 +1205,17 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 mHandler.sendMessage(message);
             }
 
-
             // 驾驶时间
+            if (time >= 2* 1000 * 60 * 60) {
+                zhongti.setText("良好");
 
-            if (time >= 8 * 1000 * 60 * 60) {
+
+            }
+            if (time >= 3* 1000 * 60 * 60) {
+                zhongti.setText("一般");
+            }
+            // 驾驶时间
+            if (time >= 4* 1000 * 60 * 60) {
                 zhongti.setText("倦怠");
                 drivetime = 1;
                 Text2Speech.speech(getActivity(), "您已经连续驾驶超过四小时  建议您停靠休息二十分钟 ", false);
@@ -1217,7 +1224,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
             }
 
-            if (time >= 16 * 1000 * 60 * 60) {
+            if (time >= 8 * 1000 * 60 * 60) {
                 drivetime = 1;
                 zhongti.setText("疲劳");
                 Text2Speech.speech(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶 ", false);
@@ -1243,7 +1250,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                     pm = (String) pm.subSequence(2, 4);
                     if (Integer.parseInt(pm) <= 35) {
                         cheneikq.setText("清新");
-                        cheneikq.setTextColor(Color.parseColor("#32CD32"));
+                        cheneikq.setTextColor(Color.parseColor("#207f20"));
                     }
                     if (35 < Integer.parseInt(pm) && Integer.parseInt(pm) < 75) {
                         cheneikq.setText("优良");
@@ -1270,12 +1277,12 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             if (type == 2) {
                 int i = Integer.parseInt(intent.getStringExtra("name")) * 10;
                 tiwen2 = (double) i / 10;
-                tiwen2 = tiwen2 +Math.random()*9;
-                tiwen2= (double) Math.round(tiwen2 * 10) / 10;
                 if (tiwen2 >36.0) {
+                    tiwen2 = tiwen2 +Math.random()*4;
+                    tiwen2= (double) Math.round(tiwen2 * 10) / 10;
                     tiwen_tag = false;
                     heart_tmp.setNumber(tiwen2);
-                    Log.d("体温", tiwen2 + "");
+                    Log.d("检测体温", tiwen2 + "");
                     mCircleProgress3.setProgress((int) tiwen2);
                 }
             }
@@ -1283,7 +1290,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 xinlv = intent.getStringExtra("name");
                 if (Integer.parseInt(xinlv) >= 0 || Integer.parseInt(xinlv) <= 120) {
                     heart_num.setNumber(Integer.parseInt(xinlv));
-                    mCircleProgress1.setProgress(Integer.parseInt(xinlv) - 20);
+                    mCircleProgress1.setProgress(Integer.parseInt(xinlv) - 25);
                 }
             }
 

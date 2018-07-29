@@ -134,7 +134,6 @@ public class BindBlutooh extends Activity {
         mListView.setOnItemClickListener(mDeviceClickListener);
         Log.e("aaa", "aaaaaaa");
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-
         if (pairedDevices.size() > 0) {
             re.setVisibility(View.GONE);
             mListView.setVisibility(View.VISIBLE);
@@ -288,7 +287,9 @@ public class BindBlutooh extends Activity {
                     registerReceiver(mReceiver, filter);
 
                 }
-
+                rippleBackground.stopRippleAnimation();
+                re.setVisibility(View.GONE);
+                mListView.setVisibility(View.VISIBLE);
                 Toast.makeText(BindBlutooh.this, "搜索到设备...", Toast.LENGTH_SHORT).show();
             }
         }

@@ -97,7 +97,8 @@ public class Check_xinlv extends AppCompatActivity {
         mAdapter = new HeartbeatAdapter();
         mHeartbeatRecycler.setAdapter(mAdapter);
 
-        if (bluetoothAdapter.isEnabled()){
+        MyApplication myApplication = (MyApplication) getApplication();
+        if (bluetoothAdapter.isEnabled() && (myApplication.isTag1() && myApplication.isTag2() && myApplication.isTag3())) {
             mHeartbeatView.setEnabled(true);
         }
         else {

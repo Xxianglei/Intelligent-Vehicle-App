@@ -94,7 +94,8 @@ public class Check_xueya extends AppCompatActivity implements View.OnClickListen
         zhuangtai = (TextView) findViewById(R.id.zhuangtai);
         date = (TextView) findViewById(R.id.date);
         mDiscView.setHeadText("健康得分");
-        if (bluetoothAdapter.isEnabled()) {
+        MyApplication myApplication = (MyApplication) getApplication();
+        if (bluetoothAdapter.isEnabled() && (myApplication.isTag1() && myApplication.isTag2() && myApplication.isTag3())) {
             start.setEnabled(true);
         } else{
             start.setEnabled(false);
