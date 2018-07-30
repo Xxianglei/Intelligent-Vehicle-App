@@ -6,6 +6,10 @@
     <color name="white">#ffffff</color>
     <color name="fill">#3376d4f3</color>
 
+    <color name="colorPrimary1">#3F51B5</color>
+    <color name="colorPrimaryDark1">#303F9F</color>
+    <color name="colorAccent1">#FF4081</color>
+
     <color name="stroke">#cc3f91fc</color>
     <!--覆盖颜色-->
     <color name="font_color">#535353</color>

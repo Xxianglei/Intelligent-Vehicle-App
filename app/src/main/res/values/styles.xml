@@ -3,8 +3,9 @@
     <!-- Base application theme. -->
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- toolbar（actionbar）颜色 -->
-        <item name="colorPrimary">#343434</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.actionMenuTextSize" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu">
@@ -18,7 +19,7 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
-        <item name="colorPrimary">#00343434</item>
+        <item name="colorPrimary">#343434</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorAccent">#ff8c00</item>

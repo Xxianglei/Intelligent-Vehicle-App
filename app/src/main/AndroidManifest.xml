@@ -15,7 +15,6 @@
         android:persistent="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme,android:label">
         <activity
@@ -24,9 +23,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
         // 活动
