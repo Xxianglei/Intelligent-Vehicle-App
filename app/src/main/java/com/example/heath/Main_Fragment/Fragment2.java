@@ -839,6 +839,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             }
             if (msg.what == 0x16) {
                 XunFeigned();
+                Toast.makeText(getActivity(), "打电话了", Toast.LENGTH_SHORT).show();
             }
             if (msg.what == 0x21) {
 
@@ -853,6 +854,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                                 Toast.makeText(getActivity(), "我知道了", Toast.LENGTH_SHORT).show();
                             }
                         }));
+                Toast.makeText(getActivity(), "您已经连续驾驶超过四小时  建议您休息一会再继续驾驶", 8000).show();
             }
             if (msg.what == 0x22) {
 
@@ -867,6 +869,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                                 Toast.makeText(getActivity(), "我知道了", Toast.LENGTH_SHORT).show();
                             }
                         }));
+                Toast.makeText(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶", 8000).show();
             }
 
         }
@@ -1220,7 +1223,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 Text2Speech.speech(getActivity(), "您已经连续驾驶超过四小时  建议您停靠休息二十分钟 ", false);
                 Message message1=Message.obtain();
                 message1.what = 0x21;
-
                 mHandler.sendMessage(message1);
 
             }
@@ -1229,7 +1231,6 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 drivetime = 1;
                 zhongti.setText("疲劳");
                 Text2Speech.speech(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶 ", false);
-                Toast.makeText(getActivity(), "您已经连续驾驶超过八小时  为了您的安全  强烈建议您停止驾驶", 5000).show();
                 Message message2=Message.obtain();
                 message2.what = 0x22;
                 mHandler.sendMessage(message2);
@@ -1304,6 +1305,7 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
 
     private void XunFeigned() {
         tag1 = true;
+        Text2Speech.speech(getActivity(), "请问 需要为您呼叫120吗", false);
         AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
         builder1.setIcon(R.mipmap.delete);
         builder1.setTitle("危险提示");
@@ -1314,11 +1316,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
                 tag1 = false;
             }
-
-
         });
 
-        builder1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                builder1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 tag1 = true;
@@ -1346,9 +1346,9 @@ public class Fragment2 extends Fragment implements View.OnClickListener {
                 intent.setData(Uri.parse("tel:" + 120 + ""));
                 startActivity(intent);
             }
-            Toast.makeText(getActivity(), "打电话了", Toast.LENGTH_SHORT).show();
+
         }
-        Text2Speech.speech(getActivity(), "请问 需要为您呼叫120吗", false);
+
     }
 
 

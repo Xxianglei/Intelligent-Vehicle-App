@@ -567,6 +567,7 @@ public class PersonCenter extends AppCompatActivity implements View.OnClickListe
             params.put("img", imageString);
 
 
+
         }
     }
 

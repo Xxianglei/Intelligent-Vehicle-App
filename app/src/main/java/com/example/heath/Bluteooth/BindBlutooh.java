@@ -231,7 +231,6 @@ public class BindBlutooh extends Activity {
                     mListView.setVisibility(View.VISIBLE);
                     list.clear();
                     mAdapter.notifyDataSetChanged();
-
                     Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
                     if (pairedDevices.size() > 0) {
                         for (BluetoothDevice device : pairedDevices) {
