@@ -1,6 +1,6 @@
 # 智能健康车载APP
 第七届 中国软件杯 大学生程序设计大赛 “基于移动互联网的智能车载APP”赛题作品
-[](http://www.cnsoftbei.com/images/cnsoft/newcnsoft_01_01_02_01.jpg)
+<img src="https://github.com/kensoon/awesome-cnsoftbei/blob/master/media/newcnsoft_01_01_02_01.jpg" alt="awesome-cnsoftbei">
 ## 本次比赛最终取得了全国铜奖的成绩,无缘高额奖金咯!  哈哈~~~ 
 ### 长见识了  
 * 一件悲伤地事情就是我不知道GitHub的贡献会随着库的删除而消失,啊~我那一大片绿没了伤心...  
