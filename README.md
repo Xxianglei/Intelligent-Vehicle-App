@@ -9,8 +9,8 @@
 * 一件悲伤地事情就是我不知道GitHub的贡献会随着库的删除而消失,啊~我那一大片绿没了伤心...  
 * 比赛再接再厉来年继续参加,继续多做做项目让我的日程再绿起来!
 * 切记清库不删库  !
-
-## 队伍介绍
+ ***
+ ## 队伍介绍
 > 队名:取名字一定要霸气  
 >
 * 组长:向磊       -> APP总设计开发
@@ -18,25 +18,6 @@
 * 组员:刘旭东     -> 后台设计开发
 * 指导老师:苗巍   -> 技术指导
 > 
-  
-
-## 源码就在智能车载APP文件夹下面
-
-## 蜗行APP部分截图
-
-<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180304.png" align="left" width="14%" />
-<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180257.png" align="left" width="14%" />
-<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180328.jpg" align="left" width="14%" />
-<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180405.jpg" align="left" width="14%" />
-<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180212.png" align="left" width="14%" />
-<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180221.png" align="left" width="16%" />       <br />  <br />  <br />  <br />  <br />  <br />  <br />  <br />  <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
-
-
-# 作品相关下载
-* APP需要硬件支持所以就不直接提供下载了,有兴趣的可以运行源码
-* 在线播放演示视频:  [http://www.iqiyi.com/w_19rzzqq3gh.html](http://www.iqiyi.com/w_19rzzqq3gh.html)  
-<br/> <br/> 
- ***
 ## 主要技术
 
 * TTS语音播报
@@ -59,6 +40,26 @@
 * Php
 * Python 
 ***
+
+  
+
+## 源码就在智能车载APP文件夹下面
+
+## 蜗行APP部分截图
+
+<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180304.png" align="left" width="14%" />
+<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180257.png" align="left" width="14%" />
+<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180328.jpg" align="left" width="14%" />
+<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180405.jpg" align="left" width="14%" />
+<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180212.png" align="left" width="14%" />
+<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180221.png" align="left" width="16%" />       <br />  <br />  <br />  <br />  <br />  <br />  <br />  <br />  <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+
+
+# 作品相关下载
+* APP需要硬件支持所以就不直接提供下载了,有兴趣的可以运行源码
+* 在线播放演示视频:  [http://www.iqiyi.com/w_19rzzqq3gh.html](http://www.iqiyi.com/w_19rzzqq3gh.html)  
+<br/> <br/> 
+
 # 题目细节
 
 
