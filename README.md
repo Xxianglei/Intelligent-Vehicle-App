@@ -10,6 +10,7 @@
 
 ## 蜗行APP部分截图
 <img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180304.png" align="left" width="16%" />
+<img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180257.png" align="left" width="16%" />
 <img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180328.jpg" align="left" width="16%" />
 <img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180405.jpg" align="left" width="16%" />
 <img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180212.png" align="left" width="16%" />
