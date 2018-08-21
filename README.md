@@ -18,10 +18,33 @@
 <img src="https://github.com/Xxianglei/Lntelligent-Vehicle-App/blob/master/%E6%99%BA%E8%83%BD%E8%BD%A6%E8%BD%BDAPP/img/Screenshot_20180821-180221.png" align="left" width="16%" />       <br />  <br />  <br />  <br />  <br />  <br />  <br />  <br />  <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 
 
-# 相关作品下载
-* 可执行文件: [蜗行1.0.Apk](https://github.com/kensoon/cyberCar/blob/master/Apps/snailgo2.1.4-release.apk) 
-* 在线播放演示视频:  [http://www.iqiyi.com/w_19rzzqq3gh.html](http://www.iqiyi.com/w_19rzzqq3gh.html)   
+# 作品相关下载
+* APP需要硬件支持所以就不直接提供下载了,有兴趣的可以运行源码
+* 在线播放演示视频:  [http://www.iqiyi.com/w_19rzzqq3gh.html](http://www.iqiyi.com/w_19rzzqq3gh.html)  
+<br/> <br/> 
+ ***
+## 主要技术
 
+* TTS语音播报
+* 高德地图
+* 和风天气数据
+* 蓝牙通讯
+* 机器学习算法
+* 原生安卓开发
+* ...
+## 开源库
+* OkHttp3
+* Gson
+* MPAndroidChart
+* RollingText
+* DBFlow
+* ...
+## 使用的语言
+
+* Java
+* Php
+* Python 
+***
 # 题目细节
 
 
@@ -97,6 +120,7 @@
 > 邮箱：prome@neusoft.com
 
 
-# 评审要点
+
+## 评审要点
  > 系统的完整性、功能的完整性、产品的创新性、技术的先进性、UI的美观性、交互的友好性、商业可实现性、性能的可靠性（运行顺畅无卡顿，连续运行不死机，无闪退等严重BUG）、要求原创禁止抄袭
 ****
