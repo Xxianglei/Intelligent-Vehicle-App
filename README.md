@@ -1,6 +1,6 @@
 # 智能健康车载APP
 第七届 "中国软件杯" 大学生程序设计大赛 “基于移动互联网的智能车载APP”赛题作品
-### 本人博客: [https://blog.csdn.net/u011583316](https://blog.csdn.net/u011583316)<br/>
+### `本人博客`: [https://blog.csdn.net/u011583316](https://blog.csdn.net/u011583316)<br/>
 <img src="https://github.com/kensoon/awesome-cnsoftbei/blob/master/media/newcnsoft_01_01_02_01.jpg" alt="awesome-cnsoftbei">  
 
 ## 本次比赛最终取得了<font color="#A52A2A">`全国铜奖`</font>的成绩,无缘高额奖金咯!  哈哈! 来年再战... 
@@ -57,7 +57,7 @@
 
 
 # 作品相关下载
-* `执行文件:`APP需要硬件支持所以就不直接提供下载了,有兴趣的可以运行源码
+* `执行文件:` APP需要硬件支持所以就不直接提供下载了,有兴趣的可以运行源码
 * `在线视频: ` [http://www.iqiyi.com/w_19rzzqq3gh.html](http://www.iqiyi.com/w_19rzzqq3gh.html)  
 * `开发文档:`[]()
 
