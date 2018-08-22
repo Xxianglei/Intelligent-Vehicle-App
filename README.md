@@ -58,9 +58,11 @@
 
 # 作品相关下载
 * `执行文件:` APP需要硬件支持所以就不直接提供下载了,有兴趣的可以运行源码
-* `在线视频: ` [http://www.iqiyi.com/w_19rzzqq3gh.html](http://www.iqiyi.com/w_19rzzqq3gh.html)  
-* `开发文档:` [https://github.com/Xxianglei/Intelligent-Vehicle-App/blob/master/%E8%BD%AF%E4%BB%B6%E6%9D%AF%E2%80%94%E8%AE%BE%E8%AE%A1%E4%B9%A6.doc](https://github.com/Xxianglei/Intelligent-Vehicle-App/blob/master/%E8%BD%AF%E4%BB%B6%E6%9D%AF%E2%80%94%E8%AE%BE%E8%AE%A1%E4%B9%A6.doc)
-* `作品PPT:` [https://github.com/Xxianglei/Intelligent-Vehicle-App/blob/master/%E4%B8%AD%E5%9B%BD%E8%BD%AF%E4%BB%B6%E6%9D%AF.pptx](https://github.com/Xxianglei/Intelligent-Vehicle-App/blob/master/%E4%B8%AD%E5%9B%BD%E8%BD%AF%E4%BB%B6%E6%9D%AF.pptx)
+* `在线视频: ` [演示视频](http://www.iqiyi.com/w_19rzzqq3gh.html)  
+* `开发文档:` [开发文档](https://github.com/Xxianglei/Intelligent-Vehicle-App/blob/master/%E8%BD%AF%E4%BB%B6%E6%9D%AF%E2%80%94%E8%AE%BE%E8%AE%A1%E4%B9%A6.doc)
+* `需求分析:` [分析概要](https://github.com/Xxianglei/Intelligent-Vehicle-App/blob/master/%E8%BD%AF%E4%BB%B6%E6%9D%AF%E2%80%94%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E6%A6%82%E8%A6%81.docx)
+* `作品PPT:` [作品PPT](https://github.com/Xxianglei/Intelligent-Vehicle-App/blob/master/%E4%B8%AD%E5%9B%BD%E8%BD%AF%E4%BB%B6%E6%9D%AF.pptx)
+
 
 
 <br/> <br/> 
