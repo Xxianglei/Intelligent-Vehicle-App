@@ -1,6 +1,6 @@
 # 智能健康车载APP
 第七届 "中国软件杯" 大学生程序设计大赛 “基于移动互联网的智能车载APP” 赛题参赛作品  
-<font color="red">路过点赞哦!</font>
+<font color="red">`路过点赞哦!`</font>
 ### `本人博客`: [https://blog.csdn.net/u011583316](https://blog.csdn.net/u011583316)<br/>
 <img src="https://github.com/kensoon/awesome-cnsoftbei/blob/master/media/newcnsoft_01_01_02_01.jpg" alt="awesome-cnsoftbei">  
 
