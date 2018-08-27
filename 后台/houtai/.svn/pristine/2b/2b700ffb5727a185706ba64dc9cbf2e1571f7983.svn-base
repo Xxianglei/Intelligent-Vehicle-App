@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>血压监测周报报告</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/echarts.common.min.js"></script>
+		<script type="text/javascript" src="js/bpw_js1.js"></script>
+		<link href="css/bpw_css4.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/public_config.css"/>
+		<script type="text/javascript" charset="UTF-8" src="js/public_config.js"></script>
+		<style>
+			#i_bpw_banner{
+				background-image: url("images/banner_4.png");
+			}
+		</style>
+		<script type="text/javascript">
+			var piedata=[{value:7,name:level3,itemStyle:{normal:{color:level3Color}}},{value:5,name:level4,itemStyle:{normal:{color:level4Color}}}];
+			var piecolorsdata=[{name:level3,icon:'pin'},{name:level4,icon:'pin'}];
+			var timesHighData=[[1505519041000,132.0],[1505562785000,135.0],[1505600480000,142.0],[1505625290000,135.0],[1505697540000,140.0],[1505734610000,135.0],[1505781060000,141.0],[1505830440000,143.0],[1505864040000,136.0],[1505898840000,143.0],[1505961840000,135.0],[1505973300000,142.0],[1505992689000,140.0],[1506037440000,142.0],[1506069570000,139.0]];
+			var timesLowData=[[1505519041000,79.0],[1505562785000,85.0],[1505600480000,83.0],[1505625290000,80.0],[1505697540000,80.0],[1505734610000,79.0],[1505781060000,88.0],[1505830440000,80.0],[1505864040000,82.0],[1505898840000,89.0],[1505961840000,89.0],[1505973300000,87.0],[1505992689000,88.0],[1506037440000,89.0],[1506069570000,84.0]];
+			var scatterHighData=[134.0,139.0,138.0,142.0,140.0,139.0,141.0];
+			var scatterLowData=[82.0,82.0,80.0,84.0,86.0,88.0,87.0];
+			var highKBData=[[0,135],[6,141]];
+			var lowKBData=[[0,79],[6,87]];
+	    	var barXaxisData=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+			var barData=[53.0,50.0,59.0,55.0,60.0,56.0,53.0,63.0,54.0,54.0,46.0,55.0,52.0,53.0,55.0];
+			var startTime=1505491200000;
+			var endTime=1506095999000;
+		</script>
+	</head>
+	<body id="i_bpw_body" class="c_bpw_body">
+		<div id="i_bpw_banner" class="c_bpw_banner">
+			<div id="logion">没有健康就没有乐趣。——博林布鲁克</div>
+			<div id="bpControl">血压控制效果</div>
+			<div id="r_bp_judge">比较不理想</div>
+			<div id="i_bpw_date"></div>
+		</div>
+		<div id="i_bpw_name" class="c_bpw_name_bg_left c_cp_padding">尊敬的王永平先生:</div>
+		<div id="i_bpw_overview" class="c_bpw_overview c_cp_padding mbotm">您好！</div>
+		<div class="c_bpw_overview c_cp_padding">您最近血压整体控制情况比较不理想：血压值偏高的情况稍多，虽无明显波动，但有缓慢上升趋势。</div>
+		
+		
+		<div class="c_bpw_blank"><img src="picture/blank.png" /></div>
+		<div id="i_bpw_levelanaly_title" class="c_bpw_levelanaly_title c_cp_padding_left"><img src="picture/title1.png" class="c_bpw_icon"></div>
+		<div id="i_bpw_levelanaly_title" class="c_bpw_levelanaly_title">血压等级分析<div class="c_bpw_levelanaly_small_title">通过每次测量等级分析血压异常占比</div></div>
+		<div class="c_bpw_clear"></div>
+		<div id="i_bpw_levelanaly_overview" class="c_bpw_levelanaly_overview c_cp_padding">
+			您本周共监测血压15次，想知道这15次血压测量中正常和异常结果占比有多少吗？让我们来一同看下血压等级分布图：
+		</div>
+		<div id="i_bpw_chart_pie" class="c_bpw_chart_pie c_cp_padding"></div>
+		<div class="c_bpw_load">血压偏高占比</div>
+
+  <div class="c_bpw_load_value1 c_bpw_color_guozhong">53%</div>
+		<div class="c_bpw_dialog"><img src="picture/dialog.png" /></div>
+		<div class="c_bpw_dialog_desc">
+			<div class="c_bpw_dialog_font">测量血压时要排除情绪激动、紧张、运动等影响因素，并积极调整生活方式，如充足睡眠、少盐饮食等，观察血压值是否有改善。</div>
+		</div>
+		
+		
+		<div class="c_bpw_blank"><img src="picture/blank.png" /></div>
+		<div id="i_bpw_trend_title" class="c_bpw_trend_title c_cp_padding_left"><img src="picture/title2.png" class="c_bpw_icon"></div>
+		<div id="i_bpw_trend_title" class="c_bpw_trend_title">均值与极值
+			<div class="c_bpw_levelanaly_small_title">血压平均水平与最高值</div>
+		</div>
+		<div class="c_bpw_clear"></div>
+		<div id="i_bpw_chart_trend_times" class="c_bpw_chart_trend_times c_cp_padding"></div>
+		<div id="i_bpw_avg_name" class="c_bpw_avg_name">平均血压mmHg</div>
+		<div id="i_bpw_avg_value" class="c_bpw_avg_value c_bpw_color_normalhigh">139/84，正常高值</div>
+		<div class="c_bpw_left">
+			<div class="c_bpw_title_info_left">收缩压最高mmHg</div>
+			<div id="i_bpw_high_highst" class="c_bpw_middle">143，偏高</div>
+			<div class="c_bpw_bottom">09-20 17:14</div>
+		</div>
+		<div class="c_bpw_right">
+			<div class="c_bpw_title_info_right">舒张压最高mmHg</div>
+			<div id="i_bpw_low_highst" class="c_bpw_middle">89，正常</div>
+			<div class="c_bpw_bottom">09-22 07:44</div>
+		</div>
+		<div class="c_bpw_clear"></div>
+		
+		
+		<div class="c_bpw_blank"><img src="picture/blank.png" /></div>
+		<div id="i_bpw_trend_title" class="c_bpw_trend_title c_cp_padding_left"><img src="picture/title3.png" class="c_bpw_icon"></div>
+		<div id="i_bpw_trend_title" class="c_bpw_trend_title">本周血压趋势
+			<div class="c_bpw_levelanaly_small_title">按日均值分析血压升降和波动</div>
+		</div>	
+		<div class="c_bpw_clear"></div>
+		<div id="i_bpw_chart_trend_day" class="c_bpw_chart_trend_day c_cp_padding"></div>
+   		<div class="c_bpw_left">
+			<div class="c_bpw_title_info_left">收缩压mmHg</div>
+			<div class="c_bpw_left_trend_value">135→141</div>
+		</div>
+		<div class="c_bpw_right">
+			<div class="c_bpw_title_info_right">上升趋势缓慢</div>
+			<div class="c_bpw_right_trend_value c_bpw_color_shangsheng" > 4.4% <img src="picture/up.png" class="c_bpw_bottom_icon" /></div>
+		</div>
+        <div class="c_bpw_clear"></div>
+   		<div class="c_bpw_left2">
+			<div class="c_bpw_title_info_left">舒张压mmHg</div>
+			<div class="c_bpw_left_trend_value">79→87</div>
+		</div>
+		<div class="c_bpw_right2">
+			<div class="c_bpw_title_info_right">上升趋势缓慢</div>
+			<div class="c_bpw_right_trend_value c_bpw_color_shangsheng"> 10.1% <img src="picture/up.png" class="c_bpw_bottom_icon" /></div>
+		</div>
+		<div class="c_bpw_clear"></div>
+		<div class="c_bpw_leftright">
+			<div id="i_bpw_bodong_value" class="c_bpw_bodong_name">血压波动</div>
+			<div id="i_bpw_avg_value" class="c_bpw_bodong_value">血压基本无波动，给您点赞。</div>
+		</div>
+        <div class="c_bpw_clear"></div>
+		
+        
+        
+		<div class="c_bpw_blank"><img src="picture/blank.png" /></div>
+		<div id="i_bpw_ppd_title" class="c_bpw_ppd_title c_cp_padding_left"><img src="picture/title4.png" class="c_bpw_icon">
+		</div>
+		<div id="i_bpw_conditioncompare_title" class="c_bpw_ppd_title">
+			脉压分析
+			<div class="c_bpw_levelanaly_small_title">分析每次收缩压和舒张压的差值</div>
+		</div>
+		<div class="c_bpw_clear"></div>
+		<div id="i_bpw_chart_bar_ppd" class="c_bpw_chart_histogram c_cp_padding"></div>
+		<div class="c_bpw_load">脉压平均值<span id="i_bpw_font">(mmHg)</span> <img class="c_bpw_tip_img" src="picture/tip.png" /></div>
+		<div id="i_bpw_tip_content" class="c_bpw_hide">
+			<div id="i_bpw_tip_content1">脉压即收缩压和舒张压的差值，不仅反映动脉硬化程度，还是评估心血管疾病严重程度和风险的一项指标。正常成年人在休息状态下脉压介于20~60mmHg，随着年龄的增长，脉压会相应增大。如发现脉压异常，还请咨询医生以获得专业的诊断和治疗。</div>
+		</div>
+		<div class="c_bpw_load_value1 c_bpw_color_zhengchang">55，正常</div>
+		<div class="c_bpw_dialog"><img src="picture/dialog.png" /></div>
+		<div class="c_bpw_dialog_desc">
+			<div class="c_bpw_dialog_font">请继续保持规律的血压测量以及健康的生活方式。不仅要关注每次高压、低压是否正常，还要关注高压和低压的差值，若出现差值过大或过小，都提示有某些疾病存在。</div>
+		</div>
+		
+		
+		<div class="c_bpw_blank"><img src="picture/blank.png" /></div>
+		<div id="i_bpw_kindlyremind_title" class="c_bpw_kindlyremind_title c_cp_padding_left"><img src="picture/title5.png" class="c_bpw_icon">
+		</div>
+		<div id="i_bpw_kindlyremind_title" class="c_bpw_kindlyremind_title">本周建议
+			<div class="c_bpw_levelanaly_small_title">综合控制效果提供的个性化建议</div>
+		</div>
+		<div class="c_bpw_clear"></div>
+		<div id="i_bpw_kindlyremind_1" class="c_bpw_kindlyremind_1 c_cp_padding">研究表明，通过良好的心理调整，保持情绪稳定、心境平和、心情舒畅，会有助于高血压的治疗。结合您的血压控制情况，心理调节方面建议：在用药、饮食、运动等方面积极治疗的同时，也请多重视心理状态的调节，避免心理负担过重，这样才能最大限度的促进血压水平稳步降至理想范围内。</div>
+		<div class="c_bpw_blank"><img src="picture/blank.png" /></div>
+		<div id="i_bpw_kindlyremind_title" class="c_bpw_kindlyremind_title c_cp_padding_left">
+		<img src="picture/icon.png" class="c_bpw_icon">
+		</div>
+		<div id="i_bpw_kindlyremind_title" class="c_bpw_kindlyremind_title">健康小知识
+		<div class="c_bpw_levelanaly_small_title">看看哪些人易患高血压</div>
+		</div>
+		<div class="c_bpw_clear"></div>
+		<div class="c_bpw_dialog mbotm">
+		<img src="picture/pic_4.png" />
+		</div>
+		<div class="c_bpw_kindlyremind_1 c_cp_padding">
+		易患人群一般要求每半年测量血压1次。 提倡家庭自测血压以及利用各种机会（单位体检、老年活动站、公益性血压计等）测量血压。
+		</div>
+	        <div id="i_bpw_references" class="c_bpw_references"><img id="i_bpw_references_button" src="picture/button1.png" /></div>
+		<div id="i_bpw_references_detail" class="c_bpw_references_detail">
+			<div id="i_bpw_references_1" class="c_bpw_references_1 c_cp_padding">[1]张瑞岭(主编). 心身疾病的临床心理康复[M]. 郑州: 郑州大学出版社. 2010: 25-26.</div>
+			<div id="i_bpw_references_2" class="c_bpw_references_1 c_cp_padding">[2]邹阳春(主编). 自己控制高血压[M]. 北京: 化学工业出版社.2012: 14、210.</div>
+			<div id="i_bpw_references_3" class="c_bpw_references_1 c_cp_padding">[3]中国高血压防治指南修订委员会. 中国高血压防治指南2010[J]. 中华高血压杂志, 2011, 19(8): 711.</div>
+		</div>
+		<div id="footerTextVar"></div><div id="i_bpw_end"><img src="picture/footer.png" class="c_bpw_end"></div>
+	</body>
+</html>

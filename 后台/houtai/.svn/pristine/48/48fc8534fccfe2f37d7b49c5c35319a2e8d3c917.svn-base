@@ -1,0 +1,29 @@
+<?php
+/**
+ * 
+ */
+class Select{
+	
+	public function login($phone,$password,$link) {
+		$sql = "SELECT*FROM loginUser where phone = {$phone}";
+		
+		$result = mysql_query($sql,$link);
+		
+		if ($result) {
+			$data = mysql_fetch_array($result);
+			
+			if ($password == $data['password']) {
+				return 201;
+			} else {
+				return 200;
+			}
+		} else {
+			return 0;
+		}
+		
+	}
+	
+	
+}
+
+?>

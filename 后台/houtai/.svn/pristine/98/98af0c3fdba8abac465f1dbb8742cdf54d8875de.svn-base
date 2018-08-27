@@ -1,0 +1,42 @@
+<?php
+/**
+ * 
+ */
+class Add{
+	
+	public  function zhuce($phone,$pwassword,$link)
+	{
+		$sql = "INSERT into loginUser(phone,password) values({$phone},'{$pwassword}')";
+		$result = mysql_query($sql,$link);
+		if ($result) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	
+	public function user($userName,$sex,$height,$weight,$age,$img,$link){
+		$sql = "INSERT into user(userName,sex,height,weight,age,img) values('{$userName}','{$sex}',{$age},{$height},{$weight},'{$img}')";
+		$result = mysql_query($sql,$link);
+		if ($result) {
+			return 301;
+		} else {
+			return 300;
+		}
+	}
+	
+	public function linkman($phone,$linkPhone,$link){
+		$sql = "INSERT into linkMan(phone,linkPhone) values({$phone},{$linkPhone})";
+		$result = mysql_query($sql,$link);
+		
+		if ($result) {
+			return 401;
+		} else {
+			return 400;
+		}
+		
+	}
+	
+}
+
+?>

@@ -1,0 +1,679 @@
+﻿img {
+	width: 100%;
+}
+.c_bpw_body {
+	margin: 0px;
+	width: 100%;
+	max-width:900px;
+	text-align: center;
+	margin: 0 auto;
+	-webkit-text-size-adjust: 100% !important; text-size-adjust: 100% !important; -moz-text-size-adjust: 100% !important;
+}
+
+.c_bpw_banner {
+	width: 100%;
+	height: 13rem;
+	max-width: 900px;
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+	position:relative;
+}
+#logion{
+	width:100%;
+	/*height:1.4rem;*/
+	color:#FFFFFF;
+	/*line-height: 1.4rem;*/
+	font-size: 0.85rem;
+	text-align: left;
+	text-indent: 4%;
+	position:absolute;
+	bottom:0.1rem;
+}
+#bpControl{
+	float:left;
+	width:100%;
+	text-align: left;
+	color: #2ea808;
+	margin-top: 3.2rem;
+	font-size: 0.85rem;
+	text-indent: 1rem;
+}
+#r_bp_judge{
+	float:left;
+	width:100%;
+	text-align: left;
+	color: #3fba14;
+	font-size: 1.4rem;
+	font-weight: 700;
+	margin-top:0.2rem;
+	text-indent: 1rem;
+}
+#i_bpw_date{
+	float:left;
+	width:100%;
+	text-align: left;
+	color: #2ca606;
+	font-size: 0.8rem;
+	text-indent: 1rem;
+}
+@media screen and (min-width: 900px) {
+	.c_bpw_banner {
+		width: 100%;
+		height: 491px;
+		max-width: 900px;
+		background-repeat:no-repeat;
+		background-size: 100% 100%;
+		position:relative;
+	}
+	#logion{
+		width:100%;
+		height:55px;
+		color:#FFFFFF;
+		line-height: 55px;
+		font-size: 16px;
+		text-align: left;
+		text-indent: 1.5rem;
+		position:absolute;
+		bottom:0;
+	}
+	#bpControl{
+		float:left;
+		width:100%;
+		text-align: left;
+		color: #2ea808;
+		margin-top:120px;
+		font-size: 30px;
+		text-indent: 50px;
+	}
+	#r_bp_judge{
+		float:left;
+		width:100%;
+		text-align: left;
+		color: #3fba14;
+		font-size: 55px;
+		font-weight: 700;
+		margin-top:0.2rem;
+		text-indent: 50px;
+	}
+	#i_bpw_date{
+		float:left;
+		width:100%;
+		text-align: left;
+		color: #2ca606;
+		font-size: 16px;
+		margin-top:20px;
+		text-indent: 50px;
+	}
+}
+.c_bpw_name_bg_left {
+	color: #686868;
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	padding-top: 8px;
+	text-align: left;
+	margin-top: 20px;
+}
+#i_bpw_hello{
+	text-align: left;
+	color: #686868;
+	font-size:18px;
+	font-family:Microsoft YaHei;
+}
+.c_bpw_overview {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: justify;
+	word-spacing: normal;
+}
+.c_bpw_icon {
+	width: 40px;
+}
+
+.c_bpw_levelanaly_title {
+	font-family: "Microsoft YaHei";
+	font-size: 20px;
+	color: #333333;
+	padding: 5px;
+	text-align: left;
+	float:left;
+}
+
+.c_bpw_levelanaly_small_title {
+	font-family: "Microsoft YaHei";
+	font-size: 13px;
+	color: #8f8d8d;
+	text-align: left;
+	margin-top:-2px;
+}
+
+.c_bpw_clear {
+	clear:both;
+	margin-bottom: 10px;
+}
+
+.c_bpw_levelanaly_overview {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 17px;
+	text-align: justify;
+	word-spacing: normal;
+}
+
+.c_bpw_chart_pie {
+	width: 100%;
+	height: 280px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.c_bpw_line {
+	width: 90%;
+	height: 1px;
+	margin-left: auto;
+	background-color: #dcdddd;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.c_bpw_ppd_title {
+	font-family: "Microsoft YaHei";
+	font-size: 20px;
+	color: #333333;
+	padding: 5px;
+	text-align: left;
+	float:left;
+}
+
+.c_bpw_conditioncompare_overview {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	text-indent: 31px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	text-align: justify;
+	word-spacing: normal;
+}
+
+.c_bpw_chart_histogram {
+	width: 100%;
+	height: 300px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 10px;
+}
+
+.c_bpw_trend_title {
+	font-family: "Microsoft YaHei";
+	font-size: 20px;
+	color: #333333;
+	padding: 5px;
+	text-align: left;
+	float:left;
+}
+
+.c_bpw_chart_trend_times {
+	width: 100%;
+	height: 320px;
+	padding-bottom: 10px;
+}
+
+.c_bpw_avg_title {
+	font-size: 20px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	text-align: center;
+	word-spacing: normal;
+}
+
+.c_bpw_avg_name {
+	color: #8f8d8d;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+	padding-left: 7%;
+}
+.c_bpw_null_desc {
+	font-size: 16px;
+	padding-top:20px;
+	padding-bottom: 17px;
+	color: #686868;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+}
+.c_bpw_chart_trend_day_desc {
+	font-size: 16px;
+	color: #686868;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+	padding-top:20px;
+	padding-bottom: 17px;
+	padding-left: 7%;
+}
+
+.c_bpw_avg_value{
+	font-size:20px;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+	padding-left: 7%;
+}
+
+.c_bpw_bodong_name{
+	color: #8f8d8d;
+	font-family: "Microsoft YaHei";
+	margin-left: 7.5%;
+	text-align: left;
+	padding-top: 5px;
+}
+.c_bpw_bodong_value{
+	font-size:20px;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+	padding-left: 7.5%;
+}
+.c_bpw_bodong_value_desc{
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	padding-top:20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	text-align: justify;
+	word-spacing: normal;
+
+}
+.c_bpw_chart_bar_ppd_desc{
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	padding-top:20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 15px;
+	text-align: justify;
+	word-spacing: normal;
+}
+.c_bpw_left_trend_value{
+	font-size:20px;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+	padding-left: 15%;
+	
+}
+.c_bpw_right_trend_value{
+	font-size:20px;
+	font-family: "Microsoft YaHei";
+	text-align: right;
+	padding-right: 15%;
+}
+.c_bpw_chart_trend_day {
+	width: 100%;
+	height: 300px;
+	padding-bottom: 10px;
+}
+
+.c_bpw_trend_title2 {
+	font-size: 20px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	text-align: center;
+	word-spacing: normal;
+}
+
+
+.c_bpw_trend_overview_high {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	text-indent: 31px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	text-align: left;
+}
+
+.c_bpw_trend_overview_low {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	text-indent: 31px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	text-align: left;
+}
+
+.c_bpw_control_img {
+	max-width: 280px;
+	text-align: center;
+}
+
+.c_bpw_kindlyremind_title {
+	font-family: "Microsoft YaHei";
+	font-size: 20px;
+	color: #333333;
+	padding: 5px;
+	text-align: left;
+	float:left;
+}
+
+.c_bpw_kindlyremind_1 {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	text-align: justify;
+	word-spacing: normal;
+	word-break:break-all;
+}
+
+.c_bpw_kindlyremind_2 {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	text-indent: 31px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	text-align: justify;
+	word-spacing: normal;
+}
+
+.c_bpw_kindlyremind_3 {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	text-indent: 31px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 20px;
+	text-align: justify;
+	word-spacing: normal;
+}
+.c_bpw_references {
+	font-family: "Microsoft YaHei";
+	font-size: 14px;
+	color: #333333;
+	padding: 10px;
+	text-align: center;
+	vertical-align:middle;
+	width: 190px;
+	height: 45px;
+	margin: 0px auto;
+}
+.c_bpw_references_1 {
+	font-size: 14px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	padding-right: 10px;
+	padding-top: 0px;
+	padding-bottom: 7px;
+	text-align: justify;
+	word-spacing: normal;
+	word-break:break-all;
+}
+.c_bpw_references_detail{
+	display: none;
+}
+.c_bpw_end{
+	padding-top:30px;
+	width: 100%;
+	text-align: center;
+}
+
+.c_bpw_left{
+	float: left;
+	width: 50%;
+	margin-top: 10px;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+}
+.c_bpw_right{
+	float: left;
+	width: 50%;
+	margin-top: 10px;
+	font-family: "Microsoft YaHei";
+	text-align: right;
+}
+.c_bpw_left2{
+	float: left;
+	width: 50%;
+	margin-top: 10px;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+}
+.c_bpw_right2{
+	float: left;
+	width: 50%;
+	margin-top: 10px;
+	font-family: "Microsoft YaHei";
+	text-align: right;
+}
+c_bpw_leftright{
+	float: left;
+	width: 100%;
+	margin-top: 30px;
+	font-family: "Microsoft YaHei";
+	text-align: left;
+}
+
+.c_bpw_middle{
+	font-size:20px;
+	ont-family: "Microsoft YaHei";
+	margin-left: 15%;
+	margin-right: 15%;
+}
+.c_bpw_bottom{
+	color: #8f8d8d;
+	ont-family: "Microsoft YaHei";
+	margin-left: 15%;
+	margin-right: 15%;
+}
+.c_bpw_title_info_left{
+	color: #8f8d8d;
+	font-family: "Microsoft YaHei";
+	margin-left: 15%;
+	text-align: left;
+}
+.c_bpw_title_info_right{
+	color: #8f8d8d;
+	font-family: "Microsoft YaHei";
+	margin-right: 15%;
+	text-align: right;
+}
+.c_bpw_bottom_icon{
+	width: 20px;
+	margin-bottom: 5px;
+}
+.c_cp_padding{
+	padding-left: 4%;
+	padding-right: 4%;
+}
+.c_cp_padding_left{
+	padding-left: 4%;
+}
+.c_bpw_load{
+	font-family: "Microsoft YaHei";
+	color: #949494;
+	font-size: 20px;
+}
+.c_bpw_load_value1{
+	font-family: "Microsoft YaHei";
+	font-size: 20px;
+}
+.c_bpw_load_value2{
+	font-family: "Microsoft YaHei";
+	color: #97b553;
+	font-size: 20px;
+}
+.c_bpw_load_value3{
+	font-family: "Microsoft YaHei";
+	color: #dd68ab;
+	font-size: 20px;
+}
+.c_bpw_load_detail{
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	font-size: 16px;
+}
+.c_bpw_references_21 {
+	font-size: 14px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	padding-top: 0px;
+	padding-bottom: 7px;
+	text-align: justify;
+	word-spacing: normal;
+}
+.c_bpw_sample{
+	font-weight: bold;
+}
+.c_bpw_gif {
+	width: 85px;
+	margin: 0 auto;
+	padding-top: 0;
+}
+.c_bpw_kindlyremind_4 {
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	color: #686868;
+	line-height: 1.5;
+	text-indent: 31px;
+	padding-bottom: 10px;
+	padding-top: 15px;
+	text-align: justify;
+	word-spacing: normal;
+}
+
+
+.c_bpw_end{
+	font-size: 0px;
+}
+
+.c_bpw_color_low{
+	color:#5AB2EF;
+}
+
+.c_bpw_color_normal{
+	color:#97B653;
+}
+
+.c_bpw_color_normalhigh{
+	color:#B0D26A;
+}
+
+.c_bpw_color_level1{
+	color:#DD6AAB;
+}
+
+.c_bpw_color_level2{
+	color:#BC47AB;
+}
+
+.c_bpw_color_level3{
+	color:#8533C0;
+}
+
+
+.c_bpw_color_piandi{
+	color:#5ab1ef;
+}
+
+.c_bpw_color_zhengchang{
+	color:#97b552;
+}
+
+.c_bpw_color_piangao{
+	color:#dd68ab;
+}
+.c_bpw_color_guozhong{
+	color:#bd46ad;
+}
+
+.c_bpw_color_xiajiang{
+	color:#67BF59;
+}
+
+.c_bpw_color_pingwen{
+	color:#018CCA;
+}
+
+.c_bpw_color_shangsheng{
+	color:#d8513d;
+}
+.c_bpw_blank {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.c_bpw_dialog {
+	width: 100%;
+	margin-top: 20px;
+}
+.c_bpw_tip_img {
+	width: 17px;
+}
+.c_bpw_hide {
+	display: none;
+}
+#i_bpw_tip_content{
+	position:absolute;
+	background-color:rgba(75,72,65,0.8);
+	border-radius: 5px;
+	width: 15rem;
+  	overflow:hidden; 
+	left: 50%;
+	margin-left: -7.4rem;
+  	z-index: 999;
+}
+#i_bpw_tip_content1{
+	font-size: 0.8rem;
+	color: #ffffff;
+	margin: 1rem;
+}
+.c_bpw_dialog_desc {
+	font-family: "Microsoft YaHei";
+	line-height: 120%;
+	letter-spacing: 0.5px;
+	color: #333333;
+	margin-top: -8.4rem;
+	margin-left: 20%;
+	width: 75%;
+}
+.c_bpw_dialog_font {
+	height: 8.4rem;
+	display:table-cell;
+	vertical-align:middle;
+	text-align: left;
+}
+#i_bpw_font {
+	color: #c4c4c4;
+	font-size: 16px;
+}
+.mTop{
+	margin-top:30px;
+}
+.mbotm{
+	margin-bottom:20px;
+}

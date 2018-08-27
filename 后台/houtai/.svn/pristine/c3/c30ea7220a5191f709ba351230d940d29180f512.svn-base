@@ -1,0 +1,28 @@
+<?php
+class Db {
+	
+	public function connect(){
+		$dbname = 'cgYgaleKaigseYNpNIwH';
+		/*填入数据库连接信息*/
+		$host = 'sqld.duapp.com';
+		$port = 4050;
+		$user = '27a21046af9e43c285455e1b6c9aba6d';//用户AK
+		$pwd = 'a9f6d17e30d846e3a224cc2f83586f9a';//用户SK
+		 /*以上信息都可以在数据库详情页查找到*/
+		
+		/*接着调用mysql_connect()连接服务器*/
+		/*为了避免因MySQL数据库连接失败而导致程序异常中断，此处通过在mysql_connect()函数前添加@，来抑制错误信息，确保程序继续运行*/
+		/*有关mysql_connect()函数的详细介绍，可参看http://php.net/manual/zh/function.mysql-connect.php*/
+		$link = @mysql_connect("{$host}:{$port}",$user,$pwd,true);
+		if (!$link) {
+			echo"连接失败";
+		} else {
+			echo "连接成功";
+		}
+		
+		mysql_query("set names UTF8",$link);
+		/*连接成功后立即调用mysql_select_db()选中需要连接的数据库*/
+		mysql_select_db($dbname,$link);
+		return $link;
+	}
+}
