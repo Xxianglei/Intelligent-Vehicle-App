@@ -27,7 +27,7 @@
 * `高德地图`
 * `和风天气数据`
 * `蓝牙通讯`
-* [`机器学习算法`](https://github.com/Xxianglei/Intelligent-Vehicle-App/tree/master/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)
+* [`神经网络`](https://github.com/Xxianglei/Intelligent-Vehicle-App/tree/master/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)
 * `原生安卓开发`
 * ...
 ## 开源库
